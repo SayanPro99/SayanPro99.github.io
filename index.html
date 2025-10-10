@@ -78,6 +78,7 @@
       background-color: rgba(0,0,0,0.9);
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     }
 
     .lightbox img {
@@ -93,20 +94,21 @@
       to { transform: scale(1); opacity: 1; }
     }
 
-    .close {
+    .close, .prev, .next {
       position: absolute;
-      top: 20px;
-      right: 30px;
       color: white;
       font-size: 40px;
       font-weight: bold;
       cursor: pointer;
       transition: color 0.2s ease;
+      user-select: none;
     }
 
-    .close:hover {
-      color: #aaa;
-    }
+    .close { top: 20px; right: 30px; }
+    .prev { left: 30px; top: 50%; transform: translateY(-50%); }
+    .next { right: 30px; top: 50%; transform: translateY(-50%); }
+
+    .close:hover, .prev:hover, .next:hover { color: #aaa; }
   </style>
 </head>
 <body>
@@ -117,40 +119,97 @@
   </div>
 
   <div id="amiri" class="grid">
-    <!-- Du kannst bei Bedarf weitere Bilder hinzufügen -->
-    <img src="/067db8ac.jpg" alt="Amiri Bild 1" onclick="openLightbox(this.src)">
-    <img src="/0eafa9b2.jpg" alt="Amiri Bild 2" onclick="openLightbox(this.src)">
-    <img src="/0fe012e6.jpg" alt="Amiri Bild 3" onclick="openLightbox(this.src)">
-    <img src="/1207b9ed.jpg" alt="Amiri Bild 4" onclick="openLightbox(this.src)">
-    <img src="/12747c3f.jpg" alt="Amiri Bild 5" onclick="openLightbox(this.src)">
-    <img src="/150842e9.jpg" alt="Amiri Bild 6" onclick="openLightbox(this.src)">
-    <img src="/187cdc78.jpg" alt="Amiri Bild 7" onclick="openLightbox(this.src)">
-    <img src="/22a3a99d.jpg" alt="Amiri Bild 8" onclick="openLightbox(this.src)">
-    <img src="/2386271a.jpg" alt="Amiri Bild 9" onclick="openLightbox(this.src)">
-    <img src="/2525eef9.jpg" alt="Amiri Bild 10" onclick="openLightbox(this.src)">
+    <!-- Alle deine Bilder -->
+    <script>
+      const images = [
+        "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg",
+        "150842e9.jpg","187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg",
+        "27fdd161.jpg","2a177cdc.jpg","2c3417c8.jpg","2ea17519.jpg","2f293de4.jpg",
+        "30f03eb1.jpg","3247f198.jpg","35f75daf.jpg","362daaae.jpg","393c2518.jpg",
+        "3b8837a3.jpg","3f6750ca.jpg","42e8c202.jpg","44d6f6ab.jpg","4710ddb7.jpg",
+        "4784ef73.jpg","4afba633.jpg","4c53668f.jpg","4c62cf94.jpg","4cb23125.jpg",
+        "504ca9b6.jpg","53489243.jpg","5528e043.jpg","55ea6023.jpg","57d8e867.jpg",
+        "5bb75d76.jpg","5eeac430.jpg","5ef7efdb.jpg","5f657643.jpg","62564a44.jpg",
+        "64e997b0.jpg","702d73b0.jpg","7046e46c.jpg","7296f789.jpg","7326abc1.jpg",
+        "75708d9f.jpg","782224ce.jpg","78302145.jpg","79508a4d.jpg","79f6ce80.jpg",
+        "7d98a568.jpg","848ac5d5.jpg","84c5ec2b.jpg","85dac8fc.jpg","8638a52e.jpg",
+        "89229fd0.jpg","8ae2604c.jpg","8e9f22c8.jpg","8fda819a.jpg","914a3b0c.jpg",
+        "939fd085.jpg","96dc2014.jpg","981a907e.jpg","982c5593.jpg","98c1d72b.jpg",
+        "99d758f5.jpg","9f8d6ed3.jpg","a30e1691.jpg","a39f148e.jpg","a3aa14e3.jpg",
+        "a5d2180f.jpg","a650ac9c.jpg","a9c1ff48.jpg","a9d055c0.jpg","aa978353.jpg",
+        "aab61bd7.jpg","aafa7f5b.jpg","afc4f9d0.jpg","b3a08897.jpg","b6326879.jpg",
+        "bef979e6.jpg","bf761b18.jpg","bfefa67c.jpg","c020f149.jpg","c6e93afc.jpg",
+        "d0b65508.jpg","d301d96d.jpg","d30edfb8.jpg","d6b1dc5d.jpg","d8697049.jpg",
+        "d8a2dd48.jpg","d9aa0f27.jpg","ec4ef27c.jpg","ef27a7e1.jpg","f1a3df2f.jpg",
+        "f5b426a5.jpg","f9a28e84.jpg","fa4cf78b.jpg","fdd7df7b.jpg","fea4c382.jpg"
+      ];
+      document.write(images.map((src,i)=>`<img src="/${src}" alt="Amiri Bild ${i+1}" onclick="openLightbox(${i})">`).join(''));
+    </script>
   </div>
 
   <!-- Lightbox -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <span class="close" onclick="closeLightbox()">&times;</span>
+    <span class="prev" onclick="event.stopPropagation(); changeImg(-1)">&#10094;</span>
     <img id="lightboxImg" src="">
+    <span class="next" onclick="event.stopPropagation(); changeImg(1)">&#10095;</span>
   </div>
 
   <script>
+    let currentIndex = 0;
+    const allImages = [
+      "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg",
+      "150842e9.jpg","187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg",
+      "27fdd161.jpg","2a177cdc.jpg","2c3417c8.jpg","2ea17519.jpg","2f293de4.jpg",
+      "30f03eb1.jpg","3247f198.jpg","35f75daf.jpg","362daaae.jpg","393c2518.jpg",
+      "3b8837a3.jpg","3f6750ca.jpg","42e8c202.jpg","44d6f6ab.jpg","4710ddb7.jpg",
+      "4784ef73.jpg","4afba633.jpg","4c53668f.jpg","4c62cf94.jpg","4cb23125.jpg",
+      "504ca9b6.jpg","53489243.jpg","5528e043.jpg","55ea6023.jpg","57d8e867.jpg",
+      "5bb75d76.jpg","5eeac430.jpg","5ef7efdb.jpg","5f657643.jpg","62564a44.jpg",
+      "64e997b0.jpg","702d73b0.jpg","7046e46c.jpg","7296f789.jpg","7326abc1.jpg",
+      "75708d9f.jpg","782224ce.jpg","78302145.jpg","79508a4d.jpg","79f6ce80.jpg",
+      "7d98a568.jpg","848ac5d5.jpg","84c5ec2b.jpg","85dac8fc.jpg","8638a52e.jpg",
+      "89229fd0.jpg","8ae2604c.jpg","8e9f22c8.jpg","8fda819a.jpg","914a3b0c.jpg",
+      "939fd085.jpg","96dc2014.jpg","981a907e.jpg","982c5593.jpg","98c1d72b.jpg",
+      "99d758f5.jpg","9f8d6ed3.jpg","a30e1691.jpg","a39f148e.jpg","a3aa14e3.jpg",
+      "a5d2180f.jpg","a650ac9c.jpg","a9c1ff48.jpg","a9d055c0.jpg","aa978353.jpg",
+      "aab61bd7.jpg","aafa7f5b.jpg","afc4f9d0.jpg","b3a08897.jpg","b6326879.jpg",
+      "bef979e6.jpg","bf761b18.jpg","bfefa67c.jpg","c020f149.jpg","c6e93afc.jpg",
+      "d0b65508.jpg","d301d96d.jpg","d30edfb8.jpg","d6b1dc5d.jpg","d8697049.jpg",
+      "d8a2dd48.jpg","d9aa0f27.jpg","ec4ef27c.jpg","ef27a7e1.jpg","f1a3df2f.jpg",
+      "f5b426a5.jpg","f9a28e84.jpg","fa4cf78b.jpg","fdd7df7b.jpg","fea4c382.jpg"
+    ];
+
     function showGallery() {
       document.getElementById('amiri').classList.toggle('active');
     }
 
-    function openLightbox(src) {
-      const lightbox = document.getElementById('lightbox');
+    function openLightbox(index) {
+      currentIndex = index;
       const img = document.getElementById('lightboxImg');
-      img.src = src;
-      lightbox.style.display = 'flex';
+      img.src = '/' + allImages[index];
+      document.getElementById('lightbox').style.display = 'flex';
     }
 
     function closeLightbox() {
       document.getElementById('lightbox').style.display = 'none';
     }
+
+    function changeImg(direction) {
+      currentIndex += direction;
+      if (currentIndex < 0) currentIndex = allImages.length - 1;
+      if (currentIndex >= allImages.length) currentIndex = 0;
+      document.getElementById('lightboxImg').src = '/' + allImages[currentIndex];
+    }
+
+    // Tastatursteuerung
+    document.addEventListener('keydown', e => {
+      if (document.getElementById('lightbox').style.display === 'flex') {
+        if (e.key === 'ArrowRight') changeImg(1);
+        if (e.key === 'ArrowLeft') changeImg(-1);
+        if (e.key === 'Escape') closeLightbox();
+      }
+    });
   </script>
 </body>
 </html>
