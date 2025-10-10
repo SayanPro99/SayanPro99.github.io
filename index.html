@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Amiri Galrie</title>
+  <title>Amiri & Louis Vuitton Galerie</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -11,13 +11,9 @@
       text-align: center;
     }
 
-    h1 {
-      margin-bottom: 20px;
-    }
+    h1 { margin-bottom: 20px; }
 
-    .buttons {
-      margin-bottom: 30px;
-    }
+    .buttons { margin-bottom: 30px; }
 
     button {
       background: black;
@@ -30,23 +26,18 @@
       font-size: 16px;
       transition: background 0.2s ease;
     }
-
-    button:hover {
-      background: #444;
-    }
+    button:hover { background: #444; }
 
     .grid {
-      display: none;
+      display: none; /* Start: nichts sichtbar */
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 15px;
       margin-top: 20px;
     }
-
     .grid.active {
       display: grid;
       animation: fadeIn 0.4s ease;
     }
-
     .grid img {
       width: 100%;
       height: auto;
@@ -56,31 +47,24 @@
       transition: transform 0.2s ease;
       cursor: pointer;
     }
-
-    .grid img:hover {
-      transform: scale(1.05);
-    }
+    .grid img:hover { transform: scale(1.05); }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Lightbox Styling */
+    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
       z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background-color: rgba(0,0,0,0.9);
       justify-content: center;
       align-items: center;
       flex-direction: column;
     }
-
     .lightbox img {
       max-width: 90%;
       max-height: 90%;
@@ -88,12 +72,10 @@
       box-shadow: 0 0 20px rgba(255,255,255,0.2);
       animation: zoomIn 0.3s ease;
     }
-
     @keyframes zoomIn {
       from { transform: scale(0.7); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
-
     .close, .prev, .next {
       position: absolute;
       color: white;
@@ -103,61 +85,15 @@
       transition: color 0.2s ease;
       user-select: none;
     }
-
     .close { top: 20px; right: 30px; }
-    .prev { left: 30px; top: 50%; transform: translateY(-50%); }
-    .next { right: 30px; top: 50%; transform: translateY(-50%); }
-
+    .prev  { left: 30px; top: 50%; transform: translateY(-50%); }
+    .next  { right: 30px; top: 50%; transform: translateY(-50%); }
     .close:hover, .prev:hover, .next:hover { color: #aaa; }
   </style>
-</head>
-<body>
-  <h1>Amiri Galerie</h1>
-
-  <div class="buttons">
-    <button onclick="showGallery()">Amiri</button>
-  </div>
-
-  <div id="amiri" class="grid">
-    <!-- Alle deine Bilder -->
-    <script>
-      const images = [
-        "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg",
-        "150842e9.jpg","187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg",
-        "27fdd161.jpg","2a177cdc.jpg","2c3417c8.jpg","2ea17519.jpg","2f293de4.jpg",
-        "30f03eb1.jpg","3247f198.jpg","35f75daf.jpg","362daaae.jpg","393c2518.jpg",
-        "3b8837a3.jpg","3f6750ca.jpg","42e8c202.jpg","44d6f6ab.jpg","4710ddb7.jpg",
-        "4784ef73.jpg","4afba633.jpg","4c53668f.jpg","4c62cf94.jpg","4cb23125.jpg",
-        "504ca9b6.jpg","53489243.jpg","5528e043.jpg","55ea6023.jpg","57d8e867.jpg",
-        "5bb75d76.jpg","5eeac430.jpg","5ef7efdb.jpg","5f657643.jpg","62564a44.jpg",
-        "64e997b0.jpg","702d73b0.jpg","7046e46c.jpg","7296f789.jpg","7326abc1.jpg",
-        "75708d9f.jpg","782224ce.jpg","78302145.jpg","79508a4d.jpg","79f6ce80.jpg",
-        "7d98a568.jpg","848ac5d5.jpg","84c5ec2b.jpg","85dac8fc.jpg","8638a52e.jpg",
-        "89229fd0.jpg","8ae2604c.jpg","8e9f22c8.jpg","8fda819a.jpg","914a3b0c.jpg",
-        "939fd085.jpg","96dc2014.jpg","981a907e.jpg","982c5593.jpg","98c1d72b.jpg",
-        "99d758f5.jpg","9f8d6ed3.jpg","a30e1691.jpg","a39f148e.jpg","a3aa14e3.jpg",
-        "a5d2180f.jpg","a650ac9c.jpg","a9c1ff48.jpg","a9d055c0.jpg","aa978353.jpg",
-        "aab61bd7.jpg","aafa7f5b.jpg","afc4f9d0.jpg","b3a08897.jpg","b6326879.jpg",
-        "bef979e6.jpg","bf761b18.jpg","bfefa67c.jpg","c020f149.jpg","c6e93afc.jpg",
-        "d0b65508.jpg","d301d96d.jpg","d30edfb8.jpg","d6b1dc5d.jpg","d8697049.jpg",
-        "d8a2dd48.jpg","d9aa0f27.jpg","ec4ef27c.jpg","ef27a7e1.jpg","f1a3df2f.jpg",
-        "f5b426a5.jpg","f9a28e84.jpg","fa4cf78b.jpg","fdd7df7b.jpg","fea4c382.jpg"
-      ];
-      document.write(images.map((src,i)=>`<img src="/${src}" alt="Amiri Bild ${i+1}" onclick="openLightbox(${i})">`).join(''));
-    </script>
-  </div>
-
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="close" onclick="closeLightbox()">&times;</span>
-    <span class="prev" onclick="event.stopPropagation(); changeImg(-1)">&#10094;</span>
-    <img id="lightboxImg" src="">
-    <span class="next" onclick="event.stopPropagation(); changeImg(1)">&#10095;</span>
-  </div>
 
   <script>
-    let currentIndex = 0;
-    const allImages = [
+    /* --- Bildlisten --- */
+    const amiriImages = [
       "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg",
       "150842e9.jpg","187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg",
       "27fdd161.jpg","2a177cdc.jpg","2c3417c8.jpg","2ea17519.jpg","2f293de4.jpg",
@@ -180,36 +116,195 @@
       "f5b426a5.jpg","f9a28e84.jpg","fa4cf78b.jpg","fdd7df7b.jpg","fea4c382.jpg"
     ];
 
-    function showGallery() {
-      document.getElementById('amiri').classList.toggle('active');
+    /* Louis Vuitton = alle aus deiner zweiten Liste, die NICHT in Amiri sind */
+    const louisVuittonImages = [
+      "013cbad0.jpg",
+      "034d5727.jpg",
+      "06888341.jpg",
+      "07a2d054.jpg",
+      "0a004be0.jpg",
+      "0b2d7702.jpg",
+      "0c9a572f.jpg",
+      "0e51b120.jpg",
+      "0ed95905.jpg,
+      "13309381.jpg",
+      "1822a5b8.jpg",
+      "19468b25.jpg",
+      "1b502148.jpg",
+      "1bcc1a6e.jpg",
+      "1d902f6b.jpg",
+      "2293d67e.jpg",
+      "23b23a20.jpg",
+      "23d24c9d.jpg",
+      "26114022.jpg",
+      "28cb652e.jpg",
+      "28ddd5c8.jpg",
+      "2ae8c298.jpg",
+      "30756ef7.jpg",
+      "324226f0.jpg",
+      "32fe9e91.jpg",
+      "36e3f25a.jpg",
+      "37627c9c.jpg",
+      "381b25a0.jpg",
+      "394bdad3.jpg",
+      "3c51fd1a.jpg",
+      "3f62707e.jpg",
+      "416b4633.jpg",
+      "4263a8d8.jpg",
+      "42c4d1e2.jpg",
+      "45316f52.jpg",
+      "48af9792.jpg",
+      "4d17bf30.jpg",
+      "52b7d7b4.jpg",
+      "537d5438.jpg",
+      "5891a3ad.jpg",
+      "5aa16775.jpg",
+      "5ad49572.jpg",
+      "5ec675ff.jpg",
+      "6181fa00.jpg",
+      "63a7e4f1.jpg",
+      "6679532d.jpg",
+      "6797eb2a.jpg",
+      "68c37c3f.jpg",
+      "6a9e388d.jpg",
+      "6b84f3e4.jpg",
+      "6fca2784.jpg",
+      "70745731.jpg",
+      "70850a29.jpg",
+      "73c45784.jpg",
+      "7aa41d83.jpg",
+      "7e50a20f.jpg",
+      "81668fb3.jpg",
+      "82ac047e.jpg",
+      "82cbf2ef.jpg",
+      "835fa07a.jpg",
+      "869c2f07.jpg",
+      "87cdd4c8.jpg",
+      "8b218760.jpg",
+      "8da3f2bc.jpg",
+      "8f50f867.jpg",
+      "90faff3c.jpg",
+      "92040bfc.jpg",
+      "958a7fec.jpg",
+      "996d98b9.jpg",
+      "9a2d9016.jpg",
+      "9c46fb7d.jpg",
+      "9f3bd0a0.jpg",
+      "a228640b.jpg",
+      "a48ce8b9.jpg",
+      "a8068dc8.jpg",
+      "a81e5c37.jpg",
+      "a8cc74b0.jpg",
+      "aacb8adb.jpg",
+      "b04ac77c.jpg",
+      "b136a238.jpg",
+      "b1bde972.jpg",
+      "b407160b.jpg",
+      "b44753e3.jpg",
+      "b6fef45c.jpg",
+      "b74117f3.jpg",
+      "b7a09b02.jpg",
+      "b9633461.jpg",
+      "baaeb20d.jpg",
+      "c2b1ef4b.jpg",
+      "c3279d1d.jpg",
+      "c5e31a15.jpg",
+      "ca37c69d.jpg",
+      "cad2a3b7.jpg",
+      "ce3b268b.jpg",
+      "ce701a73.jpg",
+      "cf5760ab.jpg",
+      "d09ac9bd.jpg",
+      "d4cb9e1d.jpg",
+      "d54b8f1e.jpg",
+      "d7ca1727.jpg",
+      "df62d6cc.jpg",
+      "e1025da3.jpg",
+      "e312f136.jpg",
+      "ea754af8.jpg",
+      "eecc92da.jpg",
+      "eef3c46b.jpg",
+      "efa515c1.jpg",
+      "f0bdff2c.jpg",
+      "f51861e1.jpg",
+      "f60e3de4.jpg",
+      "f7e586dd.jpg",
+      "fb1f2728.jpg"
+    ];
+
+    /* State für Lightbox */
+    let currentIndex = 0;
+    let currentGallery = null; // 'amiri' | 'lv'
+
+    function getCurrentArray() {
+      return currentGallery === 'lv' ? louisVuittonImages : amiriImages;
     }
 
-    function openLightbox(index) {
+    /* Kategorien ein-/ausblenden */
+    function showCategory(category) {
+      currentGallery = category; // für Lightbox
+      document.querySelectorAll('.grid').forEach(g => g.classList.remove('active'));
+      document.getElementById(category).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* Lightbox */
+    function openLightbox(cat, index) {
+      currentGallery = cat;
       currentIndex = index;
-      const img = document.getElementById('lightboxImg');
-      img.src = '/' + allImages[index];
+      document.getElementById('lightboxImg').src = '/' + getCurrentArray()[currentIndex];
       document.getElementById('lightbox').style.display = 'flex';
     }
-
     function closeLightbox() {
       document.getElementById('lightbox').style.display = 'none';
     }
-
     function changeImg(direction) {
-      currentIndex += direction;
-      if (currentIndex < 0) currentIndex = allImages.length - 1;
-      if (currentIndex >= allImages.length) currentIndex = 0;
-      document.getElementById('lightboxImg').src = '/' + allImages[currentIndex];
+      const arr = getCurrentArray();
+      currentIndex = (currentIndex + direction + arr.length) % arr.length;
+      document.getElementById('lightboxImg').src = '/' + arr[currentIndex];
     }
-
-    // Tastatursteuerung
     document.addEventListener('keydown', e => {
-      if (document.getElementById('lightbox').style.display === 'flex') {
+      const lb = document.getElementById('lightbox');
+      if (lb.style.display === 'flex') {
         if (e.key === 'ArrowRight') changeImg(1);
         if (e.key === 'ArrowLeft') changeImg(-1);
         if (e.key === 'Escape') closeLightbox();
       }
     });
+
+    /* Helper zum Rendern der Grids */
+    function renderGrid(containerId, arr, catKey) {
+      const el = document.getElementById(containerId);
+      el.innerHTML = arr.map((src, i) =>
+        `<img src="/${src}" alt="${catKey === 'amiri' ? 'Amiri' : 'Louis Vuitton'} Bild ${i+1}" onclick="openLightbox('${catKey}', ${i})">`
+      ).join('');
+    }
+
+    /* Nach DOM-Load Bilder in die Grids setzen */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderGrid('amiri', amiriImages, 'amiri');
+      renderGrid('lv', louisVuittonImages, 'lv');
+    });
   </script>
+</head>
+<body>
+  <h1>Galerie</h1>
+
+  <div class="buttons">
+    <button onclick="showCategory('amiri')">Amiri</button>
+    <button onclick="showCategory('lv')">Louis Vuitton</button>
+  </div>
+
+  <!-- Grids (start hidden) -->
+  <div id="amiri" class="grid"></div>
+  <div id="lv" class="grid"></div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <span class="prev" onclick="event.stopPropagation(); changeImg(-1)">&#10094;</span>
+    <img id="lightboxImg" src="">
+    <span class="next" onclick="event.stopPropagation(); changeImg(1)">&#10095;</span>
+  </div>
 </body>
 </html>
