@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Amiri </title>
+  <title>Amiri Galerie</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -54,6 +54,7 @@
       object-fit: cover;
       box-shadow: 0 3px 6px rgba(0,0,0,0.15);
       transition: transform 0.2s ease;
+      cursor: pointer;
     }
 
     .grid img:hover {
@@ -63,6 +64,48 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Lightbox Styling */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      animation: zoomIn 0.3s ease;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .close:hover {
+      color: #aaa;
     }
   </style>
 </head>
@@ -74,111 +117,39 @@
   </div>
 
   <div id="amiri" class="grid">
-    <img src="/067db8ac.jpg" alt="Amiri Bild 1">
-    <img src="/0eafa9b2.jpg" alt="Amiri Bild 2">
-    <img src="/0fe012e6.jpg" alt="Amiri Bild 3">
-    <img src="/1207b9ed.jpg" alt="Amiri Bild 4">
-    <img src="/12747c3f.jpg" alt="Amiri Bild 5">
-    <img src="/150842e9.jpg" alt="Amiri Bild 6">
-    <img src="/187cdc78.jpg" alt="Amiri Bild 7">
-    <img src="/22a3a99d.jpg" alt="Amiri Bild 8">
-    <img src="/2386271a.jpg" alt="Amiri Bild 9">
-    <img src="/2525eef9.jpg" alt="Amiri Bild 10">
-    <img src="/27fdd161.jpg" alt="Amiri Bild 11">
-    <img src="/2a177cdc.jpg" alt="Amiri Bild 12">
-    <img src="/2c3417c8.jpg" alt="Amiri Bild 13">
-    <img src="/2ea17519.jpg" alt="Amiri Bild 14">
-    <img src="/2f293de4.jpg" alt="Amiri Bild 15">
-    <img src="/30f03eb1.jpg" alt="Amiri Bild 16">
-    <img src="/3247f198.jpg" alt="Amiri Bild 17">
-    <img src="/35f75daf.jpg" alt="Amiri Bild 18">
-    <img src="/362daaae.jpg" alt="Amiri Bild 19">
-    <img src="/393c2518.jpg" alt="Amiri Bild 20">
-    <img src="/3b8837a3.jpg" alt="Amiri Bild 21">
-    <img src="/3f6750ca.jpg" alt="Amiri Bild 22">
-    <img src="/42e8c202.jpg" alt="Amiri Bild 23">
-    <img src="/44d6f6ab.jpg" alt="Amiri Bild 24">
-    <img src="/4710ddb7.jpg" alt="Amiri Bild 25">
-    <img src="/4784ef73.jpg" alt="Amiri Bild 26">
-    <img src="/4afba633.jpg" alt="Amiri Bild 27">
-    <img src="/4c53668f.jpg" alt="Amiri Bild 28">
-    <img src="/4c62cf94.jpg" alt="Amiri Bild 29">
-    <img src="/4cb23125.jpg" alt="Amiri Bild 30">
-    <img src="/504ca9b6.jpg" alt="Amiri Bild 31">
-    <img src="/53489243.jpg" alt="Amiri Bild 32">
-    <img src="/5528e043.jpg" alt="Amiri Bild 33">
-    <img src="/55ea6023.jpg" alt="Amiri Bild 34">
-    <img src="/57d8e867.jpg" alt="Amiri Bild 35">
-    <img src="/5bb75d76.jpg" alt="Amiri Bild 36">
-    <img src="/5eeac430.jpg" alt="Amiri Bild 37">
-    <img src="/5ef7efdb.jpg" alt="Amiri Bild 38">
-    <img src="/5f657643.jpg" alt="Amiri Bild 39">
-    <img src="/62564a44.jpg" alt="Amiri Bild 40">
-    <img src="/64e997b0.jpg" alt="Amiri Bild 41">
-    <img src="/702d73b0.jpg" alt="Amiri Bild 42">
-    <img src="/7046e46c.jpg" alt="Amiri Bild 43">
-    <img src="/7296f789.jpg" alt="Amiri Bild 44">
-    <img src="/7326abc1.jpg" alt="Amiri Bild 45">
-    <img src="/75708d9f.jpg" alt="Amiri Bild 46">
-    <img src="/782224ce.jpg" alt="Amiri Bild 47">
-    <img src="/78302145.jpg" alt="Amiri Bild 48">
-    <img src="/79508a4d.jpg" alt="Amiri Bild 49">
-    <img src="/79f6ce80.jpg" alt="Amiri Bild 50">
-    <img src="/7d98a568.jpg" alt="Amiri Bild 51">
-    <img src="/848ac5d5.jpg" alt="Amiri Bild 52">
-    <img src="/84c5ec2b.jpg" alt="Amiri Bild 53">
-    <img src="/85dac8fc.jpg" alt="Amiri Bild 54">
-    <img src="/8638a52e.jpg" alt="Amiri Bild 55">
-    <img src="/89229fd0.jpg" alt="Amiri Bild 56">
-    <img src="/8ae2604c.jpg" alt="Amiri Bild 57">
-    <img src="/8e9f22c8.jpg" alt="Amiri Bild 58">
-    <img src="/8fda819a.jpg" alt="Amiri Bild 59">
-    <img src="/914a3b0c.jpg" alt="Amiri Bild 60">
-    <img src="/939fd085.jpg" alt="Amiri Bild 61">
-    <img src="/96dc2014.jpg" alt="Amiri Bild 62">
-    <img src="/981a907e.jpg" alt="Amiri Bild 63">
-    <img src="/982c5593.jpg" alt="Amiri Bild 64">
-    <img src="/98c1d72b.jpg" alt="Amiri Bild 65">
-    <img src="/99d758f5.jpg" alt="Amiri Bild 66">
-    <img src="/9f8d6ed3.jpg" alt="Amiri Bild 67">
-    <img src="/a30e1691.jpg" alt="Amiri Bild 68">
-    <img src="/a39f148e.jpg" alt="Amiri Bild 69">
-    <img src="/a3aa14e3.jpg" alt="Amiri Bild 70">
-    <img src="/a5d2180f.jpg" alt="Amiri Bild 71">
-    <img src="/a650ac9c.jpg" alt="Amiri Bild 72">
-    <img src="/a9c1ff48.jpg" alt="Amiri Bild 73">
-    <img src="/a9d055c0.jpg" alt="Amiri Bild 74">
-    <img src="/aa978353.jpg" alt="Amiri Bild 75">
-    <img src="/aab61bd7.jpg" alt="Amiri Bild 76">
-    <img src="/aafa7f5b.jpg" alt="Amiri Bild 77">
-    <img src="/afc4f9d0.jpg" alt="Amiri Bild 78">
-    <img src="/b3a08897.jpg" alt="Amiri Bild 79">
-    <img src="/b6326879.jpg" alt="Amiri Bild 80">
-    <img src="/bef979e6.jpg" alt="Amiri Bild 81">
-    <img src="/bf761b18.jpg" alt="Amiri Bild 82">
-    <img src="/bfefa67c.jpg" alt="Amiri Bild 83">
-    <img src="/c020f149.jpg" alt="Amiri Bild 84">
-    <img src="/c6e93afc.jpg" alt="Amiri Bild 85">
-    <img src="/d0b65508.jpg" alt="Amiri Bild 86">
-    <img src="/d301d96d.jpg" alt="Amiri Bild 87">
-    <img src="/d30edfb8.jpg" alt="Amiri Bild 88">
-    <img src="/d6b1dc5d.jpg" alt="Amiri Bild 89">
-    <img src="/d8697049.jpg" alt="Amiri Bild 90">
-    <img src="/d8a2dd48.jpg" alt="Amiri Bild 91">
-    <img src="/d9aa0f27.jpg" alt="Amiri Bild 92">
-    <img src="/ec4ef27c.jpg" alt="Amiri Bild 93">
-    <img src="/ef27a7e1.jpg" alt="Amiri Bild 94">
-    <img src="/f1a3df2f.jpg" alt="Amiri Bild 95">
-    <img src="/f5b426a5.jpg" alt="Amiri Bild 96">
-    <img src="/f9a28e84.jpg" alt="Amiri Bild 97">
-    <img src="/fa4cf78b.jpg" alt="Amiri Bild 98">
-    <img src="/fdd7df7b.jpg" alt="Amiri Bild 99">
-    <img src="/fea4c382.jpg" alt="Amiri Bild 100">
+    <!-- Du kannst bei Bedarf weitere Bilder hinzufügen -->
+    <img src="/067db8ac.jpg" alt="Amiri Bild 1" onclick="openLightbox(this.src)">
+    <img src="/0eafa9b2.jpg" alt="Amiri Bild 2" onclick="openLightbox(this.src)">
+    <img src="/0fe012e6.jpg" alt="Amiri Bild 3" onclick="openLightbox(this.src)">
+    <img src="/1207b9ed.jpg" alt="Amiri Bild 4" onclick="openLightbox(this.src)">
+    <img src="/12747c3f.jpg" alt="Amiri Bild 5" onclick="openLightbox(this.src)">
+    <img src="/150842e9.jpg" alt="Amiri Bild 6" onclick="openLightbox(this.src)">
+    <img src="/187cdc78.jpg" alt="Amiri Bild 7" onclick="openLightbox(this.src)">
+    <img src="/22a3a99d.jpg" alt="Amiri Bild 8" onclick="openLightbox(this.src)">
+    <img src="/2386271a.jpg" alt="Amiri Bild 9" onclick="openLightbox(this.src)">
+    <img src="/2525eef9.jpg" alt="Amiri Bild 10" onclick="openLightbox(this.src)">
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <img id="lightboxImg" src="">
   </div>
 
   <script>
     function showGallery() {
       document.getElementById('amiri').classList.toggle('active');
+    }
+
+    function openLightbox(src) {
+      const lightbox = document.getElementById('lightbox');
+      const img = document.getElementById('lightboxImg');
+      img.src = src;
+      lightbox.style.display = 'flex';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
     }
   </script>
 </body>
