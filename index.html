@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Designer Galerie</title>
+  <title>Amiri Galerie</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -23,7 +23,7 @@
       background: black;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 25px;
       margin: 5px;
       border-radius: 8px;
       cursor: pointer;
@@ -36,14 +36,14 @@
     }
 
     .grid {
-      display: none; /* standardmäßig ausgeblendet */
+      display: none;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 15px;
       margin-top: 20px;
     }
 
     .grid.active {
-      display: grid; /* aktive Kategorie anzeigen */
+      display: grid;
       animation: fadeIn 0.4s ease;
     }
 
@@ -67,58 +67,40 @@
   </style>
 </head>
 <body>
-  <h1>Designer Galerie</h1>
+  <h1>Amiri Galerie</h1>
 
   <div class="buttons">
-    <button onclick="showCategory('amiri')">Amiri</button>
-    <button onclick="showCategory('offwhite')">Off-White</button>
+    <button onclick="showGallery()">Amiri</button>
   </div>
 
-  <!-- AMIRI -->
   <div id="amiri" class="grid">
-    <img src="/0eafa9b2.jpg" alt="Amiri Bild 1">
-    <img src="/0fe012e6.jpg" alt="Amiri Bild 2">
-    <img src="/1207b9ed.jpg" alt="Amiri Bild 3">
-    <img src="/187cdc78.jpg" alt="Amiri Bild 4">
-    <img src="/2525eef9.jpg" alt="Amiri Bild 5">
-    <img src="/27fdd161.jpg" alt="Amiri Bild 6">
-    <img src="/2a177cdc.jpg" alt="Amiri Bild 7">
-    <img src="/2c3417c8.jpg" alt="Amiri Bild 8">
-    <img src="/2ea17519.jpg" alt="Amiri Bild 9">
-    <img src="/2f293de4.jpg" alt="Amiri Bild 10">
-    <img src="/30f03eb1.jpg" alt="Amiri Bild 11">
-    <img src="/3247f198.jpg" alt="Amiri Bild 12">
-    <img src="/35f75daf.jpg" alt="Amiri Bild 13">
-    <img src="/362daaae.jpg" alt="Amiri Bild 14">
-    <img src="/42e8c202.jpg" alt="Amiri Bild 15">
-  </div>
-
-  <!-- OFF-WHITE -->
-  <div id="offwhite" class="grid">
-    <img src="/44d6f6ab.jpg" alt="Off-White Bild 1">
-    <img src="/4cb23125.jpg" alt="Off-White Bild 2">
-    <img src="/55ea6023.jpg" alt="Off-White Bild 3">
-    <img src="/5bb75d76.jpg" alt="Off-White Bild 4">
-    <img src="/5eeac430.jpg" alt="Off-White Bild 5">
-    <img src="/5ef7efdb.jpg" alt="Off-White Bild 6">
-    <img src="/5f657643.jpg" alt="Off-White Bild 7">
-    <img src="/7d98a568.jpg" alt="Off-White Bild 8">
-    <img src="/85dac8fc.jpg" alt="Off-White Bild 9">
-    <img src="/939fd085.jpg" alt="Off-White Bild 10">
-    <img src="/96dc2014.jpg" alt="Off-White Bild 11">
-    <img src="/981a907e.jpg" alt="Off-White Bild 12">
-    <img src="/982c5593.jpg" alt="Off-White Bild 13">
-    <img src="/98c1d72b.jpg" alt="Off-White Bild 14">
-    <img src="/99d758f5.jpg" alt="Off-White Bild 15">
-  </div>
-
-  <script>
-    function showCategory(category) {
-      // Alle Grids verstecken
-      document.querySelectorAll('.grid').forEach(grid => grid.classList.remove('active'));
-      // Ausgewählte Kategorie anzeigen
-      document.getElementById(category).classList.add('active');
-    }
-  </script>
-</body>
-</html>
+    <img src="/067db8ac.jpg" alt="Amiri Bild 1">
+    <img src="/0eafa9b2.jpg" alt="Amiri Bild 2">
+    <img src="/0fe012e6.jpg" alt="Amiri Bild 3">
+    <img src="/1207b9ed.jpg" alt="Amiri Bild 4">
+    <img src="/12747c3f.jpg" alt="Amiri Bild 5">
+    <img src="/150842e9.jpg" alt="Amiri Bild 6">
+    <img src="/187cdc78.jpg" alt="Amiri Bild 7">
+    <img src="/22a3a99d.jpg" alt="Amiri Bild 8">
+    <img src="/2386271a.jpg" alt="Amiri Bild 9">
+    <img src="/2525eef9.jpg" alt="Amiri Bild 10">
+    <img src="/27fdd161.jpg" alt="Amiri Bild 11">
+    <img src="/2a177cdc.jpg" alt="Amiri Bild 12">
+    <img src="/2c3417c8.jpg" alt="Amiri Bild 13">
+    <img src="/2ea17519.jpg" alt="Amiri Bild 14">
+    <img src="/2f293de4.jpg" alt="Amiri Bild 15">
+    <img src="/30f03eb1.jpg" alt="Amiri Bild 16">
+    <img src="/3247f198.jpg" alt="Amiri Bild 17">
+    <img src="/35f75daf.jpg" alt="Amiri Bild 18">
+    <img src="/362daaae.jpg" alt="Amiri Bild 19">
+    <img src="/393c2518.jpg" alt="Amiri Bild 20">
+    <img src="/3b8837a3.jpg" alt="Amiri Bild 21">
+    <img src="/3f6750ca.jpg" alt="Amiri Bild 22">
+    <img src="/42e8c202.jpg" alt="Amiri Bild 23">
+    <img src="/44d6f6ab.jpg" alt="Amiri Bild 24">
+    <img src="/4710ddb7.jpg" alt="Amiri Bild 25">
+    <img src="/4784ef73.jpg" alt="Amiri Bild 26">
+    <img src="/4afba633.jpg" alt="Amiri Bild 27">
+    <img src="/4c53668f.jpg" alt="Amiri Bild 28">
+    <img src="/4c62cf94.jpg" alt="Amiri Bild 29">
+    <img src="/4cb23125
