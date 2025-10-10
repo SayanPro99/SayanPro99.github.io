@@ -4,86 +4,33 @@
   <meta charset="UTF-8">
   <title>Amiri & Louis Vuitton Galerie</title>
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f7f7f7;
-      padding: 30px;
-      text-align: center;
-    }
-
+    body { font-family: 'Poppins', sans-serif; background: #f7f7f7; padding: 30px; text-align: center; }
     h1 { margin-bottom: 20px; }
-
     .buttons { margin-bottom: 30px; }
-
     button {
-      background: black;
-      color: white;
-      border: none;
-      padding: 10px 25px;
-      margin: 5px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.2s ease;
+      background: black; color: white; border: none; padding: 10px 25px; margin: 5px;
+      border-radius: 8px; cursor: pointer; font-size: 16px; transition: background 0.2s ease;
     }
     button:hover { background: #444; }
-
     .grid {
-      display: none; /* Start: nichts sichtbar */
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
+      display: none; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px; margin-top: 20px;
     }
-    .grid.active {
-      display: grid;
-      animation: fadeIn 0.4s ease;
-    }
+    .grid.active { display: grid; animation: fadeIn 0.4s ease; }
     .grid img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      object-fit: cover;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-      transition: transform 0.2s ease;
-      cursor: pointer;
+      width: 100%; height: auto; border-radius: 8px; object-fit: cover;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s ease; cursor: pointer;
     }
     .grid img:hover { transform: scale(1.05); }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Lightbox */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .lightbox {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      inset: 0;
-      background-color: rgba(0,0,0,0.9);
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.9);
+      justify-content: center; align-items: center; flex-direction: column;
     }
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
-      animation: zoomIn 0.3s ease;
-    }
-    @keyframes zoomIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+    .lightbox img { max-width: 90%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(255,255,255,0.2); animation: zoomIn 0.3s ease; }
+    @keyframes zoomIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .close, .prev, .next {
-      position: absolute;
-      color: white;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: color 0.2s ease;
-      user-select: none;
+      position: absolute; color: white; font-size: 40px; font-weight: bold; cursor: pointer; transition: color 0.2s ease; user-select: none;
     }
     .close { top: 20px; right: 30px; }
     .prev  { left: 30px; top: 50%; transform: translateY(-50%); }
@@ -116,129 +63,31 @@
       "f5b426a5.jpg","f9a28e84.jpg","fa4cf78b.jpg","fdd7df7b.jpg","fea4c382.jpg"
     ];
 
-    /* Louis Vuitton = alle aus deiner zweiten Liste, die NICHT in Amiri sind */
+    /* Louis Vuitton = zweite Liste MINUS Amiri; hier als feste Liste (Syntax gefixt) */
     const louisVuittonImages = [
-      "013cbad0.jpg",
-      "034d5727.jpg",
-      "06888341.jpg",
-      "07a2d054.jpg",
-      "0a004be0.jpg",
-      "0b2d7702.jpg",
-      "0c9a572f.jpg",
-      "0e51b120.jpg",
-      "0ed95905.jpg,
-      "13309381.jpg",
-      "1822a5b8.jpg",
-      "19468b25.jpg",
-      "1b502148.jpg",
-      "1bcc1a6e.jpg",
-      "1d902f6b.jpg",
-      "2293d67e.jpg",
-      "23b23a20.jpg",
-      "23d24c9d.jpg",
-      "26114022.jpg",
-      "28cb652e.jpg",
-      "28ddd5c8.jpg",
-      "2ae8c298.jpg",
-      "30756ef7.jpg",
-      "324226f0.jpg",
-      "32fe9e91.jpg",
-      "36e3f25a.jpg",
-      "37627c9c.jpg",
-      "381b25a0.jpg",
-      "394bdad3.jpg",
-      "3c51fd1a.jpg",
-      "3f62707e.jpg",
-      "416b4633.jpg",
-      "4263a8d8.jpg",
-      "42c4d1e2.jpg",
-      "45316f52.jpg",
-      "48af9792.jpg",
-      "4d17bf30.jpg",
-      "52b7d7b4.jpg",
-      "537d5438.jpg",
-      "5891a3ad.jpg",
-      "5aa16775.jpg",
-      "5ad49572.jpg",
-      "5ec675ff.jpg",
-      "6181fa00.jpg",
-      "63a7e4f1.jpg",
-      "6679532d.jpg",
-      "6797eb2a.jpg",
-      "68c37c3f.jpg",
-      "6a9e388d.jpg",
-      "6b84f3e4.jpg",
-      "6fca2784.jpg",
-      "70745731.jpg",
-      "70850a29.jpg",
-      "73c45784.jpg",
-      "7aa41d83.jpg",
-      "7e50a20f.jpg",
-      "81668fb3.jpg",
-      "82ac047e.jpg",
-      "82cbf2ef.jpg",
-      "835fa07a.jpg",
-      "869c2f07.jpg",
-      "87cdd4c8.jpg",
-      "8b218760.jpg",
-      "8da3f2bc.jpg",
-      "8f50f867.jpg",
-      "90faff3c.jpg",
-      "92040bfc.jpg",
-      "958a7fec.jpg",
-      "996d98b9.jpg",
-      "9a2d9016.jpg",
-      "9c46fb7d.jpg",
-      "9f3bd0a0.jpg",
-      "a228640b.jpg",
-      "a48ce8b9.jpg",
-      "a8068dc8.jpg",
-      "a81e5c37.jpg",
-      "a8cc74b0.jpg",
-      "aacb8adb.jpg",
-      "b04ac77c.jpg",
-      "b136a238.jpg",
-      "b1bde972.jpg",
-      "b407160b.jpg",
-      "b44753e3.jpg",
-      "b6fef45c.jpg",
-      "b74117f3.jpg",
-      "b7a09b02.jpg",
-      "b9633461.jpg",
-      "baaeb20d.jpg",
-      "c2b1ef4b.jpg",
-      "c3279d1d.jpg",
-      "c5e31a15.jpg",
-      "ca37c69d.jpg",
-      "cad2a3b7.jpg",
-      "ce3b268b.jpg",
-      "ce701a73.jpg",
-      "cf5760ab.jpg",
-      "d09ac9bd.jpg",
-      "d4cb9e1d.jpg",
-      "d54b8f1e.jpg",
-      "d7ca1727.jpg",
-      "df62d6cc.jpg",
-      "e1025da3.jpg",
-      "e312f136.jpg",
-      "ea754af8.jpg",
-      "eecc92da.jpg",
-      "eef3c46b.jpg",
-      "efa515c1.jpg",
-      "f0bdff2c.jpg",
-      "f51861e1.jpg",
-      "f60e3de4.jpg",
-      "f7e586dd.jpg",
-      "fb1f2728.jpg"
+      "013cbad0.jpg","034d5727.jpg","06888341.jpg","07a2d054.jpg","0a004be0.jpg","0b2d7702.jpg","0c9a572f.jpg",
+      "0e51b120.jpg","0ed95905.jpg","13309381.jpg","1822a5b8.jpg","19468b25.jpg","1b502148.jpg","1bcc1a6e.jpg",
+      "1d902f6b.jpg","2293d67e.jpg","23b23a20.jpg","23d24c9d.jpg","26114022.jpg","28cb652e.jpg","28ddd5c8.jpg",
+      "2ae8c298.jpg","30756ef7.jpg","324226f0.jpg","32fe9e91.jpg","36e3f25a.jpg","37627c9c.jpg","381b25a0.jpg",
+      "394bdad3.jpg","3c51fd1a.jpg","3f62707e.jpg","416b4633.jpg","4263a8d8.jpg","42c4d1e2.jpg","45316f52.jpg",
+      "48af9792.jpg","4d17bf30.jpg","52b7d7b4.jpg","537d5438.jpg","5891a3ad.jpg","5aa16775.jpg","5ad49572.jpg",
+      "5ec675ff.jpg","6181fa00.jpg","63a7e4f1.jpg","6679532d.jpg","6797eb2a.jpg","68c37c3f.jpg","6a9e388d.jpg",
+      "6b84f3e4.jpg","6fca2784.jpg","70745731.jpg","70850a29.jpg","73c45784.jpg","7aa41d83.jpg","7e50a20f.jpg",
+      "81668fb3.jpg","82ac047e.jpg","82cbf2ef.jpg","835fa07a.jpg","869c2f07.jpg","87cdd4c8.jpg","8b218760.jpg",
+      "8da3f2bc.jpg","8f50f867.jpg","90faff3c.jpg","92040bfc.jpg","958a7fec.jpg","996d98b9.jpg","9a2d9016.jpg",
+      "9c46fb7d.jpg","9f3bd0a0.jpg","a228640b.jpg","a48ce8b9.jpg","a8068dc8.jpg","a81e5c37.jpg","a8cc74b0.jpg",
+      "aacb8adb.jpg","b04ac77c.jpg","b136a238.jpg","b1bde972.jpg","b407160b.jpg","b44753e3.jpg","b6fef45c.jpg",
+      "b74117f3.jpg","b7a09b02.jpg","b9633461.jpg","baaeb20d.jpg","c2b1ef4b.jpg","c3279d1d.jpg","c5e31a15.jpg",
+      "ca37c69d.jpg","cad2a3b7.jpg","ce3b268b.jpg","ce701a73.jpg","cf5760ab.jpg","d09ac9bd.jpg","d4cb9e1d.jpg",
+      "d54b8f1e.jpg","d7ca1727.jpg","df62d6cc.jpg","e1025da3.jpg","e312f136.jpg","ea754af8.jpg","eecc92da.jpg",
+      "eef3c46b.jpg","efa515c1.jpg","f0bdff2c.jpg","f51861e1.jpg","f60e3de4.jpg","f7e586dd.jpg","fb1f2728.jpg"
     ];
 
     /* State für Lightbox */
     let currentIndex = 0;
     let currentGallery = null; // 'amiri' | 'lv'
 
-    function getCurrentArray() {
-      return currentGallery === 'lv' ? louisVuittonImages : amiriImages;
-    }
+    const getCurrentArray = () => (currentGallery === 'lv' ? louisVuittonImages : amiriImages);
 
     /* Kategorien ein-/ausblenden */
     function showCategory(category) {
@@ -255,9 +104,7 @@
       document.getElementById('lightboxImg').src = '/' + getCurrentArray()[currentIndex];
       document.getElementById('lightbox').style.display = 'flex';
     }
-    function closeLightbox() {
-      document.getElementById('lightbox').style.display = 'none';
-    }
+    function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
     function changeImg(direction) {
       const arr = getCurrentArray();
       currentIndex = (currentIndex + direction + arr.length) % arr.length;
@@ -272,15 +119,14 @@
       }
     });
 
-    /* Helper zum Rendern der Grids */
+    /* Rendern der Grids */
     function renderGrid(containerId, arr, catKey) {
       const el = document.getElementById(containerId);
       el.innerHTML = arr.map((src, i) =>
-        `<img src="/${src}" alt="${catKey === 'amiri' ? 'Amiri' : 'Louis Vuitton'} Bild ${i+1}" onclick="openLightbox('${catKey}', ${i})">`
+        `<img src="/${src}" loading="lazy" alt="${catKey === 'amiri' ? 'Amiri' : 'Louis Vuitton'} Bild ${i+1}" onclick="openLightbox('${catKey}', ${i})">`
       ).join('');
     }
 
-    /* Nach DOM-Load Bilder in die Grids setzen */
     document.addEventListener('DOMContentLoaded', () => {
       renderGrid('amiri', amiriImages, 'amiri');
       renderGrid('lv', louisVuittonImages, 'lv');
