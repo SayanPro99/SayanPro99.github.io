@@ -2,27 +2,56 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Bildergalerie</title>
+  <title>Designer Galerie</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      background: #f7f7f7;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      margin-bottom: 30px;
+    }
+
+    button {
+      background: black;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s ease;
+    }
+
+    button:hover {
+      background: #444;
     }
 
     .grid {
-      display: grid;
+      display: none; /* standardmäßig ausgeblendet */
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 15px;
+      margin-top: 20px;
+    }
+
+    .grid.active {
+      display: grid; /* aktive Kategorie anzeigen */
     }
 
     .grid img {
       width: 100%;
       height: auto;
-      display: block;
       border-radius: 8px;
       object-fit: cover;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
       transition: transform 0.2s ease;
     }
 
@@ -32,38 +61,56 @@
   </style>
 </head>
 <body>
-  <h1>Bildergalerie</h1>
-  <div class="grid">
-    <img src="/0eafa9b2.jpg" alt="Bild 1">
-    <img src="/0fe012e6.jpg" alt="Bild 2">
-    <img src="/1207b9ed.jpg" alt="Bild 3">
-    <img src="/187cdc78.jpg" alt="Bild 4">
-    <img src="/2525eef9.jpg" alt="Bild 5">
-    <img src="/27fdd161.jpg" alt="Bild 6">
-    <img src="/2a177cdc.jpg" alt="Bild 7">
-    <img src="/2c3417c8.jpg" alt="Bild 8">
-    <img src="/2ea17519.jpg" alt="Bild 9">
-    <img src="/2f293de4.jpg" alt="Bild 10">
-    <img src="/30f03eb1.jpg" alt="Bild 11">
-    <img src="/3247f198.jpg" alt="Bild 12">
-    <img src="/35f75daf.jpg" alt="Bild 13">
-    <img src="/362daaae.jpg" alt="Bild 14">
-    <img src="/42e8c202.jpg" alt="Bild 15">
-    <img src="/44d6f6ab.jpg" alt="Bild 16">
-    <img src="/4cb23125.jpg" alt="Bild 17">
-    <img src="/55ea6023.jpg" alt="Bild 18">
-    <img src="/5bb75d76.jpg" alt="Bild 19">
-    <img src="/5eeac430.jpg" alt="Bild 20">
-    <img src="/5ef7efdb.jpg" alt="Bild 21">
-    <img src="/5f657643.jpg" alt="Bild 22">
-    <img src="/7d98a568.jpg" alt="Bild 23">
-    <img src="/85dac8fc.jpg" alt="Bild 24">
-    <img src="/939fd085.jpg" alt="Bild 25">
-    <img src="/96dc2014.jpg" alt="Bild 26">
-    <img src="/981a907e.jpg" alt="Bild 27">
-    <img src="/982c5593.jpg" alt="Bild 28">
-    <img src="/98c1d72b.jpg" alt="Bild 29">
-    <img src="/99d758f5.jpg" alt="Bild 30">
+  <h1>Designer Galerie</h1>
+
+  <div class="buttons">
+    <button onclick="showCategory('amiri')">Amiri</button>
+    <button onclick="showCategory('offwhite')">Off-White</button>
   </div>
+
+  <!-- AMIRI -->
+  <div id="amiri" class="grid active">
+    <img src="/0eafa9b2.jpg" alt="Amiri Bild 1">
+    <img src="/0fe012e6.jpg" alt="Amiri Bild 2">
+    <img src="/1207b9ed.jpg" alt="Amiri Bild 3">
+    <img src="/187cdc78.jpg" alt="Amiri Bild 4">
+    <img src="/2525eef9.jpg" alt="Amiri Bild 5">
+    <img src="/27fdd161.jpg" alt="Amiri Bild 6">
+    <img src="/2a177cdc.jpg" alt="Amiri Bild 7">
+    <img src="/2c3417c8.jpg" alt="Amiri Bild 8">
+    <img src="/2ea17519.jpg" alt="Amiri Bild 9">
+    <img src="/2f293de4.jpg" alt="Amiri Bild 10">
+    <img src="/30f03eb1.jpg" alt="Amiri Bild 11">
+    <img src="/3247f198.jpg" alt="Amiri Bild 12">
+    <img src="/35f75daf.jpg" alt="Amiri Bild 13">
+    <img src="/362daaae.jpg" alt="Amiri Bild 14">
+    <img src="/42e8c202.jpg" alt="Amiri Bild 15">
+  </div>
+
+  <!-- OFF-WHITE -->
+  <div id="offwhite" class="grid">
+    <img src="/44d6f6ab.jpg" alt="Off-White Bild 1">
+    <img src="/4cb23125.jpg" alt="Off-White Bild 2">
+    <img src="/55ea6023.jpg" alt="Off-White Bild 3">
+    <img src="/5bb75d76.jpg" alt="Off-White Bild 4">
+    <img src="/5eeac430.jpg" alt="Off-White Bild 5">
+    <img src="/5ef7efdb.jpg" alt="Off-White Bild 6">
+    <img src="/5f657643.jpg" alt="Off-White Bild 7">
+    <img src="/7d98a568.jpg" alt="Off-White Bild 8">
+    <img src="/85dac8fc.jpg" alt="Off-White Bild 9">
+    <img src="/939fd085.jpg" alt="Off-White Bild 10">
+    <img src="/96dc2014.jpg" alt="Off-White Bild 11">
+    <img src="/981a907e.jpg" alt="Off-White Bild 12">
+    <img src="/982c5593.jpg" alt="Off-White Bild 13">
+    <img src="/98c1d72b.jpg" alt="Off-White Bild 14">
+    <img src="/99d758f5.jpg" alt="Off-White Bild 15">
+  </div>
+
+  <script>
+    function showCategory(category) {
+      document.querySelectorAll('.grid').forEach(grid => grid.classList.remove('active'));
+      document.getElementById(category).classList.add('active');
+    }
+  </script>
 </body>
 </html>
