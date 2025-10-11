@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Amiri & Louis Vuitton Galerie mit Preisen</title>
+  <title>Amiri, Louis Vuitton & Dior – Galerie mit Preisen</title>
   <style>
     :root {
       --btn-radius: 12px;
@@ -24,6 +24,7 @@
       margin-top: 80px;
     }
 
+    /* Sticky Button Bar */
     .buttons {
       position: sticky;
       top: 0;
@@ -73,7 +74,6 @@
       flex-direction: column;
       align-items: center;
     }
-
     .item img {
       width: 100%;
       height: auto;
@@ -84,7 +84,6 @@
       cursor: pointer;
     }
     .item img:hover { transform: scale(1.03); }
-
     .price-tag {
       margin-top: 8px;
       font-weight: bold;
@@ -97,6 +96,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
@@ -118,7 +118,6 @@
       from { transform: scale(0.7); opacity: 0; }
       to   { transform: scale(1); opacity: 1; }
     }
-
     .close, .prev, .next {
       position: absolute;
       color: white;
@@ -138,6 +137,7 @@
     .next  { right: 10px; top: 50%; transform: translateY(-50%); }
     .close:hover, .prev:hover, .next:hover { color: #ddd; background: rgba(0,0,0,0.35); }
 
+    /* Mobile */
     @media (max-width: 600px) {
       :root {
         --btn-radius: 14px;
@@ -147,18 +147,9 @@
       }
       body { padding: 20px; }
       .buttons { gap: 12px; padding: 12px 8px; }
-      button {
-        width: 100%;
-        max-width: 520px;
-      }
-      .grid {
-        gap: 12px;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      }
-      .close, .prev, .next {
-        font-size: 48px;
-        padding: 16px;
-      }
+      button { width: 100%; max-width: 520px; }
+      .grid { gap: 12px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .close, .prev, .next { font-size: 48px; padding: 16px; }
       .prev  { left: 6px; }
       .next  { right: 6px; }
       .close { top: 12px; right: 12px; }
@@ -166,6 +157,7 @@
   </style>
 
   <script>
+    /* ===== Bildlisten ===== */
     const amiriImages = [
       "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg",
       "150842e9.jpg","187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg",
@@ -208,13 +200,28 @@
       "eef3c46b.jpg","efa515c1.jpg","f0bdff2c.jpg","f51861e1.jpg","f60e3de4.jpg","f7e586dd.jpg","fb1f2728.jpg"
     ];
 
+    /* ➕ NEU: Dior – HIER deine neuen Dateinamen eintragen (z. B. "dior1.jpg","dior2.jpg",...) */
+    const diorImages = [
+      /* z.B.:
+      "dior_0001.jpg","dior_0002.jpg","dior_0003.jpg"
+      */
+    ];
+
+    /* Preise je Marke */
+    const prices = { amiri: 65, lv: 70, dior: 70 };
+
+    /* ===== State & Helpers ===== */
     let currentIndex = 0;
-    let currentGallery = null;
+    let currentGallery = null; // 'amiri' | 'lv' | 'dior'
 
-    function getCurrentArray() {
-      return currentGallery === 'lv' ? louisVuittonImages : amiriImages;
+    function getArrayByKey(key){
+      if (key === 'amiri') return amiriImages;
+      if (key === 'lv')    return louisVuittonImages;
+      return diorImages;
     }
+    function getCurrentArray(){ return getArrayByKey(currentGallery); }
 
+    /* Kategorien ein-/ausblenden */
     function showCategory(category) {
       currentGallery = category;
       document.querySelectorAll('.grid').forEach(g => g.classList.remove('active'));
@@ -222,10 +229,11 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    /* Lightbox */
     function openLightbox(cat, index) {
       currentGallery = cat;
       currentIndex = index;
-      document.getElementById('lightboxImg').src = '/' + getCurrentArray()[currentIndex];
+      document.getElementById('lightboxImg').src = '/' + getArrayByKey(cat)[index];
       document.getElementById('lightbox').style.display = 'flex';
     }
     function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
@@ -243,10 +251,10 @@
       }
     });
 
+    /* Rendern */
     function renderGrid(containerId, arr, catKey) {
       const el = document.getElementById(containerId);
-      const isLV = (catKey === 'lv');
-      const price = isLV ? 70 : 65;
+      const price = prices[catKey];
       el.innerHTML = arr.map((src, i) => `
         <div class="item">
           <img src="/${src}" loading="lazy" alt="${catKey} Bild ${i+1}" onclick="openLightbox('${catKey}', ${i})">
@@ -258,6 +266,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       renderGrid('amiri', amiriImages, 'amiri');
       renderGrid('lv', louisVuittonImages, 'lv');
+      renderGrid('dior', diorImages, 'dior');
     });
   </script>
 </head>
@@ -265,12 +274,14 @@
   <div class="buttons">
     <button onclick="showCategory('amiri')">Amiri</button>
     <button onclick="showCategory('lv')">Louis Vuitton</button>
+    <button onclick="showCategory('dior')">Dior</button>
   </div>
 
   <h1>Galerie</h1>
 
   <div id="amiri" class="grid"></div>
   <div id="lv" class="grid"></div>
+  <div id="dior" class="grid"></div>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <span class="close" onclick="closeLightbox()">&times;</span>
