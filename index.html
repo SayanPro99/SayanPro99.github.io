@@ -2,40 +2,146 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Amiri & Louis Vuitton Galerie</title>
   <style>
-    body { font-family: 'Poppins', sans-serif; background: #f7f7f7; padding: 30px; text-align: center; }
+    :root{
+      --btn-radius: 12px;
+      --btn-pad-y: 14px;
+      --btn-pad-x: 28px;
+      --btn-font: 16px;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f7f7f7;
+      padding: 30px;
+      text-align: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     h1 { margin-bottom: 20px; }
-    .buttons { margin-bottom: 30px; }
+
+    .buttons {
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
     button {
-      background: black; color: white; border: none; padding: 10px 25px; margin: 5px;
-      border-radius: 8px; cursor: pointer; font-size: 16px; transition: background 0.2s ease;
+      background: black;
+      color: white;
+      border: none;
+      padding: var(--btn-pad-y) var(--btn-pad-x);
+      margin: 0;
+      border-radius: var(--btn-radius);
+      cursor: pointer;
+      font-size: var(--btn-font);
+      transition: background 0.2s ease, transform 0.05s ease;
+      min-height: 48px;            /* Touch-Zielgröße */
+      min-width: 140px;            /* gut treffbar */
+      touch-action: manipulation;  /* verhindert Doppeltap-Zoom bei Buttons */
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
     button:hover { background: #444; }
+    button:active { transform: translateY(1px); }
+    button:focus-visible { outline: 3px solid #888; outline-offset: 2px; }
+
     .grid {
-      display: none; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px; margin-top: 20px;
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
     }
     .grid.active { display: grid; animation: fadeIn 0.4s ease; }
+
     .grid img {
-      width: 100%; height: auto; border-radius: 8px; object-fit: cover;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s ease; cursor: pointer;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease;
+      cursor: pointer;
     }
-    .grid img:hover { transform: scale(1.05); }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .grid img:hover { transform: scale(1.03); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Lightbox */
     .lightbox {
-      display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.9);
-      justify-content: center; align-items: center; flex-direction: column;
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
-    .lightbox img { max-width: 90%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(255,255,255,0.2); animation: zoomIn 0.3s ease; }
-    @keyframes zoomIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      animation: zoomIn 0.3s ease;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
     .close, .prev, .next {
-      position: absolute; color: white; font-size: 40px; font-weight: bold; cursor: pointer; transition: color 0.2s ease; user-select: none;
+      position: absolute;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.05s ease;
+      user-select: none;
+      line-height: 1;
+      padding: 12px;              /* größere Trefferfläche */
+      border-radius: 12px;
+      background: rgba(0,0,0,0.25);  /* leichte Fläche für Touch */
+      touch-action: manipulation;
     }
-    .close { top: 20px; right: 30px; }
-    .prev  { left: 30px; top: 50%; transform: translateY(-50%); }
-    .next  { right: 30px; top: 50%; transform: translateY(-50%); }
-    .close:hover, .prev:hover, .next:hover { color: #aaa; }
+    .close { top: 20px; right: 20px; }
+    .prev  { left: 10px; top: 50%; transform: translateY(-50%); }
+    .next  { right: 10px; top: 50%; transform: translateY(-50%); }
+    .close:hover, .prev:hover, .next:hover { color: #ddd; background: rgba(0,0,0,0.35); }
+    .close:active, .prev:active, .next:active { transform: translateY(-50%) scale(0.98); }
+
+    /* --- Mobile Optimierungen --- */
+    @media (max-width: 600px) {
+      :root{
+        --btn-radius: 14px;
+        --btn-pad-y: 16px;
+        --btn-pad-x: 24px;
+        --btn-font: 18px;
+      }
+      body { padding: 20px; }
+      .buttons { gap: 12px; }
+      button {
+        width: 100%;           /* volle Breite auf Handy */
+        max-width: 520px;      /* aber nicht unendlich breit */
+      }
+      .grid {
+        gap: 12px;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      }
+      .close, .prev, .next {
+        font-size: 48px;       /* größere Icons */
+        padding: 16px;         /* noch größere Hit-Box */
+      }
+      .prev  { left: 6px; }
+      .next  { right: 6px; }
+      .close { top: 12px; right: 12px; }
+    }
   </style>
 
   <script>
@@ -63,7 +169,6 @@
       "f5b426a5.jpg","f9a28e84.jpg","fa4cf78b.jpg","fdd7df7b.jpg","fea4c382.jpg"
     ];
 
-    /* Louis Vuitton = zweite Liste MINUS Amiri; hier als feste Liste (Syntax gefixt) */
     const louisVuittonImages = [
       "013cbad0.jpg","034d5727.jpg","06888341.jpg","07a2d054.jpg","0a004be0.jpg","0b2d7702.jpg","0c9a572f.jpg",
       "0e51b120.jpg","0ed95905.jpg","13309381.jpg","1822a5b8.jpg","19468b25.jpg","1b502148.jpg","1bcc1a6e.jpg",
@@ -83,15 +188,14 @@
       "eef3c46b.jpg","efa515c1.jpg","f0bdff2c.jpg","f51861e1.jpg","f60e3de4.jpg","f7e586dd.jpg","fb1f2728.jpg"
     ];
 
-    /* State für Lightbox */
+    /* State */
     let currentIndex = 0;
     let currentGallery = null; // 'amiri' | 'lv'
-
     const getCurrentArray = () => (currentGallery === 'lv' ? louisVuittonImages : amiriImages);
 
     /* Kategorien ein-/ausblenden */
     function showCategory(category) {
-      currentGallery = category; // für Lightbox
+      currentGallery = category;
       document.querySelectorAll('.grid').forEach(g => g.classList.remove('active'));
       document.getElementById(category).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
