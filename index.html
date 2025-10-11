@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Amiri & Louis Vuitton Galerie</title>
+  <title>Amiri & Louis Vuitton Galerie mit Preisen</title>
   <style>
-    :root{
+    :root {
       --btn-radius: 12px;
       --btn-pad-y: 14px;
       --btn-pad-x: 28px;
@@ -17,16 +17,13 @@
       background: #f7f7f7;
       padding: 30px;
       text-align: center;
-      -webkit-tap-highlight-color: transparent;
       margin: 0;
     }
-
     h1 {
       margin-bottom: 20px;
       margin-top: 80px;
     }
 
-    /* Sticky Button Bar */
     .buttons {
       position: sticky;
       top: 0;
@@ -70,7 +67,14 @@
     }
     .grid.active { display: grid; animation: fadeIn 0.4s ease; }
 
-    .grid img {
+    .item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .item img {
       width: 100%;
       height: auto;
       border-radius: 8px;
@@ -79,14 +83,20 @@
       transition: transform 0.2s ease;
       cursor: pointer;
     }
-    .grid img:hover { transform: scale(1.03); }
+    .item img:hover { transform: scale(1.03); }
+
+    .price-tag {
+      margin-top: 8px;
+      font-weight: bold;
+      color: #333;
+      font-size: 1rem;
+    }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
@@ -128,7 +138,6 @@
     .next  { right: 10px; top: 50%; transform: translateY(-50%); }
     .close:hover, .prev:hover, .next:hover { color: #ddd; background: rgba(0,0,0,0.35); }
 
-    /* Mobile Optimierungen */
     @media (max-width: 600px) {
       :root {
         --btn-radius: 14px;
@@ -201,7 +210,10 @@
 
     let currentIndex = 0;
     let currentGallery = null;
-    const getCurrentArray = () => (currentGallery === 'lv' ? louisVuittonImages : amiriImages);
+
+    function getCurrentArray() {
+      return currentGallery === 'lv' ? louisVuittonImages : amiriImages;
+    }
 
     function showCategory(category) {
       currentGallery = category;
@@ -233,9 +245,14 @@
 
     function renderGrid(containerId, arr, catKey) {
       const el = document.getElementById(containerId);
-      el.innerHTML = arr.map((src, i) =>
-        `<img src="/${src}" loading="lazy" alt="${catKey === 'amiri' ? 'Amiri' : 'Louis Vuitton'} Bild ${i+1}" onclick="openLightbox('${catKey}', ${i})">`
-      ).join('');
+      const isLV = (catKey === 'lv');
+      const price = isLV ? 70 : 65;
+      el.innerHTML = arr.map((src, i) => `
+        <div class="item">
+          <img src="/${src}" loading="lazy" alt="${catKey} Bild ${i+1}" onclick="openLightbox('${catKey}', ${i})">
+          <div class="price-tag">CHF ${price}</div>
+        </div>
+      `).join('');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -257,9 +274,9 @@
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <span class="close" onclick="closeLightbox()">&times;</span>
-    <span class="prev" onclick="event.stopPropagation(); changeImg(-1)">&#10094;</span>
+    <span class="prev" onclick="event.stopPropagation(); changeImg(-1);">&#10094;</span>
     <img id="lightboxImg" src="">
-    <span class="next" onclick="event.stopPropagation(); changeImg(1)">&#10095;</span>
+    <span class="next" onclick="event.stopPropagation(); changeImg(1);">&#10095;</span>
   </div>
 </body>
 </html>
