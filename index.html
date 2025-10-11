@@ -5,132 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Amiri, Louis Vuitton & Dior – Galerie mit Preisen</title>
   <style>
-    :root {
-      --btn-radius: 12px;
-      --btn-pad-y: 14px;
-      --btn-pad-x: 28px;
-      --btn-font: 16px;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f7f7f7;
-      padding: 30px;
-      text-align: center;
-      margin: 0;
-    }
-    h1 {
-      margin-bottom: 20px;
-      margin-top: 80px;
-    }
+    :root { --btn-radius: 12px; --btn-pad-y: 14px; --btn-pad-x: 28px; --btn-font: 16px; }
+    body { font-family: 'Poppins', sans-serif; background: #f7f7f7; padding: 30px; text-align: center; margin: 0; }
+    h1 { margin-bottom: 20px; margin-top: 80px; }
 
     /* Sticky Button Bar */
     .buttons {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: rgba(247,247,247,0.95);
-      backdrop-filter: blur(6px);
-      padding: 15px 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      position: sticky; top: 0; z-index: 999;
+      background: rgba(247,247,247,0.95); backdrop-filter: blur(6px);
+      padding: 15px 10px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.05);
     }
-
     button {
-      background: black;
-      color: white;
-      border: none;
-      padding: var(--btn-pad-y) var(--btn-pad-x);
-      margin: 0;
-      border-radius: var(--btn-radius);
-      cursor: pointer;
-      font-size: var(--btn-font);
+      background: black; color: white; border: none; padding: var(--btn-pad-y) var(--btn-pad-x);
+      border-radius: var(--btn-radius); cursor: pointer; font-size: var(--btn-font);
       transition: background 0.2s ease, transform 0.05s ease;
-      min-height: 48px;
-      min-width: 140px;
-      touch-action: manipulation;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      min-height: 48px; min-width: 140px; touch-action: manipulation; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
     button:hover { background: #444; }
     button:active { transform: translateY(1px); }
     button:focus-visible { outline: 3px solid #888; outline-offset: 2px; }
 
-    .grid {
-      display: none;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-      padding-bottom: 50px;
-    }
+    .grid { display: none; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; padding-bottom: 50px; }
     .grid.active { display: grid; animation: fadeIn 0.4s ease; }
 
-    .item {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    .item { position: relative; display: flex; flex-direction: column; align-items: center; }
     .item img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      object-fit: cover;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-      transition: transform 0.2s ease;
-      cursor: pointer;
+      width: 100%; height: auto; border-radius: 8px; object-fit: cover;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s ease; cursor: pointer;
     }
     .item img:hover { transform: scale(1.03); }
-    .price-tag {
-      margin-top: 8px;
-      font-weight: bold;
-      color: #333;
-      font-size: 1rem;
-    }
+    .price-tag { margin-top: 8px; font-weight: bold; color: #333; font-size: 1rem; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Lightbox */
     .lightbox {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.9);
+      justify-content: center; align-items: center; flex-direction: column;
     }
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
-      animation: zoomIn 0.3s ease;
-    }
-    @keyframes zoomIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to   { transform: scale(1); opacity: 1; }
-    }
+    .lightbox img { max-width: 90%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 20px rgba(255,255,255,0.2); animation: zoomIn 0.3s ease; }
+    @keyframes zoomIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .close, .prev, .next {
-      position: absolute;
-      color: white;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: color 0.2s ease, transform 0.05s ease;
-      user-select: none;
-      line-height: 1;
-      padding: 12px;
-      border-radius: 12px;
-      background: rgba(0,0,0,0.25);
-      touch-action: manipulation;
+      position: absolute; color: white; font-size: 40px; font-weight: bold; cursor: pointer;
+      transition: color 0.2s ease, transform 0.05s ease; user-select: none; line-height: 1;
+      padding: 12px; border-radius: 12px; background: rgba(0,0,0,0.25); touch-action: manipulation;
     }
     .close { top: 20px; right: 20px; }
     .prev  { left: 10px; top: 50%; transform: translateY(-50%); }
@@ -139,25 +58,18 @@
 
     /* Mobile */
     @media (max-width: 600px) {
-      :root {
-        --btn-radius: 14px;
-        --btn-pad-y: 16px;
-        --btn-pad-x: 24px;
-        --btn-font: 18px;
-      }
+      :root { --btn-radius: 14px; --btn-pad-y: 16px; --btn-pad-x: 24px; --btn-font: 18px; }
       body { padding: 20px; }
       .buttons { gap: 12px; padding: 12px 8px; }
       button { width: 100%; max-width: 520px; }
       .grid { gap: 12px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
       .close, .prev, .next { font-size: 48px; padding: 16px; }
-      .prev  { left: 6px; }
-      .next  { right: 6px; }
-      .close { top: 12px; right: 12px; }
+      .prev { left: 6px; } .next { right: 6px; } .close { top: 12px; right: 12px; }
     }
   </style>
 
   <script>
-    /* ===== Bildlisten ===== */
+    /* ===== Bereits verwendete Bilder ===== */
     const amiriImages = [
       "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg",
       "150842e9.jpg","187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg",
@@ -200,19 +112,56 @@
       "eef3c46b.jpg","efa515c1.jpg","f0bdff2c.jpg","f51861e1.jpg","f60e3de4.jpg","f7e586dd.jpg","fb1f2728.jpg"
     ];
 
-    /* ➕ NEU: Dior – HIER deine neuen Dateinamen eintragen (z. B. "dior1.jpg","dior2.jpg",...) */
-    const diorImages = [
-      /* z.B.:
-      "dior_0001.jpg","dior_0002.jpg","dior_0003.jpg"
-      */
+    /* ===== Deine große „Dior“-Liste (Kandidaten) ===== */
+    const diorCandidates = [
+      "0042de0c.jpg","00cffcce.jpg","013cbad0.jpg","017bc82a.jpg","034d5727.jpg","04909b45.jpg","067db8ac.jpg","06888341.jpg",
+      "07a2d054.jpg","083cdb0b.jpg","0a004be0.jpg","0b2d7702.jpg","0c9a572f.jpg","0e51b120.jpg","0eafa9b2.jpg","0ed95905.jpg",
+      "0f70077a.jpg","0fe012e6.jpg","11b0ad5b.jpg","1207b9ed.jpg","12747c3f.jpg","13309381.jpg","150842e9.jpg","1822a5b8.jpg",
+      "187cdc78.jpg","19468b25.jpg","1a4ddf3e.jpg","1b502148.jpg","1bcc1a6e.jpg","1c6acc68.jpg","1d902f6b.jpg","1e0461be.jpg",
+      "22620d06.jpg","2293d67e.jpg","22a3a99d.jpg","2386271a.jpg","23b23a20.jpg","23d24c9d.jpg","2525eef9.jpg","26114022.jpg",
+      "27fdd161.jpg","28cb652e.jpg","28ddd5c8.jpg","291efbd0.jpg","29931f86.jpg","2a177cdc.jpg","2ae8c298.jpg","2c3417c8.jpg",
+      "2d1fdfa0.jpg","2ea17519.jpg","2f293de4.jpg","30756ef7.jpg","30f03eb1.jpg","324226f0.jpg","3247f198.jpg","324c80d4.jpg",
+      "32fe9e91.jpg","35f75daf.jpg","362daaae.jpg","36e3f25a.jpg","37627c9c.jpg","381b25a0.jpg","393c2518.jpg","394bdad3.jpg",
+      "3b8837a3.jpg","3c51fd1a.jpg","3f62707e.jpg","3f6750ca.jpg","416b4633.jpg","4263a8d8.jpg","42c4d1e2.jpg","42c8b8ca.jpg",
+      "42e8c202.jpg","44d6f6ab.jpg","45316f52.jpg","4577bd4d.jpg","4710ddb7.jpg","4784ef73.jpg","48af9792.jpg","4afba633.jpg",
+      "4c53668f.jpg","4c62cf94.jpg","4cb23125.jpg","4d17bf30.jpg","504ca9b6.jpg","505b41f0.jpg","520a8b04.jpg","52b7d7b4.jpg",
+      "53489243.jpg","537d5438.jpg","5528e043.jpg","55ea6023.jpg","57528a60.jpg","57d8e867.jpg","5891a3ad.jpg","59eab049.jpg",
+      "5a19d634.jpg","5aa16775.jpg","5ad49572.jpg","5bb75d76.jpg","5ceb9aff.jpg","5ec675ff.jpg","5eeac430.jpg","5ef7efdb.jpg",
+      "5f657643.jpg","60c0038c.jpg","6181fa00.jpg","62564a44.jpg","63a7e4f1.jpg","64e997b0.jpg","6679532d.jpg","66976b96.jpg",
+      "6797eb2a.jpg","68c37c3f.jpg","6a9e388d.jpg","6b84f3e4.jpg","6fca2784.jpg","702d73b0.jpg","7046e46c.jpg","70745731.jpg",
+      "70850a29.jpg","719f84fe.jpg","7296f789.jpg","7326abc1.jpg","73c45784.jpg","75708d9f.jpg","782224ce.jpg","78302145.jpg",
+      "79508a4d.jpg","79f6ce80.jpg","7aa41d83.jpg","7d98a568.jpg","7e50a20f.jpg","810866ab.jpg","81668fb3.jpg","82ac047e.jpg",
+      "82cbf2ef.jpg","835fa07a.jpg","848ac5d5.jpg","84c5ec2b.jpg","85dac8fc.jpg","8638a52e.jpg","869c2f07.jpg","871057bb.jpg",
+      "878eb2a8.jpg","87cdd4c8.jpg","87f35616.jpg","88444800.jpg","89229fd0.jpg","8ae2604c.jpg","8b218760.jpg","8da3f2bc.jpg",
+      "8e9f22c8.jpg","8f50f867.jpg","8fda819a.jpg","9074931f.jpg","90faff3c.jpg","914a3b0c.jpg","91931dbb.jpg","91b86af5.jpg",
+      "92040bfc.jpg","939fd085.jpg","958a7fec.jpg","96dc2014.jpg","981a907e.jpg","982c5593.jpg","98c1d72b.jpg","996d98b9.jpg",
+      "99d758f5.jpg","9a2d9016.jpg","9c46fb7d.jpg","9f3bd0a0.jpg","9f8d6ed3.jpg","a1224672.jpg","a228640b.jpg","a30e1691.jpg",
+      "a39f148e.jpg","a3aa14e3.jpg","a46f59ff.jpg","a48ce8b9.jpg","a5d2180f.jpg","a650ac9c.jpg","a8068dc8.jpg","a81e5c37.jpg",
+      "a8cc74b0.jpg","a9c1ff48.jpg","a9d055c0.jpg","aa978353.jpg","aaafd54b.jpg","aab61bd7.jpg","aacb8adb.jpg","aafa7f5b.jpg",
+      "afc4f9d0.jpg","b04ac77c.jpg","b136a238.jpg","b1bde972.jpg","b3a08897.jpg","b407160b.jpg","b44753e3.jpg","b6326879.jpg",
+      "b6fef45c.jpg","b74117f3.jpg","b7a09b02.jpg","b8a98a51.jpg","b901be30.jpg","b9633461.jpg","baaeb20d.jpg","bef979e6.jpg",
+      "bf761b18.jpg","bfefa67c.jpg","c020f149.jpg","c12b0e46.jpg","c2b1ef4b.jpg","c3279d1d.jpg","c5e31a15.jpg","c6e93afc.jpg",
+      "c7c5af39.jpg","ca37c69d.jpg","cad2a3b7.jpg","ce3b268b.jpg","ce701a73.jpg","cef7defb.jpg","cf5760ab.jpg","d09ac9bd.jpg",
+      "d0b65508.jpg","d21ebaeb.jpg","d301d96d.jpg","d30edfb8.jpg","d4cb9e1d.jpg","d54b8f1e.jpg","d5d47c3a.jpg","d6151d98.jpg",
+      "d6b1dc5d.jpg","d7ca1727.jpg","d8251b32.jpg","d8697049.jpg","d8a2dd48.jpg","d9aa0f27.jpg","dd6207ed.jpg","df62d6cc.jpg",
+      "e1025da3.jpg","e120ac43.jpg","e312f136.jpg","e58a9919.jpg","e945ba34.jpg","ea754af8.jpg","eb35be6b.jpg","ec4ef27c.jpg",
+      "eecc92da.jpg","eef3c46b.jpg","ef27a7e1.jpg","efa515c1.jpg","f0bdff2c.jpg","f1a3df2f.jpg","f2700df2.jpg","f51861e1.jpg",
+      "f5b426a5.jpg","f60e3de4.jpg","f6cbffaa.jpg","f741b6d1.jpg","f7e586dd.jpg","f9a28e84.jpg","fa4cf78b.jpg","fb1f2728.jpg",
+      "fcaec063.jpg","fdd7df7b.jpg","fea4c382.jpg"
     ];
 
-    /* Preise je Marke */
+    /* ===== Preise je Marke ===== */
     const prices = { amiri: 65, lv: 70, dior: 70 };
 
     /* ===== State & Helpers ===== */
     let currentIndex = 0;
     let currentGallery = null; // 'amiri' | 'lv' | 'dior'
+
+    const amiriSet = new Set(amiriImages);
+    const lvSet    = new Set(louisVuittonImages);
+
+    // Dior = nur Kandidaten, die weder in Amiri noch in LV sind
+    const diorImages = diorCandidates.filter(fn => !amiriSet.has(fn) && !lvSet.has(fn));
 
     function getArrayByKey(key){
       if (key === 'amiri') return amiriImages;
