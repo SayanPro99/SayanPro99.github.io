@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Designer Galerie – Amiri, LV, Dior & Palm Angels</title>
+  <title>Designer Galerie – Amiri, LV, Dior, Palm Angels & Moncler</title>
   <style>
     :root { --btn-radius: 12px; --btn-pad-y: 14px; --btn-pad-x: 28px; --btn-font: 16px; }
     body { font-family: 'Poppins', sans-serif; background: #f7f7f7; padding: 30px; text-align: center; margin: 0; }
@@ -113,7 +113,7 @@
       "eef3c46b.jpg","efa515c1.jpg","f0bdff2c.jpg","f51861e1.jpg","f60e3de4.jpg","f7e586dd.jpg","fb1f2728.jpg"
     ];
 
-    /* ===== Dior: aus deiner großen Liste – nur die, die NICHT in Amiri/LV sind ===== */
+    /* ===== Dior: Kandidaten (bleibt) ===== */
     const diorCandidates = [
       "0042de0c.jpg","00cffcce.jpg","013cbad0.jpg","017bc82a.jpg","034d5727.jpg","04909b45.jpg","067db8ac.jpg","06888341.jpg",
       "07a2d054.jpg","083cdb0b.jpg","0a004be0.jpg","0b2d7702.jpg","0c9a572f.jpg","0e51b120.jpg","0eafa9b2.jpg","0ed95905.jpg",
@@ -151,7 +151,7 @@
       "fcaec063.jpg","fdd7df7b.jpg","fea4c382.jpg"
     ];
 
-    /* ===== Palm Angels: deine neue Liste ===== */
+    /* ===== Palm Angels (bestehend) ===== */
     const palmImages = [
       "0b752aa6.jpg","0be9f954.jpg","0d7aa720.jpg","0e50dfed.jpg","0ed13fb3.jpg","1c0de689.jpg","01dfcdb0.jpg","1e0758ec.jpg","1ff42a26.jpg","2ff869af.jpg",
       "3a190b31.jpg","3b57e88d.jpg","3bfa8efc.jpg","3d161dd6.jpg","3f6b0b41.jpg","4a5a0224.jpg","5bba9296.jpg","5c0aeb87.jpg","5c1c732d.jpg","5f3047e8.jpg",
@@ -165,23 +165,41 @@
       "89290399.jpg","a05d1ca1.jpg","a50d8f1f.jpg","a82ce613.jpg","a978c357.jpg","acf6b370.jpg","adb152d5.jpg","af087d27.jpg","b15a8e41.jpg","b89d906c.jpg"
     ];
 
-    /* ===== Preise ===== */
-    const prices = { amiri: 65, lv: 70, dior: 70, palm: 65 };
+    /* ===== Moncler (NEU) ===== */
+    const monclerImages = [
+      "3aa9435b.jpg","4eaef84a.jpg","4eb35532.jpg","5a1fc5bf.jpg","5dc61b8c.jpg",
+      "06a14d1c.jpg","6e6770ac.jpg","8dc70115.jpg","8e249f9d.jpg","9c09f03f.jpg",
+      "36b6119b.jpg","51e544aa.jpg","54f5510b.jpg","57f23679.jpg","64f297c8.jpg",
+      "77b48a28.jpg","82be513f.jpg","86f3d10f.jpg","95db7257.jpg","147dc66e.jpg",
+      "191a560d.jpg","15265e96.jpg","71720aad.jpg","219635b4.jpg","a8a7c2f6.jpg",
+      "a8ec3c0e.jpg","a3460a58.jpg","c4725319.jpg","cc9c5363.jpg","d132fdd2.jpg",
+      "e854e154.jpg","e49290be.jpg","e5442988.jpg","eb2c4e86.jpg","f13df3f2.jpg",
+      "f73a096f.jpg","f898e627.jpg"
+    ];
 
-    /* ===== Dior automatisch berechnen (nur unbenutzte aus Kandidaten) ===== */
-    const amiriSet = new Set(amiriImages);
-    const lvSet    = new Set(louisVuittonImages);
-    const diorImages = diorCandidates.filter(fn => !amiriSet.has(fn) && !lvSet.has(fn));
+    /* ===== Preise ===== */
+    const prices = { amiri: 65, lv: 70, dior: 70, palm: 65, moncler: 75 };
+
+    /* ===== Dior automatisch berechnen (nur unbenutzte) ===== */
+    // WICHTIG: Diese Zeilen NACH Palm & Moncler deklarieren, damit beide ausgeschlossen werden können
+    const amiriSet   = new Set(amiriImages);
+    const lvSet      = new Set(louisVuittonImages);
+    const palmSet    = new Set(palmImages || []);
+    const monclerSet = new Set(monclerImages || []);
+    const diorImages = diorCandidates.filter(fn =>
+      !amiriSet.has(fn) && !lvSet.has(fn) && !palmSet.has(fn) && !monclerSet.has(fn)
+    );
 
     /* ===== State & Helpers ===== */
     let currentIndex = 0;
-    let currentGallery = null; // 'amiri' | 'lv' | 'dior' | 'palm'
+    let currentGallery = null; // 'amiri' | 'lv' | 'dior' | 'palm' | 'moncler'
 
     function getArrayByKey(key){
-      if (key === 'amiri') return amiriImages;
-      if (key === 'lv')    return louisVuittonImages;
-      if (key === 'dior')  return diorImages;
-      if (key === 'palm')  return palmImages;
+      if (key === 'amiri')   return amiriImages;
+      if (key === 'lv')      return louisVuittonImages;
+      if (key === 'dior')    return diorImages;
+      if (key === 'palm')    return palmImages;
+      if (key === 'moncler') return monclerImages;
       return [];
     }
     function getCurrentArray(){ return getArrayByKey(currentGallery); }
@@ -233,6 +251,7 @@
       renderGrid('lv', louisVuittonImages, 'lv');
       renderGrid('dior', diorImages, 'dior');
       renderGrid('palm', palmImages, 'palm');
+      renderGrid('moncler', monclerImages, 'moncler'); /* NEU */
     });
   </script>
 </head>
@@ -242,6 +261,7 @@
     <button onclick="showCategory('lv')">Louis Vuitton</button>
     <button onclick="showCategory('dior')">Dior</button>
     <button onclick="showCategory('palm')">Palm Angels</button>
+    <button onclick="showCategory('moncler')">Moncler</button> <!-- NEU -->
   </div>
 
   <h1>Galerie</h1>
@@ -250,6 +270,7 @@
   <div id="lv" class="grid"></div>
   <div id="dior" class="grid"></div>
   <div id="palm" class="grid"></div>
+  <div id="moncler" class="grid"></div> <!-- NEU -->
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <span class="close" onclick="closeLightbox()">&times;</span>
