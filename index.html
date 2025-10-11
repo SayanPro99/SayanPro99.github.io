@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Amiri & LV Galerie</title>
+  <title>Amiri & Louis Vuitton Galerie</title>
   <style>
     :root{
       --btn-radius: 12px;
@@ -18,16 +18,28 @@
       padding: 30px;
       text-align: center;
       -webkit-tap-highlight-color: transparent;
+      margin: 0;
     }
 
-    h1 { margin-bottom: 20px; }
+    h1 {
+      margin-bottom: 20px;
+      margin-top: 80px;
+    }
 
+    /* Sticky Button Bar */
     .buttons {
-      margin-bottom: 30px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(247,247,247,0.95);
+      backdrop-filter: blur(6px);
+      padding: 15px 10px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       justify-content: center;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     button {
@@ -40,9 +52,9 @@
       cursor: pointer;
       font-size: var(--btn-font);
       transition: background 0.2s ease, transform 0.05s ease;
-      min-height: 48px;            /* Touch-Zielgröße */
-      min-width: 140px;            /* gut treffbar */
-      touch-action: manipulation;  /* verhindert Doppeltap-Zoom bei Buttons */
+      min-height: 48px;
+      min-width: 140px;
+      touch-action: manipulation;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
     button:hover { background: #444; }
@@ -54,6 +66,7 @@
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 15px;
       margin-top: 20px;
+      padding-bottom: 50px;
     }
     .grid.active { display: grid; animation: fadeIn 0.4s ease; }
 
@@ -105,38 +118,37 @@
       transition: color 0.2s ease, transform 0.05s ease;
       user-select: none;
       line-height: 1;
-      padding: 12px;              /* größere Trefferfläche */
+      padding: 12px;
       border-radius: 12px;
-      background: rgba(0,0,0,0.25);  /* leichte Fläche für Touch */
+      background: rgba(0,0,0,0.25);
       touch-action: manipulation;
     }
     .close { top: 20px; right: 20px; }
     .prev  { left: 10px; top: 50%; transform: translateY(-50%); }
     .next  { right: 10px; top: 50%; transform: translateY(-50%); }
     .close:hover, .prev:hover, .next:hover { color: #ddd; background: rgba(0,0,0,0.35); }
-    .close:active, .prev:active, .next:active { transform: translateY(-50%) scale(0.98); }
 
-    /* --- Mobile Optimierungen --- */
+    /* Mobile Optimierungen */
     @media (max-width: 600px) {
-      :root{
+      :root {
         --btn-radius: 14px;
         --btn-pad-y: 16px;
         --btn-pad-x: 24px;
         --btn-font: 18px;
       }
       body { padding: 20px; }
-      .buttons { gap: 12px; }
+      .buttons { gap: 12px; padding: 12px 8px; }
       button {
-        width: 100%;           /* volle Breite auf Handy */
-        max-width: 520px;      /* aber nicht unendlich breit */
+        width: 100%;
+        max-width: 520px;
       }
       .grid {
         gap: 12px;
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
       }
       .close, .prev, .next {
-        font-size: 48px;       /* größere Icons */
-        padding: 16px;         /* noch größere Hit-Box */
+        font-size: 48px;
+        padding: 16px;
       }
       .prev  { left: 6px; }
       .next  { right: 6px; }
@@ -145,7 +157,6 @@
   </style>
 
   <script>
-    /* --- Bildlisten --- */
     const amiriImages = [
       "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg",
       "150842e9.jpg","187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg",
@@ -188,12 +199,10 @@
       "eef3c46b.jpg","efa515c1.jpg","f0bdff2c.jpg","f51861e1.jpg","f60e3de4.jpg","f7e586dd.jpg","fb1f2728.jpg"
     ];
 
-    /* State */
     let currentIndex = 0;
-    let currentGallery = null; // 'amiri' | 'lv'
+    let currentGallery = null;
     const getCurrentArray = () => (currentGallery === 'lv' ? louisVuittonImages : amiriImages);
 
-    /* Kategorien ein-/ausblenden */
     function showCategory(category) {
       currentGallery = category;
       document.querySelectorAll('.grid').forEach(g => g.classList.remove('active'));
@@ -201,7 +210,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* Lightbox */
     function openLightbox(cat, index) {
       currentGallery = cat;
       currentIndex = index;
@@ -223,7 +231,6 @@
       }
     });
 
-    /* Rendern der Grids */
     function renderGrid(containerId, arr, catKey) {
       const el = document.getElementById(containerId);
       el.innerHTML = arr.map((src, i) =>
@@ -238,18 +245,16 @@
   </script>
 </head>
 <body>
-  <h1>Galerie</h1>
-
   <div class="buttons">
     <button onclick="showCategory('amiri')">Amiri</button>
     <button onclick="showCategory('lv')">Louis Vuitton</button>
   </div>
 
-  <!-- Grids (start hidden) -->
+  <h1>Galerie</h1>
+
   <div id="amiri" class="grid"></div>
   <div id="lv" class="grid"></div>
 
-  <!-- Lightbox -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <span class="close" onclick="closeLightbox()">&times;</span>
     <span class="prev" onclick="event.stopPropagation(); changeImg(-1)">&#10094;</span>
