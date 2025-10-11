@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Amiri, Louis Vuitton & Dior – Galerie mit Preisen</title>
+  <title>Designer Galerie – Amiri, LV, Dior & Palm Angels</title>
   <style>
     :root { --btn-radius: 12px; --btn-pad-y: 14px; --btn-pad-x: 28px; --btn-font: 16px; }
     body { font-family: 'Poppins', sans-serif; background: #f7f7f7; padding: 30px; text-align: center; margin: 0; }
@@ -69,7 +69,7 @@
   </style>
 
   <script>
-    /* ===== Bereits verwendete Bilder ===== */
+    /* ===== Amiri (bestehend) ===== */
     const amiriImages = [
       "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg",
       "150842e9.jpg","187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg",
@@ -93,6 +93,7 @@
       "f5b426a5.jpg","f9a28e84.jpg","fa4cf78b.jpg","fdd7df7b.jpg","fea4c382.jpg"
     ];
 
+    /* ===== Louis Vuitton (bestehend) ===== */
     const louisVuittonImages = [
       "013cbad0.jpg","034d5727.jpg","06888341.jpg","07a2d054.jpg","0a004be0.jpg","0b2d7702.jpg","0c9a572f.jpg",
       "0e51b120.jpg","0ed95905.jpg","13309381.jpg","1822a5b8.jpg","19468b25.jpg","1b502148.jpg","1bcc1a6e.jpg",
@@ -112,7 +113,7 @@
       "eef3c46b.jpg","efa515c1.jpg","f0bdff2c.jpg","f51861e1.jpg","f60e3de4.jpg","f7e586dd.jpg","fb1f2728.jpg"
     ];
 
-    /* ===== Deine große „Dior“-Liste (Kandidaten) ===== */
+    /* ===== Dior: aus deiner großen Liste – nur die, die NICHT in Amiri/LV sind ===== */
     const diorCandidates = [
       "0042de0c.jpg","00cffcce.jpg","013cbad0.jpg","017bc82a.jpg","034d5727.jpg","04909b45.jpg","067db8ac.jpg","06888341.jpg",
       "07a2d054.jpg","083cdb0b.jpg","0a004be0.jpg","0b2d7702.jpg","0c9a572f.jpg","0e51b120.jpg","0eafa9b2.jpg","0ed95905.jpg",
@@ -150,23 +151,38 @@
       "fcaec063.jpg","fdd7df7b.jpg","fea4c382.jpg"
     ];
 
-    /* ===== Preise je Marke ===== */
-    const prices = { amiri: 65, lv: 70, dior: 70 };
+    /* ===== Palm Angels: deine neue Liste ===== */
+    const palmImages = [
+      "0b752aa6.jpg","0be9f954.jpg","0d7aa720.jpg","0e50dfed.jpg","0ed13fb3.jpg","1c0de689.jpg","01dfcdb0.jpg","1e0758ec.jpg","1ff42a26.jpg","2ff869af.jpg",
+      "3a190b31.jpg","3b57e88d.jpg","3bfa8efc.jpg","3d161dd6.jpg","3f6b0b41.jpg","4a5a0224.jpg","5bba9296.jpg","5c0aeb87.jpg","5c1c732d.jpg","5f3047e8.jpg",
+      "6a01f3c5.jpg","6a52f3ea.jpg","6c9c3e78.jpg","6d7dd782.jpg","7a851584.jpg","07c16816.jpg","7cd657a5.jpg","7d1ca269.jpg","7f186f7d.jpg","8a991be5.jpg",
+      "08c840ac.jpg","9ae5088d.jpg","9b00700a.jpg","9bb0924e.jpg","09e51b55.jpg","10c29d89.jpg","13d7b554.jpg","15c5060f.jpg","19ee7720.jpg","27d51635.jpg",
+      "31fccad9.jpg","32f59e0f.jpg","33a1d374.jpg","47d53c60.jpg","50df6aaf.jpg","51d2db6a.jpg","51d9b1eb.jpg","51fd7c01.jpg","52edc94d.jpg","56fd1c10.jpg",
+      "57a69163.jpg","64c67967.jpg","66a915f8.jpg","86aaab00.jpg","87cbd8b3.jpg","89d2e3f5.jpg","90e798f1.jpg","98a7f074.jpg","98b1d44b.jpg","133bb974.jpg",
+      "143ba3e6.jpg","194a6f93.jpg","196f5357.jpg","345a9b48.jpg","447df0f3.jpg","470e661c.jpg","546b5db5.jpg","577fd2aa.jpg","804d43e3.jpg","856c09aa.jpg",
+      "899bf3a1.jpg","2139e874.jpg","2739a9de.jpg","3986cc24.jpg","5215d45a.jpg","6387f44b.jpg","6994cca9.jpg","7786ff15.jpg","37931d24.jpg","43596a4f.jpg",
+      "188654fa.jpg","731983cf.jpg","743595dd.jpg","843407ea.jpg","2199863c.jpg","5441175d.jpg","7339159a.jpg","28526311.jpg","36536638.jpg","85145171.jpg",
+      "89290399.jpg","a05d1ca1.jpg","a50d8f1f.jpg","a82ce613.jpg","a978c357.jpg","acf6b370.jpg","adb152d5.jpg","af087d27.jpg","b15a8e41.jpg","b89d906c.jpg"
+    ];
+
+    /* ===== Preise ===== */
+    const prices = { amiri: 65, lv: 70, dior: 70, palm: 65 };
+
+    /* ===== Dior automatisch berechnen (nur unbenutzte aus Kandidaten) ===== */
+    const amiriSet = new Set(amiriImages);
+    const lvSet    = new Set(louisVuittonImages);
+    const diorImages = diorCandidates.filter(fn => !amiriSet.has(fn) && !lvSet.has(fn));
 
     /* ===== State & Helpers ===== */
     let currentIndex = 0;
-    let currentGallery = null; // 'amiri' | 'lv' | 'dior'
-
-    const amiriSet = new Set(amiriImages);
-    const lvSet    = new Set(louisVuittonImages);
-
-    // Dior = nur Kandidaten, die weder in Amiri noch in LV sind
-    const diorImages = diorCandidates.filter(fn => !amiriSet.has(fn) && !lvSet.has(fn));
+    let currentGallery = null; // 'amiri' | 'lv' | 'dior' | 'palm'
 
     function getArrayByKey(key){
       if (key === 'amiri') return amiriImages;
       if (key === 'lv')    return louisVuittonImages;
-      return diorImages;
+      if (key === 'dior')  return diorImages;
+      if (key === 'palm')  return palmImages;
+      return [];
     }
     function getCurrentArray(){ return getArrayByKey(currentGallery); }
 
@@ -216,6 +232,7 @@
       renderGrid('amiri', amiriImages, 'amiri');
       renderGrid('lv', louisVuittonImages, 'lv');
       renderGrid('dior', diorImages, 'dior');
+      renderGrid('palm', palmImages, 'palm');
     });
   </script>
 </head>
@@ -224,6 +241,7 @@
     <button onclick="showCategory('amiri')">Amiri</button>
     <button onclick="showCategory('lv')">Louis Vuitton</button>
     <button onclick="showCategory('dior')">Dior</button>
+    <button onclick="showCategory('palm')">Palm Angels</button>
   </div>
 
   <h1>Galerie</h1>
@@ -231,6 +249,7 @@
   <div id="amiri" class="grid"></div>
   <div id="lv" class="grid"></div>
   <div id="dior" class="grid"></div>
+  <div id="palm" class="grid"></div>
 
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <span class="close" onclick="closeLightbox()">&times;</span>
