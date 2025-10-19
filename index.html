@@ -44,10 +44,12 @@
     /* =========================================================================
        Bildquellen:
        - Amiri → ./ordner3/
+       - Louis Vuitton → ./ordner2/
        - Gucci → ./ordner1/
        ====================================================================== */
 
     const AMIRI_BASE = "./ordner3/";
+    const LV_BASE    = "./ordner2/";
     const GUCCI_BASE = "./ordner1/";
 
     const srcPath = (folder, file) => `${folder}${file}`;
@@ -73,6 +75,19 @@
       "dfe6fb9b.jpg","e0b4c8b4.jpg","e2c1c8e6.jpg","e3ba21ad.jpg"
     ];
 
+    const louisVuittonImages = [
+      "00cffcce.jpg","0f70077a.jpg","1a4ddf3e.jpg","1c6acc68.jpg","1e0461be.jpg","2d1fdfa0.jpg",
+      "5a19d634.jpg","5ceb9aff.jpg","11b0ad5b.jpg","017bc82a.jpg","42c8b8ca.jpg","0042de0c.jpg",
+      "59eab049.jpg","60c0038c.jpg","083cdb0b.jpg","87f35616.jpg","91b86af5.jpg","291efbd0.jpg",
+      "324c80d4.jpg","505b41f0.jpg","520a8b04.jpg","719f84fe.jpg","878eb2a8.jpg","4577bd4d.jpg",
+      "04909b45.jpg","22620d06.jpg","29931f86.jpg","57528a60.jpg","66976b96.jpg","91931dbb.jpg",
+      "810866ab.jpg","871057bb.jpg","9074931f.jpg","88444800.jpg","a46f59ff.jpg","a1224672.jpg",
+      "aaafd54b.jpg","b8a98a51.jpg","b901be30.jpg","c7c5af39.jpg","c12b0e46.jpg","cef7defb.jpg",
+      "d5d47c3a.jpg","d21ebaeb.jpg","d6151d98.jpg","d8251b32.jpg","dd6207ed.jpg","e58a9919.jpg",
+      "e120ac43.jpg","e945ba34.jpg","eb35be6b.jpg","f6cbffaa.jpg","f741b6d1.jpg","f2700df2.jpg",
+      "fcaec063.jpg"
+    ];
+
     const gucciImages = [
       "0189e871.jpg","022cdf5c.jpg","03769abc.jpg","071d499b.jpg","0b9c6471.jpg","0d8e3428.jpg",
       "14a23b56.jpg","1587c97c.jpg","215c4013.jpg","2db98313.jpg","3934f44b.jpg","444a197a.jpg",
@@ -92,7 +107,7 @@
 
     const categories = {
       amiri:   { label:"Amiri",         base: AMIRI_BASE, images: amiriImages },
-      lv:      { label:"Louis Vuitton", base: "",         images: [] },
+      lv:      { label:"Louis Vuitton", base: LV_BASE,    images: louisVuittonImages },
       dior:    { label:"Dior",          base: "",         images: diorImages },
       palm:    { label:"Palm Angels",   base: "",         images: palmImages },
       moncler: { label:"Moncler",       base: "",         images: monclerImages },
