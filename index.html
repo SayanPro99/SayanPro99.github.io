@@ -42,12 +42,12 @@
 
   <script>
     /* =========================================================================
-       Bild-Basisordner: per data-img-base am <body> steuerbar (Default "./")
-       Beispiel:
-       <body data-img-base="./img/">  oder  <body data-img-base="./ordner10/">
+       Alle Bilder liegen im Ordner "ordner1/"
        ====================================================================== */
 
-    // Bestehende Arrays nutzen, falls bereits definiert; sonst leere Arrays
+    const IMG_BASE = "./ordner1/";
+
+    // Wenn du deine Bildnamen-Arrays bereits hast, kannst du sie hier einsetzen:
     const amiriImages        = window.amiriImages        || [];
     const louisVuittonImages = window.louisVuittonImages || [];
     const palmImages         = window.palmImages         || [];
@@ -71,9 +71,8 @@
       gucci:   { label:"Gucci",         images: gucciImages }
     };
 
-    // Hilfsfunktionen
-    const getImgBase = () => (document.body?.dataset?.imgBase || "./").replace(/^\//,"");
-    const srcPath = (file) => `${getImgBase()}${file}`;
+    // Hilfsfunktion für Bildpfade
+    const srcPath = (file) => `${IMG_BASE}${file}`;
 
     // Lightbox
     let currentGallery = null, currentIndex = 0;
@@ -150,8 +149,7 @@
   </script>
 </head>
 
-<!-- Bildbasis hier anpassen: z.B. data-img-base="./ordner10/" -->
-<body data-img-base="./">
+<body>
   <div class="hero">
     <h1>Wähle ein Brand aus</h1>
     <p>Wähle eine Marke und stöbere durch die Galerie.</p>
