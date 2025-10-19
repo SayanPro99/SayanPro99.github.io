@@ -24,24 +24,40 @@
     .brand-right{font-size:28px;opacity:.8}
 
     /* Dropdown unter der Karte */
-    .dd{
-      position:relative;
-      z-index:5;
-    }
+    .dd{ position:relative; z-index:5; }
     .dd-panel{
       margin-top:8px;
       background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px;
       box-shadow:0 16px 30px rgba(0,0,0,.12);
-      padding:8px;
+      padding:10px;
       animation:pop .18s ease;
     }
-    .dd-items{display:flex;gap:8px;flex-wrap:wrap}
+    .dd-items{display:flex;gap:10px;flex-wrap:wrap}
     .dd-item{
       border:1px solid #e5e5e5; background:#fff; border-radius:999px;
-      padding:8px 14px; font-size:14px; cursor:pointer;
+      padding:12px 18px;               /* ↑ mehr Padding */
+      font-size:16px;                  /* ↑ größere Schrift */
+      line-height:1.1;
+      cursor:pointer;
+      min-height:44px;                 /* Touch-Ziel Mindestgröße */
+      min-width:120px;                 /* etwas breiter für bequemes Tippen */
+      touch-action:manipulation;
     }
+    .dd-item:active{transform:translateY(1px)}
     .dd-item[disabled]{opacity:.5; cursor:not-allowed}
-    .dd-hint{color:#444; font-size:13px; margin-top:6px}
+    .dd-hint{color:#444; font-size:14px; margin-top:6px}
+
+    @media(max-width:700px){
+      .dd-panel{ padding:12px }
+      .dd-items{ gap:12px }
+      .dd-item{
+        padding:14px 22px;             /* auf Handy noch größer */
+        font-size:17px;
+        min-height:48px;
+        min-width:130px;
+      }
+    }
+
     @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 
     .grid{display:none;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;margin:24px auto 36px;max-width:1200px;padding:0 6px 50px}
@@ -144,7 +160,7 @@
     ];
 
     /* Off-White Unterkategorien */
-    const offwhiteTShirts = [ /* ordner7 (gekürzt nicht) */ 
+    const offwhiteTShirts = [
       "00bbeef9.jpg","00c5cc8e.png","046b33bc.jpg","05f30315.jpg","06fd14b6.jpg","07921711.jpg",
       "07abc455.jpg","0b0eca43.jpg","0b501319.jpg","0cb57f02.jpg","0f1d1ead.jpg","0fbfa35a.jpg",
       "106a24ed.jpg","118551b2.jpg","13c0eae6.jpg","143f4717.jpg","15cd55a5.jpg","175b7529.jpg",
@@ -177,7 +193,7 @@
       "f26849b0.jpg","f277e987.jpg","f4ab66ac.jpg","f5bd2c5c.jpg","f6f1e12a.png","f7d933b2.jpg",
       "f8ec176e.jpg","fac23d62.jpg","fc6e3bd6.jpg","fc97ce7a.jpg","fd6faaf7.jpg"
     ];
-    const offwhiteHoodies = [ /* ordner9 */ 
+    const offwhiteHoodies = [
       "043106cf.png","08d0c5f8.png","1315181c.jpg","19b771a6.jpg","21dfd724.png","29132f01.png",
       "2a495045.jpg","39766037.png","3d81c5dd.png","3dbcc342.png","41c62cdc.jpg","50acf72c.png",
       "55b26f41.jpg","56c6a4c4.png","5de7d134.jpg","6d3683c0.png","73302d33.jpg","84537e0f.jpg",
@@ -188,7 +204,7 @@
 
     /* Balenciaga Unterkategorien */
     const balenciagaTShirts = []; // optional
-    const balenciagaHoodies = [ /* ordner10 */ 
+    const balenciagaHoodies = [
       "046baa4a.jpg","0d920e60.jpg","0e4d4d2a.jpg","1050bcc9.jpg","11b5ac8a.jpg","15459ba5.jpg",
       "1c59ab3b.jpg","2045a7fb.jpg","265b3d2b.jpg","26baeb5f.jpg","2cae211c.jpg","2de6c523.jpg",
       "3049c3b7.jpg","3587c01b.jpg","3959d208.jpg","3b56643b.jpg","4155290b.jpg","44fbaa4a.jpg",
@@ -260,12 +276,10 @@
     let openDropdownKey = null;
 
     function showCategory(key){
-      // Marken mit Dropdown: öffne Auswahl statt direkt Galerie
       if(key === "offwhite" || key === "balenciaga"){
         toggleDropdown(key);
         return;
       }
-      // Normale Marken → direkt Galerie
       openDropdownKey && closeDropdown();
       currentGallery = key;
       document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
@@ -280,16 +294,9 @@
       const card = list.querySelector(`[data-brand="${key}"]`);
       if(!card) return;
 
-      // Wenn anderes Dropdown offen → schließen
       if(openDropdownKey && openDropdownKey !== key) closeDropdown();
+      if(openDropdownKey === key){ closeDropdown(); return; }
 
-      // Wenn gleiches offen → schließen
-      if(openDropdownKey === key){
-        closeDropdown();
-        return;
-      }
-
-      // Panel erstellen
       const dd = document.createElement("div");
       dd.className = "dd";
       dd.id = `dd-${key}`;
@@ -306,7 +313,6 @@
       card.insertAdjacentElement("afterend", dd);
       openDropdownKey = key;
 
-      // Outside click schließt Dropdown
       setTimeout(()=>{ document.addEventListener("click", outsideCloser, { once:true }); }, 0);
       function outsideCloser(ev){
         if(!dd.contains(ev.target) && ev.target !== card){ closeDropdown(); }
@@ -323,12 +329,11 @@
     // Auswahl im Dropdown
     window.selectSubset = function(brand, subset){
       if(brand === "offwhite"){
-        offwhiteSubset = subset; // "tshirts" | "hoodies"
+        offwhiteSubset = subset;
         openDropdownKey && closeDropdown();
-        // Galerie zeigen
         currentGallery = "offwhite";
         document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
-        renderOffwhiteGrid(); // rendert je nach subset
+        renderOffwhiteGrid();
         document.getElementById("offwhite").classList.add("active");
         document.getElementById("offwhite").scrollIntoView({behavior:"smooth",block:"start"});
         return;
