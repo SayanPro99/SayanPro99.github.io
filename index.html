@@ -322,7 +322,7 @@
             <button class="dd-item" ${!hasT ? "disabled" : ""} onclick="selectSubset('${key}','tshirts')">${tshirtLabel}</button>
             <button class="dd-item" onclick="selectSubset('${key}','hoodies')">${hoodieLabel}</button>
           </div>
-          <div class="dd-hint">Wähle eine Unterkategorie – die Galerie erscheint sofort.</div>
+          <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
         </div>
       `;
       card.insertAdjacentElement("afterend", dd);
@@ -341,7 +341,7 @@
       openDropdownKey = null;
     }
 
-    // Auswahl im Dropdown → sofort rendern
+    // Auswahl im Dropdown
     window.selectSubset = function(brand, subset){
       if(brand === "offwhite"){
         offwhiteSubset = subset;
@@ -465,8 +465,7 @@
       if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
       el.innerHTML = arr.map((src,i)=>`
         <div class="item">
-          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Balenciaga ${balenciagaSub
-category} ${i+1}" onclick="openLightbox('balenciaga',${i})">
+          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Balenciaga ${balenciagaSubset} ${i+1}" onclick="openLightbox('balenciaga',${i})">
           ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
         </div>
       `).join('');
