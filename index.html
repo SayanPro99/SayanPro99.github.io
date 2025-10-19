@@ -47,7 +47,7 @@
        - LV          → ./ordner2/
        - Moncler     → ./ordner4/
        - Gucci       → ./ordner1/
-       - Off-White   → ./ordner5/
+       - Off-White   → ./ordner7/   (KORRIGIERT)
        - Palm Angels → ./ordner6/
        ====================================================================== */
 
@@ -55,7 +55,7 @@
     const LV_BASE       = "./ordner2/";
     const MONCLER_BASE  = "./ordner4/";
     const GUCCI_BASE    = "./ordner1/";
-    const OFFWHITE_BASE = "./ordner5/";
+    const OFFWHITE_BASE = "./ordner7/";
     const PALM_BASE     = "./ordner6/";
 
     const srcPath = (folder, file) => `${folder}${file}`;
@@ -117,24 +117,39 @@
       "fc483e00.jpg","fd0d035c.jpg"
     ];
 
+    /* Off-White korrigiert (ordner7) */
     const offwhiteImages = [
-      "01dfcdb0.jpg","07c16816.jpg","08c840ac.jpg","09e51b55.jpg","0b752aa6.jpg","0be9f954.jpg",
-      "0d7aa720.jpg","0e50dfed.jpg","0ed13fb3.jpg","10c29d89.jpg","133bb974.jpg","13d7b554.jpg",
-      "143ba3e6.jpg","15c5060f.jpg","188654fa.jpg","194a6f93.jpg","196f5357.jpg","19ee7720.jpg",
-      "1c0de689.jpg","1e0758ec.jpg","1ff42a26.jpg","2139e874.jpg","2199863c.jpg","2739a9de.jpg",
-      "27d51635.jpg","28526311.jpg","2ff869af.jpg","31fccad9.jpg","32f59e0f.jpg","33a1d374.jpg",
-      "345a9b48.jpg","36536638.jpg","37931d24.jpg","3986cc24.jpg","3a190b31.jpg","3b57e88d.jpg",
-      "3bfa8efc.jpg","3d161dd6.jpg","3f6b0b41.jpg","43596a4f.jpg","447df0f3.jpg","470e661c.jpg",
-      "47d53c60.jpg","4a5a0224.jpg","50df6aaf.jpg","51d2db6a.jpg","51d9b1eb.jpg","51fd7c01.jpg",
-      "5215d45a.jpg","52edc94d.jpg","5441175d.jpg","546b5db5.jpg","56fd1c10.jpg","577fd2aa.jpg",
-      "57a69163.jpg","5bba9296.jpg","5c0aeb87.jpg","5c1c732d.jpg","5f3047e8.jpg","6387f44b.jpg",
-      "64c67967.jpg","66a915f8.jpg","6994cca9.jpg","6a01f3c5.jpg","6a52f3ea.jpg","6c9c3e78.jpg",
-      "6d7dd782.jpg","731983cf.jpg","7339159a.jpg","743595dd.jpg","7786ff15.jpg","7a851584.jpg",
-      "7cd657a5.jpg","7d1ca269.jpg","7f186f7d.jpg","804d43e3.jpg","843407ea.jpg","85145171.jpg",
-      "856c09aa.jpg","86aaab00.jpg","87cbd8b3.jpg","89290399.jpg","899bf3a1.jpg","89d2e3f5.jpg",
-      "8a991be5.jpg","90e798f1.jpg","98a7f074.jpg","98b1d44b.jpg","9ae5088d.jpg","9b00700a.jpg",
-      "9bb0924e.jpg","a05d1ca1.jpg","a50d8f1f.jpg","a82ce613.jpg","a978c357.jpg","acf6b370.jpg",
-      "adb152d5.jpg","af087d27.jpg","b15a8e41.jpg","b89d906c.jpg"
+      "00bbeef9.jpg","00c5cc8e.png","046b33bc.jpg","05f30315.jpg","06fd14b6.jpg","07921711.jpg",
+      "07abc455.jpg","0b0eca43.jpg","0b501319.jpg","0cb57f02.jpg","0f1d1ead.jpg","0fbfa35a.jpg",
+      "106a24ed.jpg","118551b2.jpg","13c0eae6.jpg","143f4717.jpg","15cd55a5.jpg","175b7529.jpg",
+      "1a7d2d20.jpg","1aa9f7bd.jpg","1bf68df1.jpg","1c9c9a60.jpg","1f37b49f.jpg","20fb626a.jpg",
+      "246d9b2c.jpg","2637654a.jpg","269e74c4.jpg","2ca44bb3.jpg","2cf3580c.jpg","2da20477.jpg",
+      "2dee75df.jpg","2f378357.jpg","31afd3bb.jpg","32a454da.jpg","32e33ff7.jpg","33855441.jpg",
+      "38ed3f6c.jpg","398bc95c.jpg","3b62e76d.jpg","3ca15493.jpg","3ea90420.jpg","40594810.jpg",
+      "40c9d2d0.jpg","447529ce.jpg","453570e7.jpg","45ed78b2.jpg","481fa3e0.jpg","483d050f.jpg",
+      "487e3b90.jpg","48c89e23.jpg","4adc50bf.jpg","4b4e83e3.jpg","4bebb0a3.jpg","529103f2.png",
+      "52cbe8f8.jpg","535f9eec.jpg","57559e14.jpg","585dce94.jpg","59920d91.jpg","5a6bafaa.jpg",
+      "5cffb842.jpg","5dcb1298.jpg","5f10740d.jpg","5fbf2bce.png","603a5a00.jpg","6199433f.jpg",
+      "637b690a.png","64f5e9ef.png","65384e61.jpg","65c6d0cb.jpg","67227f29.jpg","678a9145.jpg",
+      "68a5cdb3.png","6a8a9dfb.jpg","6b812bc1.jpg","70c25c02.jpg","72cce236.jpg","7a6ccdd7.jpg",
+      "7b9cb567.jpg","7bc3e478.jpg","7c6a2b28.jpg","7cb18e2d.jpg","7d3ac89d.jpg","7db088bb.jpg",
+      "7dd91543.jpg","7e787ac3.jpg","84220c52.jpg","86be63f8.jpg","86bf744f.jpg","88beae3a.jpg",
+      "8a82ddb4.jpg","90a72d00.jpg","96eeec68.jpg","97f7e640.jpg","98d69ff8.jpg","9a541bc5.jpg",
+      "9a6bafc8.jpg","9d6ac0bb.jpg","9e8cb3a2.jpg","a072ed0e.jpg","a0b8f4ee.jpg","a12a91f4.jpg",
+      "a2e821a9.jpg","a37f6e9a.jpg","a5062dac.jpg","a5ff7f26.jpg","a7eaff99.jpg","a9eb54ca.jpg",
+      "b1d66d70.png","b1e3db60.jpg","b330436d.jpg","b456b658.jpg","b5950df4.jpg","b67d4066.png",
+      "b6cb7164.jpg","b79ecbe3.jpg","b8791f14.jpg","b8ef81f6.jpg","ba92a930.png","ba9e7288.jpg",
+      "bbe17fc1.jpg","bceb4379.jpg","bdccc2a6.jpg","bf9d0990.jpg","bfd513d3.jpg","c111ffd3.jpg",
+      "c1d3c3cd.jpg","c3456319.jpg","c3ab97d1.jpg","c4c8cd50.jpg","c4d09fd6.jpg","c5c45faa.jpg",
+      "c696b7ee.jpg","c9c4fbce.jpg","ca378b48.jpg","cab62b95.jpg","cbf86a8b.jpg","cd07341c.jpg",
+      "cf4258bd.jpg","cf91f610.jpg","d1597d87.jpg","d174d4e1.jpg","d2a87b7e.jpg","d3529ddf.jpg",
+      "d392b1f3.jpg","d3ecfe80.jpg","d4274b8c.jpg","d444772e.jpg","d66bf81c.jpg","d6778ca3.jpg",
+      "d878aca7.jpg","d973351a.jpg","da6c1047.jpg","de576d38.jpg","e02e20db.jpg","e047a250.jpg",
+      "e23d7fbf.png","e271bd06.jpg","e2f89657.jpg","e31d6833.jpg","e322d1de.jpg","e5b8c9c8.jpg",
+      "e733fecb.jpg","e79d1617.jpg","e7c1b3dc.jpg","e8a58133.jpg","eaa774b9.jpg","ede2591c.jpg",
+      "ee34626a.jpg","ee997816.jpg","efecbffc.jpg","f135dcf2.jpg","f17dbc1a.jpg","f23bdc8e.jpg",
+      "f26849b0.jpg","f277e987.jpg","f4ab66ac.jpg","f5bd2c5c.jpg","f6f1e12a.png","f7d933b2.jpg",
+      "f8ec176e.jpg","fac23d62.jpg","fc6e3bd6.jpg","fc97ce7a.jpg","fd6faaf7.jpg"
     ];
 
     const palmImages = [
