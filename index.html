@@ -7,211 +7,151 @@
 
   <style>
     :root { --card-bg:#111; --card-fg:#fff; --muted:#b8b8b8; --radius:16px; }
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background:#f7f7f7; margin:0; padding:24px; color:#111;
-    }
+    * { box-sizing:border-box; }
+    body { font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:#f7f7f7; margin:0; padding:24px; color:#111; }
 
-    .hero { max-width:1000px; margin:8px auto 18px; text-align:left; padding:8px 4px; }
-    .hero h1 { margin:0 0 6px; font-size:clamp(26px,3.5vw,38px); }
-    .hero p  { margin:0; color:#555; font-size:clamp(14px,2.4vw,16px); }
+    .hero{max-width:1000px;margin:8px auto 18px;text-align:left;padding:8px 4px}
+    .hero h1{margin:0 0 6px;font-size:clamp(26px,3.5vw,38px)}
+    .hero p{margin:0;color:#555;font-size:clamp(14px,2.4vw,16px)}
 
-    .brand-list-wrap {
-      max-width:1000px; margin:0 auto 18px; background:#fff; border-radius:var(--radius);
-      box-shadow:0 6px 20px rgba(0,0,0,.08); border:1px solid rgba(0,0,0,.05); padding:12px;
-    }
-    .brand-list { display:grid; grid-template-columns:1fr; gap:12px; max-height:70vh; overflow-y:auto; padding-right:4px; }
-    .brand-card {
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
-      background:var(--card-bg); color:var(--card-fg); padding:18px 20px; border-radius:var(--radius);
-      box-shadow:0 8px 18px rgba(0,0,0,.18); cursor:pointer; user-select:none;
-      transition:transform .06s, box-shadow .15s, opacity .2s; outline:none;
-    }
-    .brand-card:hover { transform:translateY(-1px); box-shadow:0 10px 22px rgba(0,0,0,.22); }
-    .brand-left { display:flex; flex-direction:column; gap:6px; text-align:left; }
-    .brand-title { font-size:clamp(18px,2.8vw,24px); font-weight:700; }
-    .brand-right { font-size:28px; opacity:.8; }
+    .brand-list-wrap{max-width:1000px;margin:0 auto 18px;background:#fff;border-radius:var(--radius);box-shadow:0 6px 20px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.05);padding:12px}
+    .brand-list{display:grid;grid-template-columns:1fr;gap:12px;max-height:70vh;overflow-y:auto;padding-right:4px}
+    .brand-card{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--card-bg);color:var(--card-fg);padding:18px 20px;border-radius:var(--radius);box-shadow:0 8px 18px rgba(0,0,0,.18);cursor:pointer;user-select:none;transition:transform .06s,box-shadow .15s,opacity .2s;outline:none}
+    .brand-card:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(0,0,0,.22)}
+    .brand-left{display:flex;flex-direction:column;gap:6px;text-align:left}
+    .brand-title{font-size:clamp(18px,2.8vw,24px);font-weight:700}
+    .brand-meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:clamp(13px,2.4vw,14px)}
+    .brand-right{font-size:28px;opacity:.8}
 
-    .grid {
-      display:none;
-      grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-      gap:15px; margin:24px auto 36px; max-width:1200px; padding:0 6px 50px;
-    }
-    .grid.active { display:grid; animation:fadeIn .35s ease; }
-    .item { display:flex; flex-direction:column; align-items:center; }
-    .thumb {
-      width:100%; border-radius:12px; cursor:pointer;
-      box-shadow:0 2px 8px rgba(0,0,0,.14); aspect-ratio: 1 / 1; object-fit:cover;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .thumb:hover { transform: translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.2); }
+    .grid{display:none;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;margin:24px auto 36px;max-width:1200px;padding:0 6px 50px}
+    .grid.active{display:grid;animation:fadeIn .35s ease}
+    .item{display:flex;flex-direction:column;align-items:center}
+    .thumb{width:100%;aspect-ratio:1/1;border-radius:10px;box-shadow:0 3px 6px rgba(0,0,0,.15);cursor:pointer;transition:transform .18s;object-fit:cover;background:#eee}
+    .thumb:hover{transform:scale(1.03)}
+    .placeholder{display:grid;place-items:center;width:100%;aspect-ratio:1/1;border:1px dashed #ddd;border-radius:10px;color:#888;font-size:14px;background:#fafafa}
 
-    @keyframes fadeIn { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:translateY(0) } }
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-    /* Lightbox */
-    .lightbox {
-      display:none; position:fixed; z-index:1000; inset:0;
-      background:rgba(0,0,0,.92); justify-content:center; align-items:center; flex-direction:column;
-      padding:18px;
-    }
-    .lightbox img {
-      max-width:92vw; max-height:86vh; border-radius:12px; box-shadow:0 0 20px rgba(255,255,255,.2);
-      animation:zoomIn .2s ease;
-    }
-    @keyframes zoomIn { from { transform:scale(.9); opacity:0 } to { transform:scale(1); opacity:1 } }
-    .close,.prev,.next {
-      position:absolute; color:white; font-size:40px; font-weight:700; cursor:pointer;
-      padding:10px 14px; border-radius:12px; background:rgba(0,0,0,.28); line-height:1;
-      user-select:none;
-    }
-    .close { top:16px; right:16px; }
-    .prev  { left:8px; top:50%; transform:translateY(-50%); }
-    .next  { right:8px; top:50%; transform:translateY(-50%); }
-    .close:hover,.prev:hover,.next:hover { background:rgba(255,255,255,.15); }
-    .lb-meta {
-      color:#dcdcdc; font-size:14px; margin-top:10px; text-align:center;
-    }
-
-    /* kleine Qualitäts-of-Life-Tweaks */
-    ::-webkit-scrollbar { width:10px; height:10px; }
-    ::-webkit-scrollbar-thumb { background:#cfcfcf; border-radius:10px; }
+    .lightbox{display:none;position:fixed;z-index:1000;inset:0;background:rgba(0,0,0,.9);justify-content:center;align-items:center;flex-direction:column}
+    .lightbox img{max-width:90%;max-height:90%;border-radius:10px;box-shadow:0 0 20px rgba(255,255,255,.2);animation:zoomIn .3s}
+    @keyframes zoomIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+    .close,.prev,.next{position:absolute;color:white;font-size:40px;font-weight:bold;cursor:pointer;padding:12px;border-radius:12px;background:rgba(0,0,0,.25)}
+    .close{top:20px;right:20px}.prev{left:10px;top:50%;transform:translateY(-50%)}.next{right:10px;top:50%;transform:translateY(-50%)}
+    @media(max-width:700px){.grid{gap:12px;grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}.close,.prev,.next{font-size:46px}}
   </style>
 
   <script>
-    /* ========================
-       Kategorien + Bilder
-       ======================== */
+    /* =========================================================================
+       Bild-Basisordner: per data-img-base am <body> steuerbar (Default "./")
+       Beispiel:
+       <body data-img-base="./img/">  oder  <body data-img-base="./ordner10/">
+       ====================================================================== */
 
-    // Passe den Pfad an, falls deine Bilder woanders liegen:
-    const GUCCI_BASE = "images/gucci/";
+    // Bestehende Arrays nutzen, falls bereits definiert; sonst leere Arrays
+    const amiriImages        = window.amiriImages        || [];
+    const louisVuittonImages = window.louisVuittonImages || [];
+    const palmImages         = window.palmImages         || [];
+    const monclerImages      = window.monclerImages      || [];
+    const gucciImages        = window.gucciImages        || [];
+    const diorCandidates     = window.diorCandidates     || [];
 
+    // Dior = Kandidaten minus bereits verwendete
+    const used = new Set([
+      ...amiriImages, ...louisVuittonImages, ...palmImages, ...monclerImages, ...gucciImages
+    ]);
+    const diorImages = diorCandidates.filter(fn => !used.has(fn));
+
+    // Kategorien (ohne Preise)
     const categories = {
-      amiri:   { label:"Amiri",         images:[] },
-      lv:      { label:"Louis Vuitton", images:[] },
-      dior:    { label:"Dior",          images:[] },
-      palm:    { label:"Palm Angels",   images:[] },
-      moncler: { label:"Moncler",       images:[] },
-
-      // >>> Deine Gucci-Bilder:
-      gucci: {
-        label: "Gucci",
-        images: [
-          "0b9c6471.jpg","0d8e3428.jpg","2db98313.jpg","4f44e778.jpg","5e12d580.jpg",
-          "6c18f807.jpg","6c93c8ae.jpg","7bfb215b.jpg","7f76ccef.jpg","8e613c42.jpg",
-          "9a9d5273-1.jpg","9a9d5273.jpg","9f7b9df3.jpg","9f09fe0e.jpg","14a23b56.jpg",
-          "022cdf5c.jpg","45c734ab.jpg","47abf091.jpg","51a2ca6b.jpg","071d499b.jpg",
-          "85cd124a.jpg","95eaef20.jpg","0189e871.jpg","215c4013.jpg","444a197a.jpg",
-          "473f5582.jpg","665c54df.jpg","1587c97c.jpg","03769abc.jpg","3934f44b.jpg",
-          "4928eaf3.jpg","590806d4.jpg","759642c4.jpg","6660618d.jpg","85269201.jpg",
-          "a1b30634.jpg","a7d8e40f.jpg","aa5e416c.jpg","b2cb7cab.jpg","b2185f8d.jpg",
-          "c0bb1fe6.jpg","c2cd1b8b.jpg","c9e2a0a7.jpg","c969f230.jpg","c3087aed.jpg",
-          "cc5d6252.jpg","d94d5523.jpg","d5890633.jpg","da455f75.jpg","df391f60.jpg",
-          "e2590a9b.jpg","edb7ba23.jpg","f951ad39.jpg","f7434019.jpg","fc483e00.jpg",
-          "fd0d035c.jpg"
-        ].map(file => GUCCI_BASE + file)
-      }
+      amiri:   { label:"Amiri",         images: amiriImages },
+      lv:      { label:"Louis Vuitton", images: louisVuittonImages },
+      dior:    { label:"Dior",          images: diorImages },
+      palm:    { label:"Palm Angels",   images: palmImages },
+      moncler: { label:"Moncler",       images: monclerImages },
+      gucci:   { label:"Gucci",         images: gucciImages }
     };
 
-    /* ========================
-       Galerie + Lightbox Logik
-       ======================== */
-    let currentGallery = null;
-    let currentIndex = 0;
+    // Hilfsfunktionen
+    const getImgBase = () => (document.body?.dataset?.imgBase || "./").replace(/^\//,"");
+    const srcPath = (file) => `${getImgBase()}${file}`;
+
+    // Lightbox
+    let currentGallery = null, currentIndex = 0;
 
     function showCategory(key){
       currentGallery = key;
-      document.querySelectorAll(".grid").forEach(g => g.classList.remove("active"));
+      document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
       const grid = document.getElementById(key);
       grid.classList.add("active");
-      grid.scrollIntoView({ behavior:"smooth", block:"start" });
+      grid.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+
+    function openLightbox(cat,i){
+      const arr = categories[cat].images;
+      if(!arr || !arr.length) return;
+      currentGallery = cat; currentIndex = i;
+      document.getElementById("lightboxImg").src = srcPath(arr[i]);
+      document.getElementById("lightbox").style.display = "flex";
+    }
+
+    function closeLightbox(){ document.getElementById("lightbox").style.display="none"; }
+
+    function changeImg(d){
+      const arr = categories[currentGallery]?.images || [];
+      if(!arr.length) return;
+      currentIndex = (currentIndex + d + arr.length) % arr.length;
+      document.getElementById("lightboxImg").src = srcPath(arr[currentIndex]);
+    }
+
+    document.addEventListener("keydown",e=>{
+      if(document.getElementById("lightbox").style.display==="flex"){
+        if(e.key==="ArrowRight") changeImg(1);
+        if(e.key==="ArrowLeft")  changeImg(-1);
+        if(e.key==="Escape")     closeLightbox();
+      }
+    });
+
+    function renderGrid(id,arr,key){
+      const el = document.getElementById(id);
+      if(!arr || arr.length===0){
+        el.innerHTML = "<div class='placeholder' style='grid-column:1/-1;height:160px;'>Keine Bilder verfügbar.</div>";
+        return;
+      }
+      el.innerHTML = arr.map((src,i)=>`
+        <div class="item">
+          <img class="thumb" src="${srcPath(src)}" loading="lazy" alt="${key} Bild ${i+1}" onclick="openLightbox('${key}',${i})">
+        </div>`).join('');
     }
 
     function buildBrandList(){
-      const wrap = document.getElementById("brandList");
-      wrap.innerHTML = "";
+      const wrap=document.getElementById("brandList");
+      wrap.innerHTML="";
       Object.entries(categories).forEach(([key,cfg])=>{
-        const card = document.createElement("div");
-        card.className = "brand-card";
-        card.onclick = () => showCategory(key);
-        card.setAttribute("role","button");
-        card.setAttribute("tabindex","0");
-        card.onkeydown = (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); showCategory(key);} };
-
-        const count = cfg.images?.length || 0;
-        card.innerHTML = `
+        const count = (cfg.images?.length || 0);
+        const card=document.createElement("div");
+        card.className="brand-card";
+        card.onclick=()=>showCategory(key);
+        card.setAttribute('role','button'); card.setAttribute('tabindex','0');
+        card.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' ') { e.preventDefault(); showCategory(key);} };
+        card.innerHTML=`
           <div class="brand-left">
             <div class="brand-title">${cfg.label}</div>
-            <div class="brand-meta" aria-hidden="true" style="color:var(--muted);font-size:13px;">
-              ${count ? count + " Bilder" : "Keine Bilder"}
-            </div>
+            <div class="brand-meta">${count ? `${count} Bilder` : `Keine Bilder`}</div>
           </div>
           <div class="brand-right">›</div>`;
         wrap.appendChild(card);
       });
     }
 
-    function renderGrid(id, arr){
-      const grid = document.getElementById(id);
-      if(!arr || arr.length===0){
-        grid.innerHTML = "<p style='text-align:center;color:#666;'>Keine Bilder verfügbar.</p>";
-        return;
-      }
-      grid.innerHTML = arr.map((src,i)=>`
-        <div class="item">
-          <img class="thumb" src="${src}" alt="${id} Bild ${i+1}" loading="lazy"
-               onclick="openLightbox('${id}', ${i})" />
-        </div>
-      `).join("");
-    }
-
-    function openLightbox(category, index){
-      currentGallery = category;
-      currentIndex = index;
-      const lb = document.getElementById("lightbox");
-      const img = document.getElementById("lightboxImg");
-      img.src = categories[category].images[index];
-      lb.style.display = "flex";
-      updateMeta();
-    }
-
-    function closeLightbox(){
-      document.getElementById("lightbox").style.display = "none";
-    }
-
-    function updateMeta(){
-      const arr = categories[currentGallery]?.images || [];
-      const meta = document.getElementById("lbMeta");
-      meta.textContent = `${currentIndex+1} / ${arr.length}`;
-    }
-
-    function navigate(direction){
-      const arr = categories[currentGallery]?.images || [];
-      if(!arr.length) return;
-      currentIndex = (currentIndex + direction + arr.length) % arr.length;
-      document.getElementById("lightboxImg").src = arr[currentIndex];
-      updateMeta();
-    }
-
-    // Tastatur & Klick-Hintergrund schließen
-    document.addEventListener("keydown",(e)=>{
-      const lbVisible = document.getElementById("lightbox").style.display === "flex";
-      if(!lbVisible) return;
-      if(e.key === "Escape") closeLightbox();
-      if(e.key === "ArrowLeft") navigate(-1);
-      if(e.key === "ArrowRight") navigate(1);
-    });
-
     document.addEventListener("DOMContentLoaded",()=>{
       buildBrandList();
-      Object.entries(categories).forEach(([k,cfg])=>renderGrid(k,cfg.images));
-      // Optional: Gucci sofort anzeigen
-      // showCategory("gucci");
+      Object.entries(categories).forEach(([k,cfg])=>renderGrid(k,cfg.images,k));
     });
   </script>
 </head>
 
-<body>
+<!-- Bildbasis hier anpassen: z.B. data-img-base="./ordner10/" -->
+<body data-img-base="./">
   <div class="hero">
     <h1>Wähle ein Brand aus</h1>
     <p>Wähle eine Marke und stöbere durch die Galerie.</p>
@@ -230,12 +170,11 @@
   <div id="gucci" class="grid"></div>
 
   <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" onclick="if(event.target===this) closeLightbox()">
-    <span class="close"  onclick="closeLightbox()" aria-label="Schließen">&times;</span>
-    <span class="prev"   onclick="navigate(-1)" aria-label="Vorheriges Bild">&#10094;</span>
-    <img id="lightboxImg" src="" alt="Großansicht" />
-    <span class="next"   onclick="navigate(1)" aria-label="Nächstes Bild">&#10095;</span>
-    <div id="lbMeta" class="lb-meta" aria-live="polite"></div>
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <span class="prev" onclick="event.stopPropagation();changeImg(-1)">&#10094;</span>
+    <img id="lightboxImg" alt="">
+    <span class="next" onclick="event.stopPropagation();changeImg(1)">&#10095;</span>
   </div>
 </body>
 </html>
