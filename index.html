@@ -30,6 +30,12 @@
     .thumb:hover{transform:scale(1.03)}
     .placeholder{display:grid;place-items:center;width:100%;aspect-ratio:1/1;border:1px dashed #ddd;border-radius:10px;color:#888;font-size:14px;background:#fafafa}
 
+    /* Off-White Subnav */
+    .subnav{grid-column:1/-1;display:flex;gap:8px;align-items:center;margin:-6px 0 8px}
+    .pill{border:1px solid #ddd;background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px}
+    .pill.active{background:#111;color:#fff;border-color:#111}
+    .subheading{grid-column:1/-1;margin:6px 0 2px;color:#555;font-weight:600}
+
     @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
     .lightbox{display:none;position:fixed;z-index:1000;inset:0;background:rgba(0,0,0,.9);justify-content:center;align-items:center;flex-direction:column}
@@ -47,22 +53,23 @@
        - LV          → ./ordner2/
        - Moncler     → ./ordner4/
        - Gucci       → ./ordner1/
-       - Off-White   → ./ordner7/
+       - Off-White   → T-Shirts: ./ordner7/  | Hoodies: ./ordner9/
        - Palm Angels → ./ordner6/
-       - Dior        → ./ordner8/   (NEU)
+       - Dior        → ./ordner8/
        ====================================================================== */
 
-    const AMIRI_BASE    = "./ordner3/";
-    const LV_BASE       = "./ordner2/";
-    const MONCLER_BASE  = "./ordner4/";
-    const GUCCI_BASE    = "./ordner1/";
-    const OFFWHITE_BASE = "./ordner7/";
-    const PALM_BASE     = "./ordner6/";
-    const DIOR_BASE     = "./ordner8/";
+    const AMIRI_BASE     = "./ordner3/";
+    const LV_BASE        = "./ordner2/";
+    const MONCLER_BASE   = "./ordner4/";
+    const GUCCI_BASE     = "./ordner1/";
+    const OFFWHITE_T_BASE= "./ordner7/";  // T-Shirts
+    const OFFWHITE_H_BASE= "./ordner9/";  // Hoodies
+    const PALM_BASE      = "./ordner6/";
+    const DIOR_BASE      = "./ordner8/";
 
     const srcPath = (folder, file) => `${folder}${file}`;
 
-    // --- Bildlisten ---
+    // --- Bildlisten (unverändert aus deinem letzten Stand) ---
     const amiriImages = [
       "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg","150842e9.jpg",
       "187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg","27fdd161.jpg","2a177cdc.jpg",
@@ -119,7 +126,8 @@
       "fc483e00.jpg","fd0d035c.jpg"
     ];
 
-    const offwhiteImages = [
+    /* Off-White: Unterkategorien */
+    const offwhiteTShirts = [  // ordner7
       "00bbeef9.jpg","00c5cc8e.png","046b33bc.jpg","05f30315.jpg","06fd14b6.jpg","07921711.jpg",
       "07abc455.jpg","0b0eca43.jpg","0b501319.jpg","0cb57f02.jpg","0f1d1ead.jpg","0fbfa35a.jpg",
       "106a24ed.jpg","118551b2.jpg","13c0eae6.jpg","143f4717.jpg","15cd55a5.jpg","175b7529.jpg",
@@ -153,6 +161,15 @@
       "f8ec176e.jpg","fac23d62.jpg","fc6e3bd6.jpg","fc97ce7a.jpg","fd6faaf7.jpg"
     ];
 
+    const offwhiteHoodies = [ // ordner9
+      "043106cf.png","08d0c5f8.png","1315181c.jpg","19b771a6.jpg","21dfd724.png","29132f01.png",
+      "2a495045.jpg","39766037.png","3d81c5dd.png","3dbcc342.png","41c62cdc.jpg","50acf72c.png",
+      "55b26f41.jpg","56c6a4c4.png","5de7d134.jpg","6d3683c0.png","73302d33.jpg","84537e0f.jpg",
+      "881ae99e.png","9733c0fa.png","992939a0.jpg","9e883712.jpg","b2e0480c.jpg","b70b4b91.png",
+      "bebe7c04.png","c4087824.jpg","cafd04bf.png","d0f669ee.jpg","d11d78ee.png","d7812493.png",
+      "ddc8bef5.jpg","e18d2539.jpg","e1a6cb89.png","e1a9ad9e.jpg","e4b8943e.jpg","ebd02a0c.jpg"
+    ];
+
     const palmImages = [
       "01dfcdb0.jpg","07c16816.jpg","08c840ac.jpg","09e51b55.jpg","0b752aa6.jpg","0be9f954.jpg",
       "0d7aa720.jpg","0e50dfed.jpg","0ed13fb3.jpg","10c29d89.jpg","133bb974.jpg","13d7b554.jpg",
@@ -176,7 +193,6 @@
       "f18ec540.jpg","f32c01d9.jpg","f351cd39.jpg","f5fb7e10.jpg","f927145a.jpg"
     ];
 
-    /* NEU: Dior (ordner8) */
     const diorImages = [
       "0042de0c.jpg","00cffcce.jpg","017bc82a.jpg","04909b45.jpg","083cdb0b.jpg","0f70077a.jpg",
       "11b0ad5b.jpg","1a4ddf3e.jpg","1c6acc68.jpg","1e0461be.jpg","22620d06.jpg","291efbd0.jpg",
@@ -190,18 +206,21 @@
       "fcaec063.jpg"
     ];
 
+    // -------- Kategorien-Konfiguration --------
+    // Off-White bekommt eine Spezial-Renderlogik (Subkategorien), daher images leer für Standard-Grid.
     const categories = {
-      amiri:     { label:"Amiri",         base: AMIRI_BASE,    images: amiriImages },
-      lv:        { label:"Louis Vuitton", base: LV_BASE,       images: louisVuittonImages },
-      moncler:   { label:"Moncler",       base: MONCLER_BASE,  images: monclerImages },
-      gucci:     { label:"Gucci",         base: GUCCI_BASE,    images: gucciImages },
-      offwhite:  { label:"Off-White",     base: OFFWHITE_BASE, images: offwhiteImages },
-      palm:      { label:"Palm Angels",   base: PALM_BASE,     images: palmImages },
-      dior:      { label:"Dior",          base: DIOR_BASE,     images: diorImages }
+      amiri:     { label:"Amiri",         base: AMIRI_BASE,       images: amiriImages },
+      lv:        { label:"Louis Vuitton", base: LV_BASE,          images: louisVuittonImages },
+      moncler:   { label:"Moncler",       base: MONCLER_BASE,     images: monclerImages },
+      gucci:     { label:"Gucci",         base: GUCCI_BASE,       images: gucciImages },
+      offwhite:  { label:"Off-White",     base: null,             images: null }, // Spezialfall
+      palm:      { label:"Palm Angels",   base: PALM_BASE,        images: palmImages },
+      dior:      { label:"Dior",          base: DIOR_BASE,        images: diorImages }
     };
 
     // --- Anzeige / Lightbox ---
     let currentGallery = null, currentIndex = 0;
+    let offwhiteSubset = "tshirts"; // "tshirts" | "hoodies"
 
     function showCategory(key){
       currentGallery = key;
@@ -209,23 +228,42 @@
       const grid = document.getElementById(key);
       grid.classList.add("active");
       grid.scrollIntoView({behavior:"smooth",block:"start"});
+
+      if(key === "offwhite"){
+        offwhiteSubset = "tshirts";
+        renderOffwhite(); // eigener Renderer
+      }
     }
 
     function openLightbox(cat,i){
-      const arr = categories[cat].images;
+      let arr = categories[cat].images;
+      let base = categories[cat].base || "";
+
+      if(cat === "offwhite"){
+        if(offwhiteSubset === "tshirts"){ arr = offwhiteTShirts; base = OFFWHITE_T_BASE; }
+        else { arr = offwhiteHoodies; base = OFFWHITE_H_BASE; }
+      }
+
       if(!arr || !arr.length) return;
       currentGallery = cat; currentIndex = i;
-      document.getElementById("lightboxImg").src = srcPath(categories[cat].base, arr[i]);
+      document.getElementById("lightboxImg").src = srcPath(base, arr[i]);
       document.getElementById("lightbox").style.display = "flex";
     }
 
     function closeLightbox(){ document.getElementById("lightbox").style.display="none"; }
 
     function changeImg(d){
-      const arr = categories[currentGallery]?.images || [];
+      let arr = categories[currentGallery]?.images || [];
+      let base = categories[currentGallery]?.base || "";
+
+      if(currentGallery === "offwhite"){
+        if(offwhiteSubset === "tshirts"){ arr = offwhiteTShirts; base = OFFWHITE_T_BASE; }
+        else { arr = offwhiteHoodies; base = OFFWHITE_H_BASE; }
+      }
+
       if(!arr.length) return;
       currentIndex = (currentIndex + d + arr.length) % arr.length;
-      document.getElementById("lightboxImg").src = srcPath(categories[currentGallery].base, arr[currentIndex]);
+      document.getElementById("lightboxImg").src = srcPath(base, arr[currentIndex]);
     }
 
     document.addEventListener("keydown",e=>{
@@ -237,6 +275,10 @@
     });
 
     function renderGrid(id,arr,key){
+      if(key === "offwhite"){ // Spezialfall
+        renderOffwhite();
+        return;
+      }
       const el = document.getElementById(id);
       const base = categories[key].base || "";
       if(!arr || arr.length===0){
@@ -249,11 +291,47 @@
         </div>`).join('');
     }
 
+    function renderOffwhite(){
+      const el = document.getElementById("offwhite");
+      const subsetArr   = offwhiteSubset === "tshirts" ? offwhiteTShirts : offwhiteHoodies;
+      const subsetBase  = offwhiteSubset === "tshirts" ? OFFWHITE_T_BASE : OFFWHITE_H_BASE;
+
+      const pills = `
+        <div class="subnav">
+          <button class="pill ${offwhiteSubset==='tshirts'?'active':''}" onclick="setOffwhiteSubset('tshirts')">T-Shirts</button>
+          <button class="pill ${offwhiteSubset==='hoodies'?'active':''}" onclick="setOffwhiteSubset('hoodies')">Hoodies</button>
+        </div>
+      `;
+
+      if(!subsetArr || subsetArr.length===0){
+        el.innerHTML = pills + "<div class='placeholder' style='grid-column:1/-1;height:160px;'>Keine Bilder in dieser Unterkategorie.</div>";
+        return;
+      }
+
+      const cards = subsetArr.map((src,i)=>`
+        <div class="item">
+          <img class="thumb" src="${srcPath(subsetBase,src)}" loading="lazy" alt="Off-White ${offwhiteSubset} ${i+1}" onclick="openLightbox('offwhite',${i})">
+        </div>`).join('');
+
+      el.innerHTML = `${pills}${cards}`;
+    }
+
+    window.setOffwhiteSubset = function(type){
+      offwhiteSubset = type;
+      renderOffwhite();
+    }
+
     function buildBrandList(){
       const wrap=document.getElementById("brandList");
       wrap.innerHTML="";
       Object.entries(categories).forEach(([key,cfg])=>{
-        const count = (cfg.images?.length || 0);
+        let count = 0;
+        if(key === "offwhite"){
+          count = (offwhiteTShirts?.length||0) + (offwhiteHoodies?.length||0);
+        } else {
+          count = (cfg.images?.length || 0);
+        }
+
         const card=document.createElement("div");
         card.className="brand-card";
         card.onclick=()=>showCategory(key);
@@ -262,7 +340,7 @@
         card.innerHTML=`
           <div class="brand-left">
             <div class="brand-title">${cfg.label}</div>
-            <div class="brand-meta">${count ? `${count} Bilder` : `Keine Bilder`}</div>
+            <div class="brand-meta">${count ? `${count} Bilder` : `Keine Bilder`}${key==='offwhite' ? ' • (T-Shirts & Hoodies)' : ''}</div>
           </div>
           <div class="brand-right">›</div>`;
         wrap.appendChild(card);
@@ -271,7 +349,11 @@
 
     document.addEventListener("DOMContentLoaded",()=>{
       buildBrandList();
-      Object.entries(categories).forEach(([k,cfg])=>renderGrid(k,cfg.images,k));
+      // Standard-Render für alle
+      Object.entries(categories).forEach(([k,cfg])=>{
+        if(k === "offwhite"){ renderOffwhite(); }
+        else { renderGrid(k,cfg.images,k); }
+      });
     });
   </script>
 </head>
