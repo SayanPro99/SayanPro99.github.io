@@ -47,8 +47,9 @@
        - LV          → ./ordner2/
        - Moncler     → ./ordner4/
        - Gucci       → ./ordner1/
-       - Off-White   → ./ordner7/   (KORRIGIERT)
+       - Off-White   → ./ordner7/
        - Palm Angels → ./ordner6/
+       - Dior        → ./ordner8/   (NEU)
        ====================================================================== */
 
     const AMIRI_BASE    = "./ordner3/";
@@ -57,6 +58,7 @@
     const GUCCI_BASE    = "./ordner1/";
     const OFFWHITE_BASE = "./ordner7/";
     const PALM_BASE     = "./ordner6/";
+    const DIOR_BASE     = "./ordner8/";
 
     const srcPath = (folder, file) => `${folder}${file}`;
 
@@ -117,7 +119,6 @@
       "fc483e00.jpg","fd0d035c.jpg"
     ];
 
-    /* Off-White korrigiert (ordner7) */
     const offwhiteImages = [
       "00bbeef9.jpg","00c5cc8e.png","046b33bc.jpg","05f30315.jpg","06fd14b6.jpg","07921711.jpg",
       "07abc455.jpg","0b0eca43.jpg","0b501319.jpg","0cb57f02.jpg","0f1d1ead.jpg","0fbfa35a.jpg",
@@ -175,7 +176,19 @@
       "f18ec540.jpg","f32c01d9.jpg","f351cd39.jpg","f5fb7e10.jpg","f927145a.jpg"
     ];
 
-    const diorImages = [];
+    /* NEU: Dior (ordner8) */
+    const diorImages = [
+      "0042de0c.jpg","00cffcce.jpg","017bc82a.jpg","04909b45.jpg","083cdb0b.jpg","0f70077a.jpg",
+      "11b0ad5b.jpg","1a4ddf3e.jpg","1c6acc68.jpg","1e0461be.jpg","22620d06.jpg","291efbd0.jpg",
+      "29931f86.jpg","2d1fdfa0.jpg","324c80d4.jpg","42c8b8ca.jpg","4577bd4d.jpg","505b41f0.jpg",
+      "520a8b04.jpg","57528a60.jpg","59eab049.jpg","5a19d634.jpg","5ceb9aff.jpg","60c0038c.jpg",
+      "66976b96.jpg","719f84fe.jpg","810866ab.jpg","871057bb.jpg","878eb2a8.jpg","87f35616.jpg",
+      "88444800.jpg","9074931f.jpg","91931dbb.jpg","91b86af5.jpg","a1224672.jpg","a46f59ff.jpg",
+      "aaafd54b.jpg","b8a98a51.jpg","b901be30.jpg","c12b0e46.jpg","c7c5af39.jpg","cef7defb.jpg",
+      "d21ebaeb.jpg","d5d47c3a.jpg","d6151d98.jpg","d8251b32.jpg","dd6207ed.jpg","e120ac43.jpg",
+      "e58a9919.jpg","e945ba34.jpg","eb35be6b.jpg","f2700df2.jpg","f6cbffaa.jpg","f741b6d1.jpg",
+      "fcaec063.jpg"
+    ];
 
     const categories = {
       amiri:     { label:"Amiri",         base: AMIRI_BASE,    images: amiriImages },
@@ -184,7 +197,7 @@
       gucci:     { label:"Gucci",         base: GUCCI_BASE,    images: gucciImages },
       offwhite:  { label:"Off-White",     base: OFFWHITE_BASE, images: offwhiteImages },
       palm:      { label:"Palm Angels",   base: PALM_BASE,     images: palmImages },
-      dior:      { label:"Dior",          base: "",            images: diorImages }
+      dior:      { label:"Dior",          base: DIOR_BASE,     images: diorImages }
     };
 
     // --- Anzeige / Lightbox ---
