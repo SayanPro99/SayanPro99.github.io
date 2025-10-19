@@ -15,13 +15,34 @@
     .hero p{margin:0;color:#555;font-size:clamp(14px,2.4vw,16px)}
 
     .brand-list-wrap{max-width:1000px;margin:0 auto 18px;background:#fff;border-radius:var(--radius);box-shadow:0 6px 20px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.05);padding:12px}
-    .brand-list{display:grid;grid-template-columns:1fr;gap:12px;max-height:70vh;overflow-y:auto;padding-right:4px}
-    .brand-card{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--card-bg);color:var(--card-fg);padding:18px 20px;border-radius:var(--radius);box-shadow:0 8px 18px rgba(0,0,0,.18);cursor:pointer;user-select:none;transition:transform .06s,box-shadow .15s,opacity .2s;outline:none}
+    .brand-list{display:grid;grid-template-columns:1fr;gap:12px;max-height:70vh;overflow-y:auto;padding-right:4px;position:relative}
+    .brand-card{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--card-bg);color:var(--card-fg);padding:18px 20px;border-radius:var(--radius);box-shadow:0 8px 18px rgba(0,0,0,.18);cursor:pointer;user-select:none;transition:transform .06s,box-shadow .15s,opacity .2s;outline:none; position:relative}
     .brand-card:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(0,0,0,.22)}
     .brand-left{display:flex;flex-direction:column;gap:6px;text-align:left}
     .brand-title{font-size:clamp(18px,2.8vw,24px);font-weight:700}
     .brand-meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:clamp(13px,2.4vw,14px)}
     .brand-right{font-size:28px;opacity:.8}
+
+    /* Dropdown unter der Karte */
+    .dd{
+      position:relative;
+      z-index:5;
+    }
+    .dd-panel{
+      margin-top:8px;
+      background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px;
+      box-shadow:0 16px 30px rgba(0,0,0,.12);
+      padding:8px;
+      animation:pop .18s ease;
+    }
+    .dd-items{display:flex;gap:8px;flex-wrap:wrap}
+    .dd-item{
+      border:1px solid #e5e5e5; background:#fff; border-radius:999px;
+      padding:8px 14px; font-size:14px; cursor:pointer;
+    }
+    .dd-item[disabled]{opacity:.5; cursor:not-allowed}
+    .dd-hint{color:#444; font-size:13px; margin-top:6px}
+    @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 
     .grid{display:none;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;margin:24px auto 36px;max-width:1200px;padding:0 6px 50px}
     .grid.active{display:grid;animation:fadeIn .35s ease}
@@ -29,12 +50,6 @@
     .thumb{width:100%;aspect-ratio:1/1;border-radius:10px;box-shadow:0 3px 6px rgba(0,0,0,.15);cursor:pointer;transition:transform .18s;object-fit:cover;background:#eee}
     .thumb:hover{transform:scale(1.03)}
     .placeholder{grid-column:1/-1;display:grid;place-items:center;width:100%;aspect-ratio:1/1;border:1px dashed #ddd;border-radius:10px;color:#888;font-size:14px;background:#fafafa}
-
-    /* Subnav für Unterkategorien */
-    .subnav{grid-column:1/-1;display:flex;gap:8px;align-items:center;margin:-6px 0 8px}
-    .pill{border:1px solid #ddd;background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px}
-    .pill.active{background:#111;color:#fff;border-color:#111}
-    .hint{grid-column:1/-1;color:#666;font-size:14px;margin:4px 0}
 
     @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
@@ -71,7 +86,7 @@
 
     const srcPath = (folder, file) => `${folder}${file}`;
 
-    /* ----- Bildlisten (bestehend) ----- */
+    /* ----- Bildlisten ----- */
     const amiriImages = [
       "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg","150842e9.jpg",
       "187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg","27fdd161.jpg","2a177cdc.jpg",
@@ -128,8 +143,8 @@
       "fc483e00.jpg","fd0d035c.jpg"
     ];
 
-    /* Off-White: Unterkategorien (Double-Click zum Anzeigen) */
-    const offwhiteTShirts = [ /* ordner7 */ 
+    /* Off-White Unterkategorien */
+    const offwhiteTShirts = [ /* ordner7 (gekürzt nicht) */ 
       "00bbeef9.jpg","00c5cc8e.png","046b33bc.jpg","05f30315.jpg","06fd14b6.jpg","07921711.jpg",
       "07abc455.jpg","0b0eca43.jpg","0b501319.jpg","0cb57f02.jpg","0f1d1ead.jpg","0fbfa35a.jpg",
       "106a24ed.jpg","118551b2.jpg","13c0eae6.jpg","143f4717.jpg","15cd55a5.jpg","175b7529.jpg",
@@ -171,9 +186,9 @@
       "ddc8bef5.jpg","e18d2539.jpg","e1a6cb89.png","e1a9ad9e.jpg","e4b8943e.jpg","ebd02a0c.jpg"
     ];
 
-    /* Balenciaga: Unterkategorie(n) – aktuell nur Hoodies (Double-Click) */
-    const balenciagaTShirts = []; // Platzhalter, falls später T-Shirts kommen
-    const balenciagaHoodies = [ /* ordner10 */
+    /* Balenciaga Unterkategorien */
+    const balenciagaTShirts = []; // optional
+    const balenciagaHoodies = [ /* ordner10 */ 
       "046baa4a.jpg","0d920e60.jpg","0e4d4d2a.jpg","1050bcc9.jpg","11b5ac8a.jpg","15459ba5.jpg",
       "1c59ab3b.jpg","2045a7fb.jpg","265b3d2b.jpg","26baeb5f.jpg","2cae211c.jpg","2de6c523.jpg",
       "3049c3b7.jpg","3587c01b.jpg","3959d208.jpg","3b56643b.jpg","4155290b.jpg","44fbaa4a.jpg",
@@ -222,16 +237,14 @@
       "fcaec063.jpg"
     ];
 
-    /* -------- Kategorien-Konfiguration --------
-       Off-White & Balenciaga haben Spezial-Logik (Unterkategorien + Bestätigungsklick).
-    -------------------------------------------------------- */
+    /* -------- Kategorien-Konfiguration -------- */
     const categories = {
       amiri:      { label:"Amiri",         base: AMIRI_BASE,        images: amiriImages },
       lv:         { label:"Louis Vuitton", base: LV_BASE,           images: louisVuittonImages },
       moncler:    { label:"Moncler",       base: MONCLER_BASE,      images: monclerImages },
       gucci:      { label:"Gucci",         base: GUCCI_BASE,        images: gucciImages },
-      offwhite:   { label:"Off-White",     base: null,              images: null }, // Spezialfall
-      balenciaga: { label:"Balenciaga",    base: null,              images: null }, // Spezialfall
+      offwhite:   { label:"Off-White",     base: null,              images: null }, // Dropdown
+      balenciaga: { label:"Balenciaga",    base: null,              images: null }, // Dropdown
       palm:       { label:"Palm Angels",   base: PALM_BASE,         images: palmImages },
       dior:       { label:"Dior",          base: DIOR_BASE,         images: diorImages }
     };
@@ -239,41 +252,110 @@
     /* --- Anzeige / Lightbox --- */
     let currentGallery = null, currentIndex = 0;
 
-    // Off-White Auswahlstatus
-    let offwhiteSubset = null;         // "tshirts" | "hoodies"
-    let offwhiteConfirmed = false;     // Doppel-Klick nötig
+    // Auswahlstatus für Dropdown-Marken
+    let offwhiteSubset = null;     // "tshirts" | "hoodies"
+    let balenciagaSubset = null;   // "tshirts" | "hoodies" (tshirts derzeit leer)
 
-    // Balenciaga Auswahlstatus
-    let balenciagaSubset = null;       // "tshirts" | "hoodies" (tshirts derzeit leer)
-    let balenciagaConfirmed = false;   // Doppel-Klick nötig
+    // Offenes Dropdown
+    let openDropdownKey = null;
 
     function showCategory(key){
+      // Marken mit Dropdown: öffne Auswahl statt direkt Galerie
+      if(key === "offwhite" || key === "balenciaga"){
+        toggleDropdown(key);
+        return;
+      }
+      // Normale Marken → direkt Galerie
+      openDropdownKey && closeDropdown();
       currentGallery = key;
       document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
       const grid = document.getElementById(key);
       grid.classList.add("active");
       grid.scrollIntoView({behavior:"smooth",block:"start"});
+    }
 
-      if(key === "offwhite"){
-        offwhiteSubset = null; offwhiteConfirmed = false; renderOffwhite();
-      } else if(key === "balenciaga"){
-        balenciagaSubset = null; balenciagaConfirmed = false; renderBalenciaga();
+    /* ===== Dropdown unter der angeklickten Karte ===== */
+    function toggleDropdown(key){
+      const list = document.getElementById("brandList");
+      const card = list.querySelector(`[data-brand="${key}"]`);
+      if(!card) return;
+
+      // Wenn anderes Dropdown offen → schließen
+      if(openDropdownKey && openDropdownKey !== key) closeDropdown();
+
+      // Wenn gleiches offen → schließen
+      if(openDropdownKey === key){
+        closeDropdown();
+        return;
+      }
+
+      // Panel erstellen
+      const dd = document.createElement("div");
+      dd.className = "dd";
+      dd.id = `dd-${key}`;
+      const hasT = (key === "offwhite") ? true : (balenciagaTShirts.length>0);
+      dd.innerHTML = `
+        <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
+          <div class="dd-items">
+            <button class="dd-item" ${!hasT ? "disabled" : ""} onclick="selectSubset('${key}','tshirts')">T-Shirts</button>
+            <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies</button>
+          </div>
+          <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
+        </div>
+      `;
+      card.insertAdjacentElement("afterend", dd);
+      openDropdownKey = key;
+
+      // Outside click schließt Dropdown
+      setTimeout(()=>{ document.addEventListener("click", outsideCloser, { once:true }); }, 0);
+      function outsideCloser(ev){
+        if(!dd.contains(ev.target) && ev.target !== card){ closeDropdown(); }
       }
     }
 
+    function closeDropdown(){
+      if(!openDropdownKey) return;
+      const dd = document.getElementById(`dd-${openDropdownKey}`);
+      dd?.remove();
+      openDropdownKey = null;
+    }
+
+    // Auswahl im Dropdown
+    window.selectSubset = function(brand, subset){
+      if(brand === "offwhite"){
+        offwhiteSubset = subset; // "tshirts" | "hoodies"
+        openDropdownKey && closeDropdown();
+        // Galerie zeigen
+        currentGallery = "offwhite";
+        document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
+        renderOffwhiteGrid(); // rendert je nach subset
+        document.getElementById("offwhite").classList.add("active");
+        document.getElementById("offwhite").scrollIntoView({behavior:"smooth",block:"start"});
+        return;
+      }
+      if(brand === "balenciaga"){
+        balenciagaSubset = subset;
+        openDropdownKey && closeDropdown();
+        currentGallery = "balenciaga";
+        document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
+        renderBalenciagaGrid();
+        document.getElementById("balenciaga").classList.add("active");
+        document.getElementById("balenciaga").scrollIntoView({behavior:"smooth",block:"start"});
+        return;
+      }
+    };
+
+    /* ===== Lightbox ===== */
     function openLightbox(cat,i){
       let arr = categories[cat].images;
       let base = categories[cat].base || "";
 
       if(cat === "offwhite"){
-        if(!offwhiteConfirmed) return;
         if(offwhiteSubset === "tshirts"){ arr = offwhiteTShirts; base = OFFWHITE_T_BASE; }
         else { arr = offwhiteHoodies; base = OFFWHITE_H_BASE; }
       }
-
       if(cat === "balenciaga"){
-        if(!balenciagaConfirmed) return;
-        if(balenciagaSubset === "tshirts"){ arr = balenciagaTShirts; base = ""; /* kein Ordner gesetzt */ }
+        if(balenciagaSubset === "tshirts"){ arr = balenciagaTShirts; base = ""; }
         else { arr = balenciagaHoodies; base = BALENCIAGA_H_BASE; }
       }
 
@@ -282,21 +364,16 @@
       document.getElementById("lightboxImg").src = srcPath(base, arr[i]);
       document.getElementById("lightbox").style.display = "flex";
     }
-
     function closeLightbox(){ document.getElementById("lightbox").style.display="none"; }
-
     function changeImg(d){
       let arr = categories[currentGallery]?.images || [];
       let base = categories[currentGallery]?.base || "";
 
       if(currentGallery === "offwhite"){
-        if(!offwhiteConfirmed) return;
         if(offwhiteSubset === "tshirts"){ arr = offwhiteTShirts; base = OFFWHITE_T_BASE; }
         else { arr = offwhiteHoodies; base = OFFWHITE_H_BASE; }
       }
-
       if(currentGallery === "balenciaga"){
-        if(!balenciagaConfirmed) return;
         if(balenciagaSubset === "tshirts"){ arr = balenciagaTShirts; base = ""; }
         else { arr = balenciagaHoodies; base = BALENCIAGA_H_BASE; }
       }
@@ -305,7 +382,6 @@
       currentIndex = (currentIndex + d + arr.length) % arr.length;
       document.getElementById("lightboxImg").src = srcPath(base, arr[currentIndex]);
     }
-
     document.addEventListener("keydown",e=>{
       if(document.getElementById("lightbox").style.display==="flex"){
         if(e.key==="ArrowRight") changeImg(1);
@@ -314,10 +390,8 @@
       }
     });
 
+    /* ===== Rendering ===== */
     function renderGrid(id,arr,key){
-      if(key === "offwhite"){ renderOffwhite(); return; }
-      if(key === "balenciaga"){ renderBalenciaga(); return; }
-
       const el = document.getElementById(id);
       const base = categories[key].base || "";
       if(!arr || arr.length===0){
@@ -330,69 +404,36 @@
         </div>`).join('');
     }
 
-    /* ------ Off-White Rendering mit Doppel-Klick ------ */
-    function renderOffwhite(){
+    function renderOffwhiteGrid(){
       const el = document.getElementById("offwhite");
-      const pills = `
-        <div class="subnav">
-          <button class="pill ${offwhiteSubset==='tshirts'?'active':''}" onclick="clickOffwhite('tshirts')">T-Shirts</button>
-          <button class="pill ${offwhiteSubset==='hoodies'?'active':''}" onclick="clickOffwhite('hoodies')">Hoodies / Pullover</button>
-        </div>
-      `;
-      if(!offwhiteSubset || !offwhiteConfirmed){
-        el.innerHTML = `
-          ${pills}
-          <div class="hint">Wähle zuerst eine Unterkategorie und klicke dann <b>nochmals auf dieselbe Auswahl</b>, um die Bilder anzuzeigen.</div>
-          <div class="placeholder">Noch keine Bilder ausgewählt.</div>`;
+      if(!offwhiteSubset){
+        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown T-Shirts oder Hoodies wählen.</div>";
         return;
       }
-      const subsetArr  = offwhiteSubset === "tshirts" ? offwhiteTShirts : offwhiteHoodies;
-      const subsetBase = offwhiteSubset === "tshirts" ? OFFWHITE_T_BASE : OFFWHITE_H_BASE;
-      const cards = subsetArr.map((src,i)=>`
-        <div class="item">
-          <img class="thumb" src="${srcPath(subsetBase,src)}" loading="lazy" alt="Off-White ${offwhiteSubset} ${i+1}" onclick="openLightbox('offwhite',${i})">
-        </div>`).join('');
-      el.innerHTML = `${pills}${cards}`;
-    }
-    window.clickOffwhite = function(type){
-      if(offwhiteSubset === type){
-        if(!offwhiteConfirmed){ offwhiteConfirmed = true; }
-      } else { offwhiteSubset = type; offwhiteConfirmed = false; }
-      renderOffwhite();
+      const arr  = offwhiteSubset === "tshirts" ? offwhiteTShirts : offwhiteHoodies;
+      const base = offwhiteSubset === "tshirts" ? OFFWHITE_T_BASE : OFFWHITE_H_BASE;
+      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
+      el.innerHTML = arr.map((src,i)=>`
+        <div class="item"><img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Off-White ${offwhiteSubset} ${i+1}" onclick="openLightbox('offwhite',${i})"></div>
+      `).join('');
     }
 
-    /* ------ Balenciaga Rendering mit Doppel-Klick ------ */
-    function renderBalenciaga(){
+    function renderBalenciagaGrid(){
       const el = document.getElementById("balenciaga");
-      const pills = `
-        <div class="subnav">
-          <button class="pill ${balenciagaSubset==='hoodies'?'active':''}" onclick="clickBalenciaga('hoodies')">Hoodies</button>
-          <button class="pill ${balenciagaSubset==='tshirts'?'active':''}" onclick="clickBalenciaga('tshirts')" ${balenciagaTShirts.length? "" : "disabled style='opacity:.5;cursor:not-allowed'"}>T-Shirts</button>
-        </div>
-      `;
-      if(!balenciagaSubset || !balenciagaConfirmed){
-        el.innerHTML = `
-          ${pills}
-          <div class="hint">Wähle eine Unterkategorie und klicke dann <b>nochmals auf dieselbe Auswahl</b>, um die Bilder anzuzeigen.</div>
-          <div class="placeholder">Noch keine Bilder ausgewählt.</div>`;
+      if(!balenciagaSubset){
+        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown Hoodies (oder T-Shirts) wählen.</div>";
         return;
       }
-      const subsetArr  = balenciagaSubset === "tshirts" ? balenciagaTShirts : balenciagaHoodies;
-      const subsetBase = balenciagaSubset === "tshirts" ? "" : BALENCIAGA_H_BASE;
-      const cards = subsetArr.map((src,i)=>`
-        <div class="item">
-          <img class="thumb" src="${srcPath(subsetBase,src)}" loading="lazy" alt="Balenciaga ${balenciagaSubset} ${i+1}" onclick="openLightbox('balenciaga',${i})">
-        </div>`).join('');
-      el.innerHTML = `${pills}${cards}`;
-    }
-    window.clickBalenciaga = function(type){
-      if(balenciagaSubset === type){
-        if(!balenciagaConfirmed){ balenciagaConfirmed = true; }
-      } else { balenciagaSubset = type; balenciagaConfirmed = false; }
-      renderBalenciaga();
+      const isT = balenciagaSubset === "tshirts";
+      const arr  = isT ? balenciagaTShirts : balenciagaHoodies;
+      const base = isT ? "" : BALENCIAGA_H_BASE;
+      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
+      el.innerHTML = arr.map((src,i)=>`
+        <div class="item"><img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Balenciaga ${balenciagaSubset} ${i+1}" onclick="openLightbox('balenciaga',${i})"></div>
+      `).join('');
     }
 
-    /* ------ Markenliste ------ */
+    /* ------ Markenliste mit data-brand (für Dropdown-Ziel) ------ */
     function buildBrandList(){
       const wrap=document.getElementById("brandList");
       wrap.innerHTML="";
@@ -410,6 +451,7 @@
 
         const card=document.createElement("div");
         card.className="brand-card";
+        card.dataset.brand = key;
         card.onclick=()=>showCategory(key);
         card.setAttribute('role','button'); card.setAttribute('tabindex','0');
         card.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' ') { e.preventDefault(); showCategory(key);} };
@@ -425,10 +467,10 @@
 
     document.addEventListener("DOMContentLoaded",()=>{
       buildBrandList();
+      // Standard-Galerien initial rendern
       Object.entries(categories).forEach(([k,cfg])=>{
-        if(k === "offwhite"){ renderOffwhite(); }
-        else if(k === "balenciaga"){ renderBalenciaga(); }
-        else { renderGrid(k,cfg.images,k); }
+        if(k === "offwhite" || k === "balenciaga") return; // per Dropdown
+        renderGrid(k,cfg.images,k);
       });
     });
   </script>
