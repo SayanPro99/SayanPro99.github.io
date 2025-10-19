@@ -42,18 +42,29 @@
 
   <script>
     /* =========================================================================
-       Alle Bilder liegen im Ordner "ordner1/"
+       Bilder liegen in ./ordner1/
        ====================================================================== */
-
     const IMG_BASE = "./ordner1/";
+    const srcPath = (file) => `${IMG_BASE}${file}`;
 
-    // Wenn du deine Bildnamen-Arrays bereits hast, kannst du sie hier einsetzen:
-    const amiriImages        = window.amiriImages        || [];
-    const louisVuittonImages = window.louisVuittonImages || [];
-    const palmImages         = window.palmImages         || [];
-    const monclerImages      = window.monclerImages      || [];
-    const gucciImages        = window.gucciImages        || [];
-    const diorCandidates     = window.diorCandidates     || [];
+    // ----- Bildlisten -----
+    const amiriImages        = [];
+    const louisVuittonImages = [];
+    const palmImages         = [];
+    const monclerImages      = [];
+    const diorCandidates     = []; // leer gelassen
+    const gucciImages = [
+      "0189e871.jpg","022cdf5c.jpg","03769abc.jpg","071d499b.jpg","0b9c6471.jpg","0d8e3428.jpg",
+      "14a23b56.jpg","1587c97c.jpg","215c4013.jpg","2db98313.jpg","3934f44b.jpg","444a197a.jpg",
+      "45c734ab.jpg","473f5582.jpg","47abf091.jpg","4928eaf3.jpg","4f44e778.jpg","51a2ca6b.jpg",
+      "590806d4.jpg","5e12d580.jpg","665c54df.jpg","6660618d.jpg","6c18f807.jpg","6c93c8ae.jpg",
+      "759642c4.jpg","7bfb215b.jpg","7f76ccef.jpg","85269201.jpg","85cd124a.jpg","8e613c42.jpg",
+      "95eaef20.jpg","9a9d5273-1.jpg","9a9d5273.jpg","9f09fe0e.jpg","9f7b9df3.jpg","a1b30634.jpg",
+      "a7d8e40f.jpg","aa5e416c.jpg","b2185f8d.jpg","b2cb7cab.jpg","c0bb1fe6.jpg","c2cd1b8b.jpg",
+      "c3087aed.jpg","c969f230.jpg","c9e2a0a7.jpg","cc5d6252.jpg","d5890633.jpg","d94d5523.jpg",
+      "da455f75.jpg","df391f60.jpg","e2590a9b.jpg","edb7ba23.jpg","f7434019.jpg","f951ad39.jpg",
+      "fc483e00.jpg","fd0d035c.jpg"
+    ];
 
     // Dior = Kandidaten minus bereits verwendete
     const used = new Set([
@@ -61,7 +72,7 @@
     ]);
     const diorImages = diorCandidates.filter(fn => !used.has(fn));
 
-    // Kategorien (ohne Preise)
+    // Kategorien
     const categories = {
       amiri:   { label:"Amiri",         images: amiriImages },
       lv:      { label:"Louis Vuitton", images: louisVuittonImages },
@@ -71,10 +82,7 @@
       gucci:   { label:"Gucci",         images: gucciImages }
     };
 
-    // Hilfsfunktion für Bildpfade
-    const srcPath = (file) => `${IMG_BASE}${file}`;
-
-    // Lightbox
+    // ----- UI -----
     let currentGallery = null, currentIndex = 0;
 
     function showCategory(key){
