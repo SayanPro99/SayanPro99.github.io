@@ -35,12 +35,12 @@
     .dd-items{display:flex;gap:10px;flex-wrap:wrap}
     .dd-item{
       border:1px solid #e5e5e5; background:#fff; border-radius:999px;
-      padding:12px 18px;               /* ↑ mehr Padding */
-      font-size:16px;                  /* ↑ größere Schrift */
+      padding:12px 18px;
+      font-size:16px;
       line-height:1.1;
       cursor:pointer;
-      min-height:44px;                 /* Touch-Ziel Mindestgröße */
-      min-width:120px;                 /* etwas breiter für bequemes Tippen */
+      min-height:44px;
+      min-width:120px;
       touch-action:manipulation;
     }
     .dd-item:active{transform:translateY(1px)}
@@ -51,7 +51,7 @@
       .dd-panel{ padding:12px }
       .dd-items{ gap:12px }
       .dd-item{
-        padding:14px 22px;             /* auf Handy noch größer */
+        padding:14px 22px;
         font-size:17px;
         min-height:48px;
         min-width:130px;
@@ -67,6 +67,9 @@
     .thumb:hover{transform:scale(1.03)}
     .placeholder{grid-column:1/-1;display:grid;place-items:center;width:100%;aspect-ratio:1/1;border:1px dashed #ddd;border-radius:10px;color:#888;font-size:14px;background:#fafafa}
 
+    /* Preis-Tag unter Thumbnails */
+    .price-tag{margin-top:8px;font-weight:700;color:#333;font-size:14px}
+
     @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
     .lightbox{display:none;position:fixed;z-index:1000;inset:0;background:rgba(0,0,0,.9);justify-content:center;align-items:center;flex-direction:column}
@@ -79,26 +82,34 @@
 
   <script>
     /* =========================================================================
-       Bildquellen:
-       - Amiri         → ./ordner3/
-       - LV            → ./ordner2/
-       - Moncler       → ./ordner4/
-       - Gucci         → ./ordner1/
-       - Off-White     → T-Shirts: ./ordner7/  | Hoodies: ./ordner9/
-       - Balenciaga    → Hoodies: ./ordner10/  | (T-Shirts optional)
-       - Palm Angels   → ./ordner6/
-       - Dior          → ./ordner8/
+       Ordner:
+       Amiri → ./ordner3/ | LV → ./ordner2/ | Moncler → ./ordner4/ | Gucci → ./ordner1/
+       Off-White T-Shirts → ./ordner7/ | Off-White Hoodies → ./ordner9/
+       Balenciaga Hoodies → ./ordner10/ | Palm Angels → ./ordner6/ | Dior → ./ordner8/
        ====================================================================== */
 
-    const AMIRI_BASE       = "./ordner3/";
-    const LV_BASE          = "./ordner2/";
-    const MONCLER_BASE     = "./ordner4/";
-    const GUCCI_BASE       = "./ordner1/";
-    const OFFWHITE_T_BASE  = "./ordner7/";
-    const OFFWHITE_H_BASE  = "./ordner9/";
-    const BALENCIAGA_H_BASE= "./ordner10/";
-    const PALM_BASE        = "./ordner6/";
-    const DIOR_BASE        = "./ordner8/";
+    const AMIRI_BASE        = "./ordner3/";
+    const LV_BASE           = "./ordner2/";
+    const MONCLER_BASE      = "./ordner4/";
+    const GUCCI_BASE        = "./ordner1/";
+    const OFFWHITE_T_BASE   = "./ordner7/";
+    const OFFWHITE_H_BASE   = "./ordner9/";
+    const BALENCIAGA_H_BASE = "./ordner10/";
+    const PALM_BASE         = "./ordner6/";
+    const DIOR_BASE         = "./ordner8/";
+
+    /* ===== Preise (CHF) ===== */
+    const prices = {
+      amiri: 55,
+      lv: 55,
+      moncler: 60,
+      gucci: 60,
+      dior: 55,
+      palm_tshirt: 55,
+      offwhite_tshirt: 50,
+      offwhite_hoodie: 90,
+      balenciaga_hoodie: 90
+    };
 
     const srcPath = (folder, file) => `${folder}${file}`;
 
@@ -301,11 +312,15 @@
       dd.className = "dd";
       dd.id = `dd-${key}`;
       const hasT = (key === "offwhite") ? true : (balenciagaTShirts.length>0);
+      const tshirtLabel = key === "offwhite" ? `T-Shirts (CHF ${prices.offwhite_tshirt})` : `T-Shirts`;
+      const hoodieLabel = key === "offwhite"
+        ? `Hoodies (CHF ${prices.offwhite_hoodie})`
+        : `Hoodies (CHF ${prices.balenciaga_hoodie})`;
       dd.innerHTML = `
         <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
           <div class="dd-items">
-            <button class="dd-item" ${!hasT ? "disabled" : ""} onclick="selectSubset('${key}','tshirts')">T-Shirts</button>
-            <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies</button>
+            <button class="dd-item" ${!hasT ? "disabled" : ""} onclick="selectSubset('${key}','tshirts')">${tshirtLabel}</button>
+            <button class="dd-item" onclick="selectSubset('${key}','hoodies')">${hoodieLabel}</button>
           </div>
           <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
         </div>
@@ -403,9 +418,19 @@
         el.innerHTML = "<div class='placeholder'>Keine Bilder verfügbar.</div>";
         return;
       }
+      // Preis je Marke ohne Unterkategorien
+      let price = null;
+      if(key === "amiri") price = prices.amiri;
+      if(key === "lv") price = prices.lv;
+      if(key === "moncler") price = prices.moncler;
+      if(key === "gucci") price = prices.gucci;
+      if(key === "palm") price = prices.palm_tshirt;
+      if(key === "dior") price = prices.dior;
+
       el.innerHTML = arr.map((src,i)=>`
         <div class="item">
           <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="${key} Bild ${i+1}" onclick="openLightbox('${key}',${i})">
+          ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
         </div>`).join('');
     }
 
@@ -417,9 +442,13 @@
       }
       const arr  = offwhiteSubset === "tshirts" ? offwhiteTShirts : offwhiteHoodies;
       const base = offwhiteSubset === "tshirts" ? OFFWHITE_T_BASE : OFFWHITE_H_BASE;
+      const price = offwhiteSubset === "tshirts" ? prices.offwhite_tshirt : prices.offwhite_hoodie;
       if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
       el.innerHTML = arr.map((src,i)=>`
-        <div class="item"><img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Off-White ${offwhiteSubset} ${i+1}" onclick="openLightbox('offwhite',${i})"></div>
+        <div class="item">
+          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Off-White ${offwhiteSubset} ${i+1}" onclick="openLightbox('offwhite',${i})">
+          <div class="price-tag">CHF ${price}</div>
+        </div>
       `).join('');
     }
 
@@ -432,26 +461,40 @@
       const isT = balenciagaSubset === "tshirts";
       const arr  = isT ? balenciagaTShirts : balenciagaHoodies;
       const base = isT ? "" : BALENCIAGA_H_BASE;
+      const price = isT ? null : prices.balenciaga_hoodie;
       if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
       el.innerHTML = arr.map((src,i)=>`
-        <div class="item"><img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Balenciaga ${balenciagaSubset} ${i+1}" onclick="openLightbox('balenciaga',${i})"></div>
+        <div class="item">
+          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Balenciaga ${balenciagaSubset} ${i+1}" onclick="openLightbox('balenciaga',${i})">
+          ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
+        </div>
       `).join('');
     }
 
-    /* ------ Markenliste mit data-brand (für Dropdown-Ziel) ------ */
+    /* ------ Markenliste mit data-brand (für Dropdown-Ziel) + Preistext ------ */
     function buildBrandList(){
       const wrap=document.getElementById("brandList");
       wrap.innerHTML="";
       Object.entries(categories).forEach(([key,cfg])=>{
-        let count = 0, suffix = "";
+        let count = 0, metaExtra = "";
+
         if(key === "offwhite"){
           count = (offwhiteTShirts?.length||0) + (offwhiteHoodies?.length||0);
-          suffix = " • (T-Shirts & Hoodies)";
+          metaExtra = `T-Shirts CHF ${prices.offwhite_tshirt} • Hoodies CHF ${prices.offwhite_hoodie}`;
         } else if(key === "balenciaga"){
           count = (balenciagaTShirts?.length||0) + (balenciagaHoodies?.length||0);
-          suffix = balenciagaTShirts.length ? " • (T-Shirts & Hoodies)" : " • (Hoodies)";
+          metaExtra = `Hoodies CHF ${prices.balenciaga_hoodie}${balenciagaTShirts.length ? " • T-Shirts" : ""}`;
         } else {
           count = (cfg.images?.length || 0);
+          const brandPrice = (
+            key==="amiri" ? prices.amiri :
+            key==="lv" ? prices.lv :
+            key==="moncler" ? prices.moncler :
+            key==="gucci" ? prices.gucci :
+            key==="palm" ? prices.palm_tshirt :
+            key==="dior" ? prices.dior : null
+          );
+          metaExtra = brandPrice !== null ? `ab CHF ${brandPrice}` : "";
         }
 
         const card=document.createElement("div");
@@ -463,7 +506,7 @@
         card.innerHTML=`
           <div class="brand-left">
             <div class="brand-title">${cfg.label}</div>
-            <div class="brand-meta">${count ? `${count} Bilder` : `Keine Bilder`}${suffix}</div>
+            <div class="brand-meta">${count ? `${count} Bilder` : `Keine Bilder`}${metaExtra ? ` • ${metaExtra}` : ""}</div>
           </div>
           <div class="brand-right">›</div>`;
         wrap.appendChild(card);
