@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Designer Galerie – Amiri, LV, Dior, Palm Angels, Moncler, Gucci, Off-White, Balenciaga, Bape, Casablanca & Stussy</title>
+  <title>Designer Galerie – Amiri, LV, Dior, Palm Angels, Moncler, Gucci, Off-White, Balenciaga, Bape, Casablanca, Stussy</title>
 
   <style>
     :root { --card-bg:#111; --card-fg:#fff; --muted:#b8b8b8; --radius:16px; }
@@ -83,18 +83,15 @@
   <script>
     /* =========================================================================
        Ordner:
-       Amiri → ./ordner3/ (T-Shirts) | AMIRI Hoodies → ./ordner12/
-       LV → ./ordner2/ | Moncler → ./ordner4/ | Gucci → ./ordner1/
+       Amiri → ./ordner3/ | LV → ./ordner2/ | Moncler → ./ordner4/ | Gucci → ./ordner1/
        Off-White T-Shirts → ./ordner7/ | Off-White Hoodies → ./ordner9/
-       Balenciaga Hoodies → ./ordner10/
-       Palm Angels → ./ordner6/ | Dior → ./ordner8/
-       NEU: Bape T-Shirts → ./ordner11/
-            Casablanca T-Shirts → ./ordner13/ | Casablanca Hoodies → ./ordner14/
-            Stussy T-Shirts → ./ordner16/ | Stussy Hoodies → ./ordner15/
+       Balenciaga Hoodies → ./ordner10/ | Palm Angels → ./ordner6/ | Dior → ./ordner8/
+       Bape T-Shirts → ./ordner11/ | Amiri Hoodies → ./ordner12/ 
+       Casablanca T-Shirts → ./ordner13/ | Casablanca Hoodies → ./ordner14/
+       Stussy Hoodies → ./ordner15/ | Stussy T-Shirts → ./ordner16/
        ====================================================================== */
 
-    const AMIRI_BASE        = "./ordner3/";   // T-Shirts
-    const AMIRI_H_BASE      = "./ordner12/";  // Hoodies (NEU)
+    const AMIRI_BASE        = "./ordner3/";
     const LV_BASE           = "./ordner2/";
     const MONCLER_BASE      = "./ordner4/";
     const GUCCI_BASE        = "./ordner1/";
@@ -103,17 +100,17 @@
     const BALENCIAGA_H_BASE = "./ordner10/";
     const PALM_BASE         = "./ordner6/";
     const DIOR_BASE         = "./ordner8/";
-
-    // NEUE Basispfade
     const BAPE_T_BASE       = "./ordner11/";
+    const AMIRI_H_BASE      = "./ordner12/";
     const CASABLANCA_T_BASE = "./ordner13/";
     const CASABLANCA_H_BASE = "./ordner14/";
-    const STUSSY_T_BASE     = "./ordner16/";
     const STUSSY_H_BASE     = "./ordner15/";
+    const STUSSY_T_BASE     = "./ordner16/";
 
     /* ===== Preise (CHF) ===== */
     const prices = {
-      // bestehend
+      amiri_tshirt: 55,
+      amiri_hoodie: 90,
       lv: 55,
       moncler: 60,
       gucci: 60,
@@ -122,21 +119,17 @@
       offwhite_tshirt: 50,
       offwhite_hoodie: 90,
       balenciaga_hoodie: 90,
-
-      // NEU: differenzierte Preise je Unterkategorie (leer lassen, wenn unbekannt)
-      amiri_tshirt: 55,     // bisheriger Amiri-Preis
-      amiri_hoodie: null,
-      casablanca_tshirt: null,
-      casablanca_hoodie: null,
-      stussy_tshirt: null,
-      stussy_hoodie: null,
-      bape_tshirt: null
+      bape_tshirt: 55,
+      casablanca_tshirt: 55,
+      casablanca_hoodie: 90,
+      stussy_tshirt: 55,
+      stussy_hoodie: 90
     };
 
     const srcPath = (folder, file) => `${folder}${file}`;
 
-    /* ----- Bildlisten (BESTEHEND) -> Amiri jetzt: T-Shirts ----- */
-    const amiriTShirts = [
+    /* ----- Bildlisten ----- */
+    const amiriImages = [
       "067db8ac.jpg","0eafa9b2.jpg","0fe012e6.jpg","1207b9ed.jpg","12747c3f.jpg","150842e9.jpg",
       "187cdc78.jpg","22a3a99d.jpg","2386271a.jpg","2525eef9.jpg","27fdd161.jpg","2a177cdc.jpg",
       "2c3417c8.jpg","2ea17519.jpg","2f293de4.jpg","30f03eb1.jpg","3247f198.jpg","35f75daf.jpg",
@@ -286,13 +279,56 @@
       "fcaec063.jpg"
     ];
 
-    /* ========================= NEUE BILDLISTEN ========================= */
-    // Bape T-Shirts (ordner11)
+    /* Neue Kategorien */
+    // Bape T-Shirts (Ordner11)
     const bapeTShirts = [
-      "000ac551.jpg","01c232b5.jpg","03596834.jpg","0459873e.jpg","04625565.jpg","0577b447.jpg","05dabad5.jpg","073974c2.jpg","0843940a.jpg","0a165375.jpg","0be265d3.jpg","0c5d5f12.jpg","0d607ff1.jpg","0e5fa137.jpg","0ed49836.jpg","0fe744aa.jpg","11d32465.jpg","120c600e.jpg","12412e1f.jpg","12544f6d.jpg","161fa697.jpg","1651d780.jpg","16951b91.jpg","16b1f79e.jpg","1a0a1400.jpg","1ac03068.jpg","1ad42d18.jpg","1cc95ab6.jpg","1d40f71a.jpg","1ecafc79.jpg","1f0fb5d3.jpg","1f4a7afe.jpg","1fe2b00d.jpg","208251f9.jpg","20918934.jpg","2160ec8c.jpg","2243580a.jpg","22787090.jpg","22f722b9.jpg","231207a5.jpg","2638713e.jpg","26520233.jpg","266db4c7.jpg","26a49b18.jpg","27020aaa.jpg","27b6c646.jpg","27fd3841.jpg","2830b937.jpg","288034df.jpg","28984c37.jpg","2899e73e.jpg","2bae574f.jpg","2c855204.jpg","2d9625f3.jpg","2eeaba41.jpg","309e5f9f.jpg","30aa2332.jpg","314c36bd.jpg","3204674b.jpg","32c23e22.jpg","33c5d808.jpg","345bc70f.jpg","34e50876.jpg","35e00023.jpg","365b3267.jpg","3678e3cc.jpg","36c87628.jpg","3766f7af.jpg","37a1eb42.jpg","385bb3a4.jpg","38dafaaf.jpg","390da04c.jpg","394cc8d7.jpg","39b54235.jpg","3ac64183.jpg","3b22b9e5.jpg","3d2618f5.jpg","3e71715e.jpg","3e9f4ef0.jpg","3eb2e2b5.jpg","40019057.jpg","411885aa.jpg","414b91df.jpg","41764883.jpg","4259cc89.jpg","4513c561.jpg","45cec778.jpg","46883cc6.jpg","483cc0f8.jpg","49dcd9c4.jpg","4b0d83a3.jpg","4b65f40d.jpg","4c076868.jpg","4c232ec6.jpg","4ccde1cc.jpg","4e384a97.jpg","4ea44ccd.jpg","4fea8f58.jpg","50397982.jpg","513659af.jpg","538400de.jpg","542612ca.jpg","57310019.jpg","57aeadf6.jpg","58ac4452.jpg","597b67a4.jpg","5ba06af7.jpg","5c76181e.jpg","5cfda4c6.jpg","6139f481.jpg","62dbb891.jpg","6407868e.jpg","64efdddd.jpg","6505726a.jpg","655f151e.jpg","661a451a.jpg","6adf1db4.jpg","6b4b3624.jpg","6be175ba.jpg","6f40ee58.jpg","700f5b9f.jpg","7043547c.jpg","70baf366.jpg","7241a1a8.jpg","730268ba.jpg","73712502.jpg","7489085c.jpg","74ef27ca.jpg","76766ac7.jpg","77d877da.jpg","78b7e3f2.jpg","79a583ed.jpg","7c4f7c7e.jpg","7d56316b.jpg","7e587a5a.jpg","7e80127d.jpg","7e887d59.jpg","8208aac8.jpg","821e69ce.jpg","82d67a14.jpg","831542b4.jpg","831e723a.jpg","83ff85cc.jpg","84826588.jpg","85b0849c.jpg","867c35aa.jpg","86ad05b7.jpg","88bde660.jpg","8906b2db.jpg","8a0e793c.jpg","8b66b859.jpg","8b83d42f.jpg","8c620f9f.jpg","8ffda0b6.jpg","90046431.jpg","91423456.jpg","9160a571.jpg","919484d1.jpg","933c27d9.jpg","9383c544.jpg","9497f17c.jpg","95ec7f33.jpg","9726254d.jpg","988301f5.jpg","988eb93d.jpg","98bfafb8.jpg","98e1b31b.jpg","997203f5.jpg","9b5211ef.jpg","9b98ebda.jpg","9ba0f369.jpg","9ddbf5cb.jpg","9e7b96cd.jpg","9e952db5.jpg","a0736443.jpg","a1899d2e.jpg","a2f27a31.jpg","a4397db0.jpg","a476c7c1.jpg","a4a5fa53.jpg","a67e3f4e.jpg","a6e88373.jpg","a6ffaa8d.jpg","a72d5d37.jpg","a8914cb6.jpg","a9649304.jpg","aa2d3c73.jpg","ac79636e.jpg","ad1d643a.jpg","add93133.jpg","af07f451.jpg","af76d791.jpg","b039769f.jpg","b06de032.jpg","b0e1507e.jpg","b1bc5667.jpg","b1d9e5ea.jpg","b246ba53.jpg","b2d443d2.jpg","b376c3da.jpg","b5030a64.jpg","b658c32a.jpg","b8b0fe39.jpg","b8ed045f.jpg","bb57da4e.jpg","bf597811.jpg","bff9e6fa.jpg","c1b0de4d.jpg","c22e26d8.jpg","c45cdb33.jpg","c93d67e6.jpg","ca30b7f7.jpg","ceb7b02f.jpg","d09b8025.jpg","d33831e5.jpg","d697291d.jpg","d724e2b0.jpg","d8541228.jpg","d8e3f92b.jpg","d9599a1a.jpg","d95e626c.jpg","dde32c63.jpg","de062816.jpg","de130a97.jpg","de5e474e.jpg","dee40e22.jpg","def0ecff.jpg","df28528e.jpg","dfa02100.jpg","dfc5d0d9.jpg","e0e7599a.jpg","e1d165f1.jpg","e1e2615e.jpg","e2210966.jpg","e2ba3a87.jpg","e38d1bd7.jpg","e6f4112f.jpg","ecfed1f2.jpg","ed00d0d4.jpg","edd9ecfd.jpg","eebadb33.jpg","ef970117.jpg","f133b8e2.jpg","f14c5b47.jpg","f1562419.jpg","f1a831a2.jpg","f259a1d6.jpg","f4bc6d2a.jpg","f736f009.jpg","f7415ec1.jpg","f7f69f54.jpg","f8d73c04.jpg","f9fb4a30.jpg","fa560dc3.jpg","fa9f7758.jpg","fb6902b3.jpg","fbe5227c.jpg","fcd5ad1e.jpg","fd1702ce.jpg","fd7e0d6a.jpg","fdb12236.jpg","fffe4556.jpg"
+      "000ac551.jpg","01c232b5.jpg","03596834.jpg","0459873e.jpg","04625565.jpg","0577b447.jpg",
+      "05dabad5.jpg","073974c2.jpg","0843940a.jpg","0a165375.jpg","0be265d3.jpg","0c5d5f12.jpg",
+      "0d607ff1.jpg","0e5fa137.jpg","0ed49836.jpg","0fe744aa.jpg","11d32465.jpg","120c600e.jpg",
+      "12412e1f.jpg","12544f6d.jpg","161fa697.jpg","1651d780.jpg","16951b91.jpg","16b1f79e.jpg",
+      "1a0a1400.jpg","1ac03068.jpg","1ad42d18.jpg","1cc95ab6.jpg","1d40f71a.jpg","1ecafc79.jpg",
+      "1f0fb5d3.jpg","1f4a7afe.jpg","1fe2b00d.jpg","208251f9.jpg","20918934.jpg","2160ec8c.jpg",
+      "2243580a.jpg","22787090.jpg","22f722b9.jpg","231207a5.jpg","2638713e.jpg","26520233.jpg",
+      "266db4c7.jpg","26a49b18.jpg","27020aaa.jpg","27b6c646.jpg","27fd3841.jpg","2830b937.jpg",
+      "288034df.jpg","28984c37.jpg","2899e73e.jpg","2bae574f.jpg","2c855204.jpg","2d9625f3.jpg",
+      "2eeaba41.jpg","309e5f9f.jpg","30aa2332.jpg","314c36bd.jpg","3204674b.jpg","32c23e22.jpg",
+      "33c5d808.jpg","345bc70f.jpg","34e50876.jpg","35e00023.jpg","365b3267.jpg","3678e3cc.jpg",
+      "36c87628.jpg","3766f7af.jpg","37a1eb42.jpg","385bb3a4.jpg","38dafaaf.jpg","390da04c.jpg",
+      "394cc8d7.jpg","39b54235.jpg","3ac64183.jpg","3b22b9e5.jpg","3d2618f5.jpg","3e71715e.jpg",
+      "3e9f4ef0.jpg","3eb2e2b5.jpg","40019057.jpg","411885aa.jpg","414b91df.jpg","41764883.jpg",
+      "4259cc89.jpg","4513c561.jpg","45cec778.jpg","46883cc6.jpg","483cc0f8.jpg","49dcd9c4.jpg",
+      "4b0d83a3.jpg","4b65f40d.jpg","4c076868.jpg","4c232ec6.jpg","4ccde1cc.jpg","4e384a97.jpg",
+      "4ea44ccd.jpg","4fea8f58.jpg","50397982.jpg","513659af.jpg","538400de.jpg","542612ca.jpg",
+      "57310019.jpg","57aeadf6.jpg","58ac4452.jpg","597b67a4.jpg","5ba06af7.jpg","5c76181e.jpg",
+      "5cfda4c6.jpg","6139f481.jpg","62dbb891.jpg","6407868e.jpg","64efdddd.jpg","6505726a.jpg",
+      "655f151e.jpg","661a451a.jpg","6adf1db4.jpg","6b4b3624.jpg","6be175ba.jpg","6f40ee58.jpg",
+      "700f5b9f.jpg","7043547c.jpg","70baf366.jpg","7241a1a8.jpg","730268ba.jpg","73712502.jpg",
+      "7489085c.jpg","74ef27ca.jpg","76766ac7.jpg","77d877da.jpg","78b7e3f2.jpg","79a583ed.jpg",
+      "7c4f7c7e.jpg","7d56316b.jpg","7e587a5a.jpg","7e80127d.jpg","7e887d59.jpg","8208aac8.jpg",
+      "821e69ce.jpg","82d67a14.jpg","831542b4.jpg","831e723a.jpg","83ff85cc.jpg","84826588.jpg",
+      "85b0849c.jpg","867c35aa.jpg","86ad05b7.jpg","88bde660.jpg","8906b2db.jpg","8a0e793c.jpg",
+      "8b66b859.jpg","8b83d42f.jpg","8c620f9f.jpg","8ffda0b6.jpg","90046431.jpg","91423456.jpg",
+      "9160a571.jpg","919484d1.jpg","933c27d9.jpg","9383c544.jpg","9497f17c.jpg","95ec7f33.jpg",
+      "9726254d.jpg","988301f5.jpg","988eb93d.jpg","98bfafb8.jpg","98e1b31b.jpg","997203f5.jpg",
+      "9b5211ef.jpg","9b98ebda.jpg","9ba0f369.jpg","9ddbf5cb.jpg","9e7b96cd.jpg","9e952db5.jpg",
+      "a0736443.jpg","a1899d2e.jpg","a2f27a31.jpg","a4397db0.jpg","a476c7c1.jpg","a4a5fa53.jpg",
+      "a67e3f4e.jpg","a6e88373.jpg","a6ffaa8d.jpg","a72d5d37.jpg","a8914cb6.jpg","a9649304.jpg",
+      "aa2d3c73.jpg","ac79636e.jpg","ad1d643a.jpg","add93133.jpg","af07f451.jpg","af76d791.jpg",
+      "b039769f.jpg","b06de032.jpg","b0e1507e.jpg","b1bc5667.jpg","b1d9e5ea.jpg","b246ba53.jpg",
+      "b2d443d2.jpg","b376c3da.jpg","b5030a64.jpg","b658c32a.jpg","b8b0fe39.jpg","b8ed045f.jpg",
+      "bb57da4e.jpg","bf597811.jpg","bff9e6fa.jpg","c1b0de4d.jpg","c22e26d8.jpg","c45cdb33.jpg",
+      "c93d67e6.jpg","ca30b7f7.jpg","ceb7b02f.jpg","d09b8025.jpg","d33831e5.jpg","d697291d.jpg",
+      "d724e2b0.jpg","d8541228.jpg","d8e3f92b.jpg","d9599a1a.jpg","d95e626c.jpg","dde32c63.jpg",
+      "de062816.jpg","de130a97.jpg","de5e474e.jpg","dee40e22.jpg","def0ecff.jpg","df28528e.jpg",
+      "dfa02100.jpg","dfc5d0d9.jpg","e0e7599a.jpg","e1d165f1.jpg","e1e2615e.jpg","e2210966.jpg",
+      "e2ba3a87.jpg","e38d1bd7.jpg","e6f4112f.jpg","ecfed1f2.jpg","ed00d0d4.jpg","edd9ecfd.jpg",
+      "eebadb33.jpg","ef970117.jpg","f133b8e2.jpg","f14c5b47.jpg","f1562419.jpg","f1a831a2.jpg",
+      "f259a1d6.jpg","f4bc6d2a.jpg","f736f009.jpg","f7415ec1.jpg","f7f69f54.jpg","f8d73c04.jpg",
+      "f9fb4a30.jpg","fa560dc3.jpg","fa9f7758.jpg","fb6902b3.jpg","fbe5227c.jpg","fcd5ad1e.jpg",
+      "fd1702ce.jpg","fd7e0d6a.jpg","fdb12236.jpg","fffe4556.jpg"
     ];
 
-    // Amiri Hoodies (ordner12)
+    // Amiri Hoodies (Ordner12)
     const amiriHoodies = [
       "029aab32.jpg","088520b7.jpg","1db0b9bc.jpg","3dc6bac8.jpg","4f250b32.jpg","60a1db50.jpg",
       "636f8f4e.jpg","66b3f7ad.jpg","699cce8c.jpg","6ce40c2e.jpg","7c5a53d3.jpg","7cd8eb68.jpg",
@@ -302,7 +338,7 @@
       "ebb6b899.jpg","f08b8ccb.jpg","f1042bef.jpg","f5fc839c.jpg"
     ];
 
-    // Casablanca T-Shirts (ordner13)
+    // Casablanca T-Shirts (Ordner13)
     const casablancaTShirts = [
       "02f89fbf.jpg","03fddc0e.jpg","04113ccb.jpg","0493d81f.jpg","06c2f476.jpg","09c14c8c.jpg",
       "0aa62afc.jpg","0adf844a.jpg","0e35ae9b.jpg","0eee6219.jpg","0f9c578d.jpg","10533f01.jpg",
@@ -326,7 +362,7 @@
       "f54f759f.jpg","f993917d.jpg","f9e1a2a8.jpg","fa33e96c.jpg","fcdad38d.jpg"
     ];
 
-    // Casablanca Hoodies (ordner14) – zweite Liste verwendet
+    // Casablanca Hoodies (Ordner14)
     const casablancaHoodies = [
       "022ecdb8.jpg","088532d3.jpg","0c6d6af4.jpg","0ed464a5.jpg","0f003da3.jpg","11b0c37e.jpg",
       "16ea2b2c.jpg","1c8d2ef3.jpg","218d7b25.jpg","252e5ab7.jpg","2e289811.jpg","30ef4a19.jpg",
@@ -338,7 +374,7 @@
       "f6c803bb.jpg","f6ff6356.jpg","fb30c652.jpg","fe3310f8.jpg"
     ];
 
-    // Stussy Hoodies (ordner15)
+    // Stussy Hoodies (Ordner15)
     const stussyHoodies = [
       "00a60e61.png","118b02ac.png","130c9dc3.png","133b1b3e.png","1f1e3653.png","22751c4a.jpg",
       "23e1b497.png","249d915d.png","269ba319.jpg","2c226d70.png","2d16e45e.png","3b1998a6.png",
@@ -353,7 +389,7 @@
       "f583639f.png","f63b84ba.png","f745771f.jpg","f751504f.png","fea4f069.png"
     ];
 
-    // Stussy T-Shirts (ordner16)
+    // Stussy T-Shirts (Ordner16)
     const stussyTShirts = [
       "057af762.jpg","05915131.jpg","065493ef.jpg","06b412f4.jpg","0745d742.jpg","0a9230e9.jpg",
       "0da13314.jpg","0e7574d6.jpg","1282b7dd.jpg","132db41b.jpg","15275a6d.jpg","15f67e99.jpg",
@@ -377,34 +413,36 @@
 
     /* -------- Kategorien-Konfiguration -------- */
     const categories = {
-      amiri:      { label:"Amiri",         base: null,               images: null }, // Dropdown (T-Shirt + Hoodie)
-      lv:         { label:"Louis Vuitton", base: LV_BASE,            images: louisVuittonImages },
-      moncler:    { label:"Moncler",       base: MONCLER_BASE,       images: monclerImages },
-      gucci:      { label:"Gucci",         base: GUCCI_BASE,         images: gucciImages },
-      offwhite:   { label:"Off-White",     base: null,               images: null }, // Dropdown
-      balenciaga: { label:"Balenciaga",    base: null,               images: null }, // Dropdown
-      palm:       { label:"Palm Angels",   base: PALM_BASE,          images: palmImages },
-      dior:       { label:"Dior",          base: DIOR_BASE,          images: diorImages },
-      bape:       { label:"Bape",          base: BAPE_T_BASE,        images: bapeTShirts },
-      casablanca: { label:"Casablanca",    base: null,               images: null }, // Dropdown
-      stussy:     { label:"Stussy",        base: null,               images: null }  // Dropdown
+      amiri:      { label:"Amiri",         base: null,              images: null }, // Dropdown
+      lv:         { label:"Louis Vuitton", base: LV_BASE,           images: louisVuittonImages },
+      moncler:    { label:"Moncler",       base: MONCLER_BASE,      images: monclerImages },
+      gucci:      { label:"Gucci",         base: GUCCI_BASE,        images: gucciImages },
+      offwhite:   { label:"Off-White",     base: null,              images: null }, // Dropdown
+      balenciaga: { label:"Balenciaga",    base: null,              images: null }, // Dropdown
+      palm:       { label:"Palm Angels",   base: PALM_BASE,         images: palmImages },
+      dior:       { label:"Dior",          base: DIOR_BASE,         images: diorImages },
+      bape:       { label:"Bape",          base: null,              images: null }, // Dropdown
+      casablanca: { label:"Casablanca",    base: null,              images: null }, // Dropdown
+      stussy:     { label:"Stussy",        base: null,              images: null }  // Dropdown
     };
 
     /* --- Anzeige / Lightbox --- */
     let currentGallery = null, currentIndex = 0;
 
     // Auswahlstatus für Dropdown-Marken
-    let offwhiteSubset   = null;     // "tshirts" | "hoodies"
-    let balenciagaSubset = null;     // "tshirts" | "hoodies" (tshirts derzeit leer)
-    let amiriSubset      = null;     // NEU
-    let casablancaSubset = null;     // NEU
-    let stussySubset     = null;     // NEU
+    let amiriSubset = null;        // "tshirts" | "hoodies"
+    let offwhiteSubset = null;     // "tshirts" | "hoodies"
+    let balenciagaSubset = null;   // "tshirts" | "hoodies" (tshirts derzeit leer)
+    let bapeSubset = null;         // "tshirts" (nur T-Shirts verfügbar)
+    let casablancaSubset = null;   // "tshirts" | "hoodies"
+    let stussySubset = null;       // "tshirts" | "hoodies"
 
     // Offenes Dropdown
     let openDropdownKey = null;
 
     function showCategory(key){
-      if(["offwhite","balenciaga","amiri","casablanca","stussy"].includes(key)){
+      if(key === "amiri" || key === "offwhite" || key === "balenciaga" || 
+         key === "bape" || key === "casablanca" || key === "stussy"){
         toggleDropdown(key);
         return;
       }
@@ -416,7 +454,7 @@
       grid.scrollIntoView({behavior:"smooth",block:"start"});
     }
 
-    /* ===== Dropdown unter der angeklickten Karte (verallgemeinert) ===== */
+    /* ===== Dropdown unter der angeklickten Karte ===== */
     function toggleDropdown(key){
       const list = document.getElementById("brandList");
       const card = list.querySelector(`[data-brand="${key}"]`);
@@ -425,45 +463,76 @@
       if(openDropdownKey && openDropdownKey !== key) closeDropdown();
       if(openDropdownKey === key){ closeDropdown(); return; }
 
-      // Hat die Marke T-Shirts?
-      const hasT = (
-        key === "offwhite"   ? true :
-        key === "balenciaga" ? (balenciagaTShirts.length>0) :
-        key === "amiri"      ? (amiriTShirts.length>0) :
-        key === "casablanca" ? (casablancaTShirts.length>0) :
-        key === "stussy"     ? (stussyTShirts.length>0) : false
-      );
-
-      // Preislabels
-      const tPrice = (
-        key === "offwhite"   ? prices.offwhite_tshirt :
-        key === "balenciaga" ? null :
-        key === "amiri"      ? prices.amiri_tshirt :
-        key === "casablanca" ? prices.casablanca_tshirt :
-        key === "stussy"     ? prices.stussy_tshirt : null
-      );
-      const hPrice = (
-        key === "offwhite"   ? prices.offwhite_hoodie :
-        key === "balenciaga" ? prices.balenciaga_hoodie :
-        key === "amiri"      ? prices.amiri_hoodie :
-        key === "casablanca" ? prices.casablanca_hoodie :
-        key === "stussy"     ? prices.stussy_hoodie : null
-      );
-      const tshirtLabel = `T-Shirts${tPrice!=null?` (CHF ${tPrice})`:''}`;
-      const hoodieLabel = `Hoodies${hPrice!=null?` (CHF ${hPrice})`:''}`;
-
       const dd = document.createElement("div");
       dd.className = "dd";
       dd.id = `dd-${key}`;
-      dd.innerHTML = `
-        <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
-          <div class="dd-items">
-            <button class="dd-item" ${!hasT ? "disabled" : ""} onclick="selectSubset('${key}','tshirts')">${tshirtLabel}</button>
-            <button class="dd-item" onclick="selectSubset('${key}','hoodies')">${hoodieLabel}</button>
+      
+      // Dropdown-Inhalt je nach Marke
+      let dropdownContent = '';
+      
+      if (key === "amiri") {
+        dropdownContent = `
+          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
+            <div class="dd-items">
+              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.amiri_tshirt})</button>
+              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.amiri_hoodie})</button>
+            </div>
+            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
           </div>
-          <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
-        </div>
-      `;
+        `;
+      } else if (key === "offwhite") {
+        dropdownContent = `
+          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
+            <div class="dd-items">
+              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.offwhite_tshirt})</button>
+              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.offwhite_hoodie})</button>
+            </div>
+            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
+          </div>
+        `;
+      } else if (key === "balenciaga") {
+        const hasT = balenciagaTShirts.length > 0;
+        dropdownContent = `
+          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
+            <div class="dd-items">
+              <button class="dd-item" ${!hasT ? "disabled" : ""} onclick="selectSubset('${key}','tshirts')">T-Shirts</button>
+              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.balenciaga_hoodie})</button>
+            </div>
+            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
+          </div>
+        `;
+      } else if (key === "bape") {
+        dropdownContent = `
+          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
+            <div class="dd-items">
+              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.bape_tshirt})</button>
+            </div>
+            <div class="dd-hint">Nur T-Shirts verfügbar.</div>
+          </div>
+        `;
+      } else if (key === "casablanca") {
+        dropdownContent = `
+          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
+            <div class="dd-items">
+              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.casablanca_tshirt})</button>
+              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.casablanca_hoodie})</button>
+            </div>
+            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
+          </div>
+        `;
+      } else if (key === "stussy") {
+        dropdownContent = `
+          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
+            <div class="dd-items">
+              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.stussy_tshirt})</button>
+              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.stussy_hoodie})</button>
+            </div>
+            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
+          </div>
+        `;
+      }
+      
+      dd.innerHTML = dropdownContent;
       card.insertAdjacentElement("afterend", dd);
       openDropdownKey = key;
 
@@ -482,6 +551,16 @@
 
     // Auswahl im Dropdown
     window.selectSubset = function(brand, subset){
+      if(brand === "amiri"){
+        amiriSubset = subset;
+        openDropdownKey && closeDropdown();
+        currentGallery = "amiri";
+        document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
+        renderAmiriGrid();
+        document.getElementById("amiri").classList.add("active");
+        document.getElementById("amiri").scrollIntoView({behavior:"smooth",block:"start"});
+        return;
+      }
       if(brand === "offwhite"){
         offwhiteSubset = subset;
         openDropdownKey && closeDropdown();
@@ -502,14 +581,14 @@
         document.getElementById("balenciaga").scrollIntoView({behavior:"smooth",block:"start"});
         return;
       }
-      if(brand === "amiri"){
-        amiriSubset = subset;
+      if(brand === "bape"){
+        bapeSubset = subset;
         openDropdownKey && closeDropdown();
-        currentGallery = "amiri";
+        currentGallery = "bape";
         document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
-        renderAmiriGrid();
-        document.getElementById("amiri").classList.add("active");
-        document.getElementById("amiri").scrollIntoView({behavior:"smooth",block:"start"});
+        renderBapeGrid();
+        document.getElementById("bape").classList.add("active");
+        document.getElementById("bape").scrollIntoView({behavior:"smooth",block:"start"});
         return;
       }
       if(brand === "casablanca"){
@@ -536,28 +615,29 @@
 
     /* ===== Lightbox ===== */
     function openLightbox(cat,i){
-      let arr = categories[cat].images;
-      let base = categories[cat].base || "";
-
-      if(cat === "offwhite"){
+      let arr = [], base = "";
+      
+      if(cat === "amiri"){
+        if(amiriSubset === "tshirts"){ arr = amiriImages; base = AMIRI_BASE; }
+        else { arr = amiriHoodies; base = AMIRI_H_BASE; }
+      } else if(cat === "offwhite"){
         if(offwhiteSubset === "tshirts"){ arr = offwhiteTShirts; base = OFFWHITE_T_BASE; }
         else { arr = offwhiteHoodies; base = OFFWHITE_H_BASE; }
-      }
-      if(cat === "balenciaga"){
+      } else if(cat === "balenciaga"){
         if(balenciagaSubset === "tshirts"){ arr = balenciagaTShirts; base = ""; }
         else { arr = balenciagaHoodies; base = BALENCIAGA_H_BASE; }
-      }
-      if(cat === "amiri"){
-        if(amiriSubset === "tshirts"){ arr = amiriTShirts; base = AMIRI_BASE; }
-        else { arr = amiriHoodies; base = AMIRI_H_BASE; }
-      }
-      if(cat === "casablanca"){
+      } else if(cat === "bape"){
+        arr = bapeTShirts; base = BAPE_T_BASE;
+      } else if(cat === "casablanca"){
         if(casablancaSubset === "tshirts"){ arr = casablancaTShirts; base = CASABLANCA_T_BASE; }
         else { arr = casablancaHoodies; base = CASABLANCA_H_BASE; }
-      }
-      if(cat === "stussy"){
+      } else if(cat === "stussy"){
         if(stussySubset === "tshirts"){ arr = stussyTShirts; base = STUSSY_T_BASE; }
         else { arr = stussyHoodies; base = STUSSY_H_BASE; }
+      } else {
+        // Einfache Kategorien
+        arr = categories[cat]?.images || [];
+        base = categories[cat]?.base || "";
       }
 
       if(!arr || !arr.length) return;
@@ -565,36 +645,40 @@
       document.getElementById("lightboxImg").src = srcPath(base, arr[i]);
       document.getElementById("lightbox").style.display = "flex";
     }
+    
     function closeLightbox(){ document.getElementById("lightbox").style.display="none"; }
+    
     function changeImg(d){
-      let arr = categories[currentGallery]?.images || [];
-      let base = categories[currentGallery]?.base || "";
-
-      if(currentGallery === "offwhite"){
+      let arr = [], base = "";
+      
+      if(currentGallery === "amiri"){
+        if(amiriSubset === "tshirts"){ arr = amiriImages; base = AMIRI_BASE; }
+        else { arr = amiriHoodies; base = AMIRI_H_BASE; }
+      } else if(currentGallery === "offwhite"){
         if(offwhiteSubset === "tshirts"){ arr = offwhiteTShirts; base = OFFWHITE_T_BASE; }
         else { arr = offwhiteHoodies; base = OFFWHITE_H_BASE; }
-      }
-      if(currentGallery === "balenciaga"){
+      } else if(currentGallery === "balenciaga"){
         if(balenciagaSubset === "tshirts"){ arr = balenciagaTShirts; base = ""; }
         else { arr = balenciagaHoodies; base = BALENCIAGA_H_BASE; }
-      }
-      if(currentGallery === "amiri"){
-        if(amiriSubset === "tshirts"){ arr = amiriTShirts; base = AMIRI_BASE; }
-        else { arr = amiriHoodies; base = AMIRI_H_BASE; }
-      }
-      if(currentGallery === "casablanca"){
+      } else if(currentGallery === "bape"){
+        arr = bapeTShirts; base = BAPE_T_BASE;
+      } else if(currentGallery === "casablanca"){
         if(casablancaSubset === "tshirts"){ arr = casablancaTShirts; base = CASABLANCA_T_BASE; }
         else { arr = casablancaHoodies; base = CASABLANCA_H_BASE; }
-      }
-      if(currentGallery === "stussy"){
+      } else if(currentGallery === "stussy"){
         if(stussySubset === "tshirts"){ arr = stussyTShirts; base = STUSSY_T_BASE; }
         else { arr = stussyHoodies; base = STUSSY_H_BASE; }
+      } else {
+        // Einfache Kategorien
+        arr = categories[currentGallery]?.images || [];
+        base = categories[currentGallery]?.base || "";
       }
 
       if(!arr.length) return;
       currentIndex = (currentIndex + d + arr.length) % arr.length;
       document.getElementById("lightboxImg").src = srcPath(base, arr[currentIndex]);
     }
+    
     document.addEventListener("keydown",e=>{
       if(document.getElementById("lightbox").style.display==="flex"){
         if(e.key==="ArrowRight") changeImg(1);
@@ -618,13 +702,30 @@
       if(key === "gucci") price = prices.gucci;
       if(key === "palm") price = prices.palm_tshirt;
       if(key === "dior") price = prices.dior;
-      if(key === "bape") price = prices.bape_tshirt; // ggf. gesetzt
 
       el.innerHTML = arr.map((src,i)=>`
         <div class="item">
           <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="${key} Bild ${i+1}" onclick="openLightbox('${key}',${i})">
           ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
         </div>`).join('');
+    }
+
+    function renderAmiriGrid(){
+      const el = document.getElementById("amiri");
+      if(!amiriSubset){
+        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown T-Shirts oder Hoodies wählen.</div>";
+        return;
+      }
+      const arr  = amiriSubset === "tshirts" ? amiriImages : amiriHoodies;
+      const base = amiriSubset === "tshirts" ? AMIRI_BASE : AMIRI_H_BASE;
+      const price = amiriSubset === "tshirts" ? prices.amiri_tshirt : prices.amiri_hoodie;
+      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
+      el.innerHTML = arr.map((src,i)=>`
+        <div class="item">
+          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Amiri ${amiriSubset} ${i+1}" onclick="openLightbox('amiri',${i})">
+          <div class="price-tag">CHF ${price}</div>
+        </div>
+      `).join('');
     }
 
     function renderOffwhiteGrid(){
@@ -640,7 +741,7 @@
       el.innerHTML = arr.map((src,i)=>`
         <div class="item">
           <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Off-White ${offwhiteSubset} ${i+1}" onclick="openLightbox('offwhite',${i})">
-          ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
+          <div class="price-tag">CHF ${price}</div>
         </div>
       `).join('');
     }
@@ -664,26 +765,24 @@
       `).join('');
     }
 
-    // NEU: Amiri Dropdown
-    function renderAmiriGrid(){
-      const el = document.getElementById("amiri");
-      if(!amiriSubset){
-        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown T-Shirts oder Hoodies wählen.</div>";
+    function renderBapeGrid(){
+      const el = document.getElementById("bape");
+      if(!bapeSubset){
+        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown T-Shirts wählen.</div>";
         return;
       }
-      const arr  = amiriSubset === "tshirts" ? amiriTShirts : amiriHoodies;
-      const base = amiriSubset === "tshirts" ? AMIRI_BASE : AMIRI_H_BASE;
-      const price = amiriSubset === "tshirts" ? prices.amiri_tshirt : prices.amiri_hoodie;
-      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
+      const arr  = bapeTShirts;
+      const base = BAPE_T_BASE;
+      const price = prices.bape_tshirt;
+      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder verfügbar.</div>"; return; }
       el.innerHTML = arr.map((src,i)=>`
         <div class="item">
-          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Amiri ${amiriSubset} ${i+1}" onclick="openLightbox('amiri',${i})">
-          ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
+          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Bape T-Shirt ${i+1}" onclick="openLightbox('bape',${i})">
+          <div class="price-tag">CHF ${price}</div>
         </div>
       `).join('');
     }
 
-    // NEU: Casablanca Dropdown
     function renderCasablancaGrid(){
       const el = document.getElementById("casablanca");
       if(!casablancaSubset){
@@ -697,12 +796,11 @@
       el.innerHTML = arr.map((src,i)=>`
         <div class="item">
           <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Casablanca ${casablancaSubset} ${i+1}" onclick="openLightbox('casablanca',${i})">
-          ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
+          <div class="price-tag">CHF ${price}</div>
         </div>
       `).join('');
     }
 
-    // NEU: Stussy Dropdown
     function renderStussyGrid(){
       const el = document.getElementById("stussy");
       if(!stussySubset){
@@ -716,45 +814,36 @@
       el.innerHTML = arr.map((src,i)=>`
         <div class="item">
           <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Stussy ${stussySubset} ${i+1}" onclick="openLightbox('stussy',${i})">
-          ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
+          <div class="price-tag">CHF ${price}</div>
         </div>
       `).join('');
     }
 
-    /* ------ Markenliste mit data-brand (Dropdown-Ziele) + Preistext ------ */
+    /* ------ Markenliste mit data-brand (für Dropdown-Ziel) + Preistext ------ */
     function buildBrandList(){
       const wrap=document.getElementById("brandList");
       wrap.innerHTML="";
       Object.entries(categories).forEach(([key,cfg])=>{
         let count = 0, metaExtra = "";
 
-        if(["offwhite","balenciaga","amiri","casablanca","stussy"].includes(key)){
-          // Summiere Unterkategorien
-          if(key === "offwhite") count = (offwhiteTShirts?.length||0) + (offwhiteHoodies?.length||0);
-          if(key === "balenciaga") count = (balenciagaTShirts?.length||0) + (balenciagaHoodies?.length||0);
-          if(key === "amiri") count = (amiriTShirts?.length||0) + (amiriHoodies?.length||0);
-          if(key === "casablanca") count = (casablancaTShirts?.length||0) + (casablancaHoodies?.length||0);
-          if(key === "stussy") count = (stussyTShirts?.length||0) + (stussyHoodies?.length||0);
-
-          // Preistext bauen (nur anzeigen, wenn gesetzt)
-          const tPrice = (
-            key === "offwhite" ? prices.offwhite_tshirt :
-            key === "balenciaga" ? null :
-            key === "amiri" ? prices.amiri_tshirt :
-            key === "casablanca" ? prices.casablanca_tshirt :
-            key === "stussy" ? prices.stussy_tshirt : null
-          );
-          const hPrice = (
-            key === "offwhite" ? prices.offwhite_hoodie :
-            key === "balenciaga" ? prices.balenciaga_hoodie :
-            key === "amiri" ? prices.amiri_hoodie :
-            key === "casablanca" ? prices.casablanca_hoodie :
-            key === "stussy" ? prices.stussy_hoodie : null
-          );
-          const parts = [];
-          if(tPrice != null) parts.push(`T-Shirts CHF ${tPrice}`); else parts.push("T-Shirts");
-          if(hPrice != null) parts.push(`Hoodies CHF ${hPrice}`); else parts.push("Hoodies");
-          metaExtra = parts.join(" • ");
+        if(key === "amiri"){
+          count = (amiriImages?.length||0) + (amiriHoodies?.length||0);
+          metaExtra = `T-Shirts CHF ${prices.amiri_tshirt} • Hoodies CHF ${prices.amiri_hoodie}`;
+        } else if(key === "offwhite"){
+          count = (offwhiteTShirts?.length||0) + (offwhiteHoodies?.length||0);
+          metaExtra = `T-Shirts CHF ${prices.offwhite_tshirt} • Hoodies CHF ${prices.offwhite_hoodie}`;
+        } else if(key === "balenciaga"){
+          count = (balenciagaTShirts?.length||0) + (balenciagaHoodies?.length||0);
+          metaExtra = `Hoodies CHF ${prices.balenciaga_hoodie}${balenciagaTShirts.length ? " • T-Shirts" : ""}`;
+        } else if(key === "bape"){
+          count = (bapeTShirts?.length||0);
+          metaExtra = `T-Shirts CHF ${prices.bape_tshirt}`;
+        } else if(key === "casablanca"){
+          count = (casablancaTShirts?.length||0) + (casablancaHoodies?.length||0);
+          metaExtra = `T-Shirts CHF ${prices.casablanca_tshirt} • Hoodies CHF ${prices.casablanca_hoodie}`;
+        } else if(key === "stussy"){
+          count = (stussyTShirts?.length||0) + (stussyHoodies?.length||0);
+          metaExtra = `T-Shirts CHF ${prices.stussy_tshirt} • Hoodies CHF ${prices.stussy_hoodie}`;
         } else {
           count = (cfg.images?.length || 0);
           const brandPrice = (
@@ -762,8 +851,7 @@
             key==="moncler" ? prices.moncler :
             key==="gucci" ? prices.gucci :
             key==="palm" ? prices.palm_tshirt :
-            key==="dior" ? prices.dior :
-            key==="bape" ? prices.bape_tshirt : null
+            key==="dior" ? prices.dior : null
           );
           metaExtra = brandPrice !== null ? `ab CHF ${brandPrice}` : "";
         }
@@ -786,9 +874,10 @@
 
     document.addEventListener("DOMContentLoaded",()=>{
       buildBrandList();
-      // Standard-Galerien initial rendern (Dropdown-Marken überspringen)
+      // Standard-Galerien initial rendern
       Object.entries(categories).forEach(([k,cfg])=>{
-        if(["offwhite","balenciaga","amiri","casablanca","stussy"].includes(k)) return; // per Dropdown
+        if(k === "amiri" || k === "offwhite" || k === "balenciaga" || 
+           k === "bape" || k === "casablanca" || k === "stussy") return; // per Dropdown
         renderGrid(k,cfg.images,k);
       });
     });
