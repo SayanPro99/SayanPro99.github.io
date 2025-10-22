@@ -10,18 +10,69 @@
     * { box-sizing:border-box; }
     body { font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:#f7f7f7; margin:0; padding:24px; color:#111; }
 
+    /* Neue Kategorie-Auswahl */
+    .category-selector {
+      max-width: 1000px;
+      margin: 0 auto 24px;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 6px 20px rgba(0,0,0,.08);
+      border: 1px solid rgba(0,0,0,.05);
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .category-title {
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #111;
+    }
+    
+    .category-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .category-btn {
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 18px 32px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 160px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+    
+    .category-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,.2);
+      background: #333;
+    }
+    
+    .category-btn.active {
+      background: #444;
+      transform: translateY(-1px);
+    }
+
     .hero{max-width:1000px;margin:8px auto 18px;text-align:left;padding:8px 4px}
     .hero h1{margin:0 0 6px;font-size:clamp(26px,3.5vw,38px)}
     .hero p{margin:0;color:#555;font-size:clamp(14px,2.4vw,16px)}
 
-    .brand-list-wrap{max-width:1000px;margin:0 auto 18px;background:#fff;border-radius:var(--radius);box-shadow:0 6px 20px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.05);padding:12px}
-    .brand-list{display:grid;grid-template-columns:1fr;gap:12px;max-height:70vh;overflow-y:auto;padding-right:4px;position:relative}
-    .brand-card{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--card-bg);color:var(--card-fg);padding:18px 20px;border-radius:var(--radius);box-shadow:0 8px 18px rgba(0,0,0,.18);cursor:pointer;user-select:none;transition:transform .06s,box-shadow .15s,opacity .2s;outline:none; position:relative}
-    .brand-card:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(0,0,0,.22)}
-    .brand-left{display:flex;flex-direction:column;gap:6px;text-align:left}
+    .brand-list-wrap{max-width:1000px;margin:0 auto 18px;background:#fff;border-radius:var(--radius);box-shadow:0 6px 20px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.05);padding:20px}
+    .brand-list{display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:16px;max-height:70vh;overflow-y:auto;padding-right:4px;position:relative}
+    .brand-card{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--card-bg);color:var(--card-fg);padding:22px 24px;border-radius:var(--radius);box-shadow:0 8px 18px rgba(0,0,0,.18);cursor:pointer;user-select:none;transition:transform .06s,box-shadow .15s,opacity .2s;outline:none; position:relative; min-height: 100px;}
+    .brand-card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.22)}
+    .brand-left{display:flex;flex-direction:column;gap:8px;text-align:left; flex: 1;}
     .brand-title{font-size:clamp(18px,2.8vw,24px);font-weight:700}
     .brand-meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:clamp(13px,2.4vw,14px)}
-    .brand-right{font-size:28px;opacity:.8}
+    .brand-right{font-size:32px;opacity:.8; min-width: 40px; text-align: center;}
 
     /* Dropdown unter der Karte */
     .dd{ position:relative; z-index:5; }
@@ -29,32 +80,47 @@
       margin-top:8px;
       background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px;
       box-shadow:0 16px 30px rgba(0,0,0,.12);
-      padding:10px;
+      padding:16px;
       animation:pop .18s ease;
     }
-    .dd-items{display:flex;gap:10px;flex-wrap:wrap}
+    .dd-items{display:flex;gap:12px;flex-wrap:wrap}
     .dd-item{
       border:1px solid #e5e5e5; background:#fff; border-radius:999px;
-      padding:12px 18px;
-      font-size:16px;
+      padding:16px 24px;
+      font-size:18px;
       line-height:1.1;
       cursor:pointer;
-      min-height:44px;
-      min-width:120px;
+      min-height:52px;
+      min-width:140px;
       touch-action:manipulation;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+    .dd-item:hover {
+      background: #f5f5f5;
+      transform: translateY(-1px);
     }
     .dd-item:active{transform:translateY(1px)}
     .dd-item[disabled]{opacity:.5; cursor:not-allowed}
-    .dd-hint{color:#444; font-size:14px; margin-top:6px}
+    .dd-hint{color:#444; font-size:14px; margin-top:10px; text-align: center;}
 
     @media(max-width:700px){
-      .dd-panel{ padding:12px }
+      .brand-list {
+        grid-template-columns: 1fr;
+      }
+      .dd-panel{ padding:16px }
       .dd-items{ gap:12px }
       .dd-item{
-        padding:14px 22px;
-        font-size:17px;
+        padding:16px 20px;
+        font-size:16px;
         min-height:48px;
         min-width:130px;
+      }
+      .category-buttons {
+        flex-direction: column;
+      }
+      .category-btn {
+        width: 100%;
       }
     }
 
@@ -141,7 +207,7 @@
       "79508a4d.jpg","79f6ce80.jpg","7d98a568.jpg","848ac5d5.jpg","84c5ec2b.jpg","85dac8fc.jpg",
       "8638a52e.jpg","89229fd0.jpg","8ae2604c.jpg","8e9f22c8.jpg","8fda819a.jpg","914a3b0c.jpg",
       "939fd085.jpg","96dc2014.jpg","981a907e.jpg","982c5593.jpg","98c1d72b.jpg","99d758f5.jpg",
-      "9f8d6ed3.jpg","a30e1691.jpg","a39f148e.jpg","a3aa14e3.jpg","a5d2180f.jpg","a650ac9c.jpg",
+      "9f8d6ed3.jpg","a30e1691.jpg","a39f148e.jpg","a3aa14e3.jpg","a5d218f.jpg","a650ac9c.jpg",
       "a9c1ff48.jpg","a9d055c0.jpg","aa978353.jpg","aab61bd7.jpg","aafa7f5b.jpg","afc4f9d0.jpg",
       "b3a08897.jpg","b6326879.jpg","bef979e6.jpg","bf761b18.jpg","bfefa67c.jpg","c020f149.jpg",
       "c6e93afc.jpg","d0b65508.jpg","d301d96d.jpg","d30edfb8.jpg","d6b1dc5d.jpg","d8697049.jpg",
@@ -439,6 +505,22 @@
 
     // Offenes Dropdown
     let openDropdownKey = null;
+    
+    // Aktive Kategorie (T-Shirts oder Hoodies)
+    let activeCategory = 'tshirts';
+
+    function setActiveCategory(category) {
+      activeCategory = category;
+      
+      // Aktiven Button stylen
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Markenliste neu aufbauen
+      buildBrandList();
+    }
 
     function showCategory(key){
       if(key === "amiri" || key === "offwhite" || key === "balenciaga" || 
@@ -823,27 +905,44 @@
     function buildBrandList(){
       const wrap=document.getElementById("brandList");
       wrap.innerHTML="";
-      Object.entries(categories).forEach(([key,cfg])=>{
+      
+      // Filtere Marken basierend auf aktiver Kategorie
+      const filteredBrands = Object.entries(categories).filter(([key, cfg]) => {
+        if (activeCategory === 'tshirts') {
+          // Zeige nur Marken, die T-Shirts haben
+          return key === "lv" || key === "moncler" || key === "gucci" || 
+                 key === "palm" || key === "dior" || key === "amiri" || 
+                 key === "offwhite" || key === "bape" || key === "casablanca" || 
+                 key === "stussy";
+        } else if (activeCategory === 'hoodies') {
+          // Zeige nur Marken, die Hoodies haben
+          return key === "amiri" || key === "offwhite" || key === "balenciaga" || 
+                 key === "casablanca" || key === "stussy";
+        }
+        return true;
+      });
+      
+      filteredBrands.forEach(([key,cfg])=>{
         let count = 0, metaExtra = "";
 
         if(key === "amiri"){
-          count = (amiriImages?.length||0) + (amiriHoodies?.length||0);
-          metaExtra = `T-Shirts CHF ${prices.amiri_tshirt} • Hoodies CHF ${prices.amiri_hoodie}`;
+          count = activeCategory === 'tshirts' ? (amiriImages?.length||0) : (amiriHoodies?.length||0);
+          metaExtra = activeCategory === 'tshirts' ? `T-Shirts CHF ${prices.amiri_tshirt}` : `Hoodies CHF ${prices.amiri_hoodie}`;
         } else if(key === "offwhite"){
-          count = (offwhiteTShirts?.length||0) + (offwhiteHoodies?.length||0);
-          metaExtra = `T-Shirts CHF ${prices.offwhite_tshirt} • Hoodies CHF ${prices.offwhite_hoodie}`;
+          count = activeCategory === 'tshirts' ? (offwhiteTShirts?.length||0) : (offwhiteHoodies?.length||0);
+          metaExtra = activeCategory === 'tshirts' ? `T-Shirts CHF ${prices.offwhite_tshirt}` : `Hoodies CHF ${prices.offwhite_hoodie}`;
         } else if(key === "balenciaga"){
-          count = (balenciagaTShirts?.length||0) + (balenciagaHoodies?.length||0);
-          metaExtra = `Hoodies CHF ${prices.balenciaga_hoodie}${balenciagaTShirts.length ? " • T-Shirts" : ""}`;
+          count = (balenciagaHoodies?.length||0);
+          metaExtra = `Hoodies CHF ${prices.balenciaga_hoodie}`;
         } else if(key === "bape"){
           count = (bapeTShirts?.length||0);
           metaExtra = `T-Shirts CHF ${prices.bape_tshirt}`;
         } else if(key === "casablanca"){
-          count = (casablancaTShirts?.length||0) + (casablancaHoodies?.length||0);
-          metaExtra = `T-Shirts CHF ${prices.casablanca_tshirt} • Hoodies CHF ${prices.casablanca_hoodie}`;
+          count = activeCategory === 'tshirts' ? (casablancaTShirts?.length||0) : (casablancaHoodies?.length||0);
+          metaExtra = activeCategory === 'tshirts' ? `T-Shirts CHF ${prices.casablanca_tshirt}` : `Hoodies CHF ${prices.casablanca_hoodie}`;
         } else if(key === "stussy"){
-          count = (stussyTShirts?.length||0) + (stussyHoodies?.length||0);
-          metaExtra = `T-Shirts CHF ${prices.stussy_tshirt} • Hoodies CHF ${prices.stussy_hoodie}`;
+          count = activeCategory === 'tshirts' ? (stussyTShirts?.length||0) : (stussyHoodies?.length||0);
+          metaExtra = activeCategory === 'tshirts' ? `T-Shirts CHF ${prices.stussy_tshirt}` : `Hoodies CHF ${prices.stussy_hoodie}`;
         } else {
           count = (cfg.images?.length || 0);
           const brandPrice = (
@@ -853,7 +952,7 @@
             key==="palm" ? prices.palm_tshirt :
             key==="dior" ? prices.dior : null
           );
-          metaExtra = brandPrice !== null ? `ab CHF ${brandPrice}` : "";
+          metaExtra = brandPrice !== null ? `CHF ${brandPrice}` : "";
         }
 
         const card=document.createElement("div");
@@ -873,7 +972,10 @@
     }
 
     document.addEventListener("DOMContentLoaded",()=>{
+      // Setze aktive Kategorie auf T-Shirts als Standard
+      document.querySelector('.category-btn').classList.add('active');
       buildBrandList();
+      
       // Standard-Galerien initial rendern
       Object.entries(categories).forEach(([k,cfg])=>{
         if(k === "amiri" || k === "offwhite" || k === "balenciaga" || 
@@ -885,6 +987,15 @@
 </head>
 
 <body>
+  <!-- Neue Kategorie-Auswahl -->
+  <div class="category-selector">
+    <div class="category-title">Was möchtest du dir ansehen?</div>
+    <div class="category-buttons">
+      <button class="category-btn" onclick="setActiveCategory('tshirts')">T-Shirts</button>
+      <button class="category-btn" onclick="setActiveCategory('hoodies')">Hoodies</button>
+    </div>
+  </div>
+
   <div class="hero">
     <h1>Wähle ein Brand aus</h1>
     <p>Wähle eine Marke und stöbere durch die Galerie.</p>
