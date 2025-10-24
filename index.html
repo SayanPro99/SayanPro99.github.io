@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Designer Galerie – Amiri, LV, Dior, Palm Angels, Moncler, Gucci, Off-White, Balenciaga, Bape, Casablanca, Stussy</title>
+  <title>Designer Galerie – Wähle deine Kategorie</title>
 
   <style>
     :root { --card-bg:#111; --card-fg:#fff; --muted:#b8b8b8; --radius:16px; }
@@ -14,6 +14,22 @@
     .hero h1{margin:0 0 6px;font-size:clamp(26px,3.5vw,38px)}
     .hero p{margin:0;color:#555;font-size:clamp(14px,2.4vw,16px)}
 
+    /* Kategorie-Auswahl */
+    .category-selector{max-width:1000px;margin:24px auto;text-align:center}
+    .category-btns{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    .category-btn{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      background:#fff;border:2px solid #e5e5e5;border-radius:var(--radius);
+      padding:24px 32px;min-width:180px;cursor:pointer;transition:all .2s;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    .category-btn:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.12);border-color:#ccc}
+    .category-btn.active{background:#111;color:#fff;border-color:#111}
+    .category-btn .icon{font-size:42px;margin-bottom:12px}
+    .category-btn .label{font-size:20px;font-weight:600;margin-bottom:6px}
+    .category-btn .desc{font-size:14px;color:#777}
+    .category-btn.active .desc{color:#ddd}
+
     .brand-list-wrap{max-width:1000px;margin:0 auto 18px;background:#fff;border-radius:var(--radius);box-shadow:0 6px 20px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.05);padding:12px}
     .brand-list{display:grid;grid-template-columns:1fr;gap:12px;max-height:70vh;overflow-y:auto;padding-right:4px;position:relative}
     .brand-card{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--card-bg);color:var(--card-fg);padding:18px 20px;border-radius:var(--radius);box-shadow:0 8px 18px rgba(0,0,0,.18);cursor:pointer;user-select:none;transition:transform .06s,box-shadow .15s,opacity .2s;outline:none; position:relative}
@@ -22,43 +38,6 @@
     .brand-title{font-size:clamp(18px,2.8vw,24px);font-weight:700}
     .brand-meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:clamp(13px,2.4vw,14px)}
     .brand-right{font-size:28px;opacity:.8}
-
-    /* Dropdown unter der Karte */
-    .dd{ position:relative; z-index:5; }
-    .dd-panel{
-      margin-top:8px;
-      background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px;
-      box-shadow:0 16px 30px rgba(0,0,0,.12);
-      padding:10px;
-      animation:pop .18s ease;
-    }
-    .dd-items{display:flex;gap:10px;flex-wrap:wrap}
-    .dd-item{
-      border:1px solid #e5e5e5; background:#fff; border-radius:999px;
-      padding:12px 18px;
-      font-size:16px;
-      line-height:1.1;
-      cursor:pointer;
-      min-height:44px;
-      min-width:120px;
-      touch-action:manipulation;
-    }
-    .dd-item:active{transform:translateY(1px)}
-    .dd-item[disabled]{opacity:.5; cursor:not-allowed}
-    .dd-hint{color:#444; font-size:14px; margin-top:6px}
-
-    @media(max-width:700px){
-      .dd-panel{ padding:12px }
-      .dd-items{ gap:12px }
-      .dd-item{
-        padding:14px 22px;
-        font-size:17px;
-        min-height:48px;
-        min-width:130px;
-      }
-    }
-
-    @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 
     .grid{display:none;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;margin:24px auto 36px;max-width:1200px;padding:0 6px 50px}
     .grid.active{display:grid;animation:fadeIn .35s ease}
@@ -413,233 +392,66 @@
 
     /* -------- Kategorien-Konfiguration -------- */
     const categories = {
-      amiri:      { label:"Amiri",         base: null,              images: null }, // Dropdown
-      lv:         { label:"Louis Vuitton", base: LV_BASE,           images: louisVuittonImages },
-      moncler:    { label:"Moncler",       base: MONCLER_BASE,      images: monclerImages },
-      gucci:      { label:"Gucci",         base: GUCCI_BASE,        images: gucciImages },
-      offwhite:   { label:"Off-White",     base: null,              images: null }, // Dropdown
-      balenciaga: { label:"Balenciaga",    base: null,              images: null }, // Dropdown
-      palm:       { label:"Palm Angels",   base: PALM_BASE,         images: palmImages },
-      dior:       { label:"Dior",          base: DIOR_BASE,         images: diorImages },
-      bape:       { label:"Bape",          base: null,              images: null }, // Dropdown
-      casablanca: { label:"Casablanca",    base: null,              images: null }, // Dropdown
-      stussy:     { label:"Stussy",        base: null,              images: null }  // Dropdown
+      amiri:      { label:"Amiri",         tshirts: {base: AMIRI_BASE, images: amiriImages, price: prices.amiri_tshirt}, hoodies: {base: AMIRI_H_BASE, images: amiriHoodies, price: prices.amiri_hoodie} },
+      lv:         { label:"Louis Vuitton", tshirts: {base: LV_BASE, images: louisVuittonImages, price: prices.lv} },
+      moncler:    { label:"Moncler",       tshirts: {base: MONCLER_BASE, images: monclerImages, price: prices.moncler} },
+      gucci:      { label:"Gucci",         tshirts: {base: GUCCI_BASE, images: gucciImages, price: prices.gucci} },
+      offwhite:   { label:"Off-White",     tshirts: {base: OFFWHITE_T_BASE, images: offwhiteTShirts, price: prices.offwhite_tshirt}, hoodies: {base: OFFWHITE_H_BASE, images: offwhiteHoodies, price: prices.offwhite_hoodie} },
+      balenciaga: { label:"Balenciaga",    hoodies: {base: BALENCIAGA_H_BASE, images: balenciagaHoodies, price: prices.balenciaga_hoodie} },
+      palm:       { label:"Palm Angels",   tshirts: {base: PALM_BASE, images: palmImages, price: prices.palm_tshirt} },
+      dior:       { label:"Dior",          tshirts: {base: DIOR_BASE, images: diorImages, price: prices.dior} },
+      bape:       { label:"Bape",          tshirts: {base: BAPE_T_BASE, images: bapeTShirts, price: prices.bape_tshirt} },
+      casablanca: { label:"Casablanca",    tshirts: {base: CASABLANCA_T_BASE, images: casablancaTShirts, price: prices.casablanca_tshirt}, hoodies: {base: CASABLANCA_H_BASE, images: casablancaHoodies, price: prices.casablanca_hoodie} },
+      stussy:     { label:"Stussy",        tshirts: {base: STUSSY_T_BASE, images: stussyTShirts, price: prices.stussy_tshirt}, hoodies: {base: STUSSY_H_BASE, images: stussyHoodies, price: prices.stussy_hoodie} }
     };
 
     /* --- Anzeige / Lightbox --- */
     let currentGallery = null, currentIndex = 0;
+    let currentCategory = null; // 'tshirts' oder 'hoodies'
 
-    // Auswahlstatus für Dropdown-Marken
-    let amiriSubset = null;        // "tshirts" | "hoodies"
-    let offwhiteSubset = null;     // "tshirts" | "hoodies"
-    let balenciagaSubset = null;   // "tshirts" | "hoodies" (tshirts derzeit leer)
-    let bapeSubset = null;         // "tshirts" (nur T-Shirts verfügbar)
-    let casablancaSubset = null;   // "tshirts" | "hoodies"
-    let stussySubset = null;       // "tshirts" | "hoodies"
+    /* ===== Kategorie-Auswahl ===== */
+    function selectCategory(category) {
+      currentCategory = category;
+      
+      // UI-Update für aktive Kategorie
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`[data-category="${category}"]`).classList.add('active');
+      
+      // Markenliste aktualisieren
+      buildBrandList();
+      
+      // Hero-Text anpassen
+      document.querySelector('.hero h1').textContent = `Wähle ein Brand aus - ${category === 'tshirts' ? 'T-Shirts' : 'Hoodies'}`;
+      document.querySelector('.hero p').textContent = `Verfügbare Marken für ${category === 'tshirts' ? 'T-Shirts' : 'Hoodies'}`;
+    }
 
-    // Offenes Dropdown
-    let openDropdownKey = null;
-
+    /* ===== Marken anzeigen ===== */
     function showCategory(key){
-      if(key === "amiri" || key === "offwhite" || key === "balenciaga" || 
-         key === "bape" || key === "casablanca" || key === "stussy"){
-        toggleDropdown(key);
+      if (!currentCategory) return;
+      
+      // Prüfen, ob die Marke die ausgewählte Kategorie hat
+      if (!categories[key][currentCategory]) {
+        alert(`Keine ${currentCategory === 'tshirts' ? 'T-Shirts' : 'Hoodies'} für ${categories[key].label} verfügbar.`);
         return;
       }
-      openDropdownKey && closeDropdown();
+      
       currentGallery = key;
       document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
       const grid = document.getElementById(key);
       grid.classList.add("active");
+      renderGridForBrand(key);
       grid.scrollIntoView({behavior:"smooth",block:"start"});
     }
 
-    /* ===== Dropdown unter der angeklickten Karte ===== */
-    function toggleDropdown(key){
-      const list = document.getElementById("brandList");
-      const card = list.querySelector(`[data-brand="${key}"]`);
-      if(!card) return;
-
-      if(openDropdownKey && openDropdownKey !== key) closeDropdown();
-      if(openDropdownKey === key){ closeDropdown(); return; }
-
-      const dd = document.createElement("div");
-      dd.className = "dd";
-      dd.id = `dd-${key}`;
-      
-      // Dropdown-Inhalt je nach Marke
-      let dropdownContent = '';
-      
-      if (key === "amiri") {
-        dropdownContent = `
-          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
-            <div class="dd-items">
-              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.amiri_tshirt})</button>
-              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.amiri_hoodie})</button>
-            </div>
-            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
-          </div>
-        `;
-      } else if (key === "offwhite") {
-        dropdownContent = `
-          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
-            <div class="dd-items">
-              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.offwhite_tshirt})</button>
-              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.offwhite_hoodie})</button>
-            </div>
-            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
-          </div>
-        `;
-      } else if (key === "balenciaga") {
-        const hasT = balenciagaTShirts.length > 0;
-        dropdownContent = `
-          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
-            <div class="dd-items">
-              <button class="dd-item" ${!hasT ? "disabled" : ""} onclick="selectSubset('${key}','tshirts')">T-Shirts</button>
-              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.balenciaga_hoodie})</button>
-            </div>
-            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
-          </div>
-        `;
-      } else if (key === "bape") {
-        dropdownContent = `
-          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
-            <div class="dd-items">
-              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.bape_tshirt})</button>
-            </div>
-            <div class="dd-hint">Nur T-Shirts verfügbar.</div>
-          </div>
-        `;
-      } else if (key === "casablanca") {
-        dropdownContent = `
-          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
-            <div class="dd-items">
-              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.casablanca_tshirt})</button>
-              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.casablanca_hoodie})</button>
-            </div>
-            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
-          </div>
-        `;
-      } else if (key === "stussy") {
-        dropdownContent = `
-          <div class="dd-panel" role="menu" aria-label="${categories[key].label} Auswahl">
-            <div class="dd-items">
-              <button class="dd-item" onclick="selectSubset('${key}','tshirts')">T-Shirts (CHF ${prices.stussy_tshirt})</button>
-              <button class="dd-item" onclick="selectSubset('${key}','hoodies')">Hoodies (CHF ${prices.stussy_hoodie})</button>
-            </div>
-            <div class="dd-hint">Wähle <b>T-Shirts</b> oder <b>Hoodies</b>, die Galerie lädt danach automatisch.</div>
-          </div>
-        `;
-      }
-      
-      dd.innerHTML = dropdownContent;
-      card.insertAdjacentElement("afterend", dd);
-      openDropdownKey = key;
-
-      setTimeout(()=>{ document.addEventListener("click", outsideCloser, { once:true }); }, 0);
-      function outsideCloser(ev){
-        if(!dd.contains(ev.target) && ev.target !== card){ closeDropdown(); }
-      }
-    }
-
-    function closeDropdown(){
-      if(!openDropdownKey) return;
-      const dd = document.getElementById(`dd-${openDropdownKey}`);
-      dd?.remove();
-      openDropdownKey = null;
-    }
-
-    // Auswahl im Dropdown
-    window.selectSubset = function(brand, subset){
-      if(brand === "amiri"){
-        amiriSubset = subset;
-        openDropdownKey && closeDropdown();
-        currentGallery = "amiri";
-        document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
-        renderAmiriGrid();
-        document.getElementById("amiri").classList.add("active");
-        document.getElementById("amiri").scrollIntoView({behavior:"smooth",block:"start"});
-        return;
-      }
-      if(brand === "offwhite"){
-        offwhiteSubset = subset;
-        openDropdownKey && closeDropdown();
-        currentGallery = "offwhite";
-        document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
-        renderOffwhiteGrid();
-        document.getElementById("offwhite").classList.add("active");
-        document.getElementById("offwhite").scrollIntoView({behavior:"smooth",block:"start"});
-        return;
-      }
-      if(brand === "balenciaga"){
-        balenciagaSubset = subset;
-        openDropdownKey && closeDropdown();
-        currentGallery = "balenciaga";
-        document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
-        renderBalenciagaGrid();
-        document.getElementById("balenciaga").classList.add("active");
-        document.getElementById("balenciaga").scrollIntoView({behavior:"smooth",block:"start"});
-        return;
-      }
-      if(brand === "bape"){
-        bapeSubset = subset;
-        openDropdownKey && closeDropdown();
-        currentGallery = "bape";
-        document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
-        renderBapeGrid();
-        document.getElementById("bape").classList.add("active");
-        document.getElementById("bape").scrollIntoView({behavior:"smooth",block:"start"});
-        return;
-      }
-      if(brand === "casablanca"){
-        casablancaSubset = subset;
-        openDropdownKey && closeDropdown();
-        currentGallery = "casablanca";
-        document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
-        renderCasablancaGrid();
-        document.getElementById("casablanca").classList.add("active");
-        document.getElementById("casablanca").scrollIntoView({behavior:"smooth",block:"start"});
-        return;
-      }
-      if(brand === "stussy"){
-        stussySubset = subset;
-        openDropdownKey && closeDropdown();
-        currentGallery = "stussy";
-        document.querySelectorAll(".grid").forEach(g=>g.classList.remove("active"));
-        renderStussyGrid();
-        document.getElementById("stussy").classList.add("active");
-        document.getElementById("stussy").scrollIntoView({behavior:"smooth",block:"start"});
-        return;
-      }
-    };
-
     /* ===== Lightbox ===== */
     function openLightbox(cat,i){
-      let arr = [], base = "";
+      if (!currentCategory || !categories[cat][currentCategory]) return;
       
-      if(cat === "amiri"){
-        if(amiriSubset === "tshirts"){ arr = amiriImages; base = AMIRI_BASE; }
-        else { arr = amiriHoodies; base = AMIRI_H_BASE; }
-      } else if(cat === "offwhite"){
-        if(offwhiteSubset === "tshirts"){ arr = offwhiteTShirts; base = OFFWHITE_T_BASE; }
-        else { arr = offwhiteHoodies; base = OFFWHITE_H_BASE; }
-      } else if(cat === "balenciaga"){
-        if(balenciagaSubset === "tshirts"){ arr = balenciagaTShirts; base = ""; }
-        else { arr = balenciagaHoodies; base = BALENCIAGA_H_BASE; }
-      } else if(cat === "bape"){
-        arr = bapeTShirts; base = BAPE_T_BASE;
-      } else if(cat === "casablanca"){
-        if(casablancaSubset === "tshirts"){ arr = casablancaTShirts; base = CASABLANCA_T_BASE; }
-        else { arr = casablancaHoodies; base = CASABLANCA_H_BASE; }
-      } else if(cat === "stussy"){
-        if(stussySubset === "tshirts"){ arr = stussyTShirts; base = STUSSY_T_BASE; }
-        else { arr = stussyHoodies; base = STUSSY_H_BASE; }
-      } else {
-        // Einfache Kategorien
-        arr = categories[cat]?.images || [];
-        base = categories[cat]?.base || "";
-      }
-
+      const arr = categories[cat][currentCategory].images;
+      const base = categories[cat][currentCategory].base;
+      
       if(!arr || !arr.length) return;
       currentGallery = cat; currentIndex = i;
       document.getElementById("lightboxImg").src = srcPath(base, arr[i]);
@@ -649,30 +461,10 @@
     function closeLightbox(){ document.getElementById("lightbox").style.display="none"; }
     
     function changeImg(d){
-      let arr = [], base = "";
+      if (!currentCategory || !categories[currentGallery][currentCategory]) return;
       
-      if(currentGallery === "amiri"){
-        if(amiriSubset === "tshirts"){ arr = amiriImages; base = AMIRI_BASE; }
-        else { arr = amiriHoodies; base = AMIRI_H_BASE; }
-      } else if(currentGallery === "offwhite"){
-        if(offwhiteSubset === "tshirts"){ arr = offwhiteTShirts; base = OFFWHITE_T_BASE; }
-        else { arr = offwhiteHoodies; base = OFFWHITE_H_BASE; }
-      } else if(currentGallery === "balenciaga"){
-        if(balenciagaSubset === "tshirts"){ arr = balenciagaTShirts; base = ""; }
-        else { arr = balenciagaHoodies; base = BALENCIAGA_H_BASE; }
-      } else if(currentGallery === "bape"){
-        arr = bapeTShirts; base = BAPE_T_BASE;
-      } else if(currentGallery === "casablanca"){
-        if(casablancaSubset === "tshirts"){ arr = casablancaTShirts; base = CASABLANCA_T_BASE; }
-        else { arr = casablancaHoodies; base = CASABLANCA_H_BASE; }
-      } else if(currentGallery === "stussy"){
-        if(stussySubset === "tshirts"){ arr = stussyTShirts; base = STUSSY_T_BASE; }
-        else { arr = stussyHoodies; base = STUSSY_H_BASE; }
-      } else {
-        // Einfache Kategorien
-        arr = categories[currentGallery]?.images || [];
-        base = categories[currentGallery]?.base || "";
-      }
+      const arr = categories[currentGallery][currentCategory].images;
+      const base = categories[currentGallery][currentCategory].base;
 
       if(!arr.length) return;
       currentIndex = (currentIndex + d + arr.length) % arr.length;
@@ -688,173 +480,49 @@
     });
 
     /* ===== Rendering ===== */
-    function renderGrid(id,arr,key){
-      const el = document.getElementById(id);
-      const base = categories[key].base || "";
+    function renderGridForBrand(brandKey){
+      const el = document.getElementById(brandKey);
+      if (!currentCategory || !categories[brandKey][currentCategory]) {
+        el.innerHTML = "<div class='placeholder'>Keine Bilder verfügbar.</div>";
+        return;
+      }
+      
+      const categoryData = categories[brandKey][currentCategory];
+      const arr = categoryData.images;
+      const base = categoryData.base;
+      const price = categoryData.price;
+      
       if(!arr || arr.length===0){
         el.innerHTML = "<div class='placeholder'>Keine Bilder verfügbar.</div>";
         return;
       }
-      // Preis je Marke ohne Unterkategorien
-      let price = null;
-      if(key === "lv") price = prices.lv;
-      if(key === "moncler") price = prices.moncler;
-      if(key === "gucci") price = prices.gucci;
-      if(key === "palm") price = prices.palm_tshirt;
-      if(key === "dior") price = prices.dior;
 
       el.innerHTML = arr.map((src,i)=>`
         <div class="item">
-          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="${key} Bild ${i+1}" onclick="openLightbox('${key}',${i})">
-          ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
+          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="${brandKey} Bild ${i+1}" onclick="openLightbox('${brandKey}',${i})">
+          <div class="price-tag">CHF ${price}</div>
         </div>`).join('');
     }
 
-    function renderAmiriGrid(){
-      const el = document.getElementById("amiri");
-      if(!amiriSubset){
-        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown T-Shirts oder Hoodies wählen.</div>";
-        return;
-      }
-      const arr  = amiriSubset === "tshirts" ? amiriImages : amiriHoodies;
-      const base = amiriSubset === "tshirts" ? AMIRI_BASE : AMIRI_H_BASE;
-      const price = amiriSubset === "tshirts" ? prices.amiri_tshirt : prices.amiri_hoodie;
-      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
-      el.innerHTML = arr.map((src,i)=>`
-        <div class="item">
-          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Amiri ${amiriSubset} ${i+1}" onclick="openLightbox('amiri',${i})">
-          <div class="price-tag">CHF ${price}</div>
-        </div>
-      `).join('');
-    }
-
-    function renderOffwhiteGrid(){
-      const el = document.getElementById("offwhite");
-      if(!offwhiteSubset){
-        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown T-Shirts oder Hoodies wählen.</div>";
-        return;
-      }
-      const arr  = offwhiteSubset === "tshirts" ? offwhiteTShirts : offwhiteHoodies;
-      const base = offwhiteSubset === "tshirts" ? OFFWHITE_T_BASE : OFFWHITE_H_BASE;
-      const price = offwhiteSubset === "tshirts" ? prices.offwhite_tshirt : prices.offwhite_hoodie;
-      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
-      el.innerHTML = arr.map((src,i)=>`
-        <div class="item">
-          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Off-White ${offwhiteSubset} ${i+1}" onclick="openLightbox('offwhite',${i})">
-          <div class="price-tag">CHF ${price}</div>
-        </div>
-      `).join('');
-    }
-
-    function renderBalenciagaGrid(){
-      const el = document.getElementById("balenciaga");
-      if(!balenciagaSubset){
-        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown Hoodies (oder T-Shirts) wählen.</div>";
-        return;
-      }
-      const isT = balenciagaSubset === "tshirts";
-      const arr  = isT ? balenciagaTShirts : balenciagaHoodies;
-      const base = isT ? "" : BALENCIAGA_H_BASE;
-      const price = isT ? null : prices.balenciaga_hoodie;
-      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
-      el.innerHTML = arr.map((src,i)=>`
-        <div class="item">
-          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Balenciaga ${balenciagaSubset} ${i+1}" onclick="openLightbox('balenciaga',${i})">
-          ${price !== null ? `<div class="price-tag">CHF ${price}</div>` : ``}
-        </div>
-      `).join('');
-    }
-
-    function renderBapeGrid(){
-      const el = document.getElementById("bape");
-      if(!bapeSubset){
-        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown T-Shirts wählen.</div>";
-        return;
-      }
-      const arr  = bapeTShirts;
-      const base = BAPE_T_BASE;
-      const price = prices.bape_tshirt;
-      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder verfügbar.</div>"; return; }
-      el.innerHTML = arr.map((src,i)=>`
-        <div class="item">
-          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Bape T-Shirt ${i+1}" onclick="openLightbox('bape',${i})">
-          <div class="price-tag">CHF ${price}</div>
-        </div>
-      `).join('');
-    }
-
-    function renderCasablancaGrid(){
-      const el = document.getElementById("casablanca");
-      if(!casablancaSubset){
-        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown T-Shirts oder Hoodies wählen.</div>";
-        return;
-      }
-      const arr  = casablancaSubset === "tshirts" ? casablancaTShirts : casablancaHoodies;
-      const base = casablancaSubset === "tshirts" ? CASABLANCA_T_BASE : CASABLANCA_H_BASE;
-      const price = casablancaSubset === "tshirts" ? prices.casablanca_tshirt : prices.casablanca_hoodie;
-      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
-      el.innerHTML = arr.map((src,i)=>`
-        <div class="item">
-          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Casablanca ${casablancaSubset} ${i+1}" onclick="openLightbox('casablanca',${i})">
-          <div class="price-tag">CHF ${price}</div>
-        </div>
-      `).join('');
-    }
-
-    function renderStussyGrid(){
-      const el = document.getElementById("stussy");
-      if(!stussySubset){
-        el.innerHTML = "<div class='placeholder'>Bitte oben im Dropdown T-Shirts oder Hoodies wählen.</div>";
-        return;
-      }
-      const arr  = stussySubset === "tshirts" ? stussyTShirts : stussyHoodies;
-      const base = stussySubset === "tshirts" ? STUSSY_T_BASE : STUSSY_H_BASE;
-      const price = stussySubset === "tshirts" ? prices.stussy_tshirt : prices.stussy_hoodie;
-      if(!arr?.length){ el.innerHTML = "<div class='placeholder'>Keine Bilder in dieser Unterkategorie.</div>"; return; }
-      el.innerHTML = arr.map((src,i)=>`
-        <div class="item">
-          <img class="thumb" src="${srcPath(base,src)}" loading="lazy" alt="Stussy ${stussySubset} ${i+1}" onclick="openLightbox('stussy',${i})">
-          <div class="price-tag">CHF ${price}</div>
-        </div>
-      `).join('');
-    }
-
-    /* ------ Markenliste mit data-brand (für Dropdown-Ziel) + Preistext ------ */
+    /* ------ Markenliste für aktuelle Kategorie ------ */
     function buildBrandList(){
       const wrap=document.getElementById("brandList");
       wrap.innerHTML="";
-      Object.entries(categories).forEach(([key,cfg])=>{
-        let count = 0, metaExtra = "";
-
-        if(key === "amiri"){
-          count = (amiriImages?.length||0) + (amiriHoodies?.length||0);
-          metaExtra = `T-Shirts CHF ${prices.amiri_tshirt} • Hoodies CHF ${prices.amiri_hoodie}`;
-        } else if(key === "offwhite"){
-          count = (offwhiteTShirts?.length||0) + (offwhiteHoodies?.length||0);
-          metaExtra = `T-Shirts CHF ${prices.offwhite_tshirt} • Hoodies CHF ${prices.offwhite_hoodie}`;
-        } else if(key === "balenciaga"){
-          count = (balenciagaTShirts?.length||0) + (balenciagaHoodies?.length||0);
-          metaExtra = `Hoodies CHF ${prices.balenciaga_hoodie}${balenciagaTShirts.length ? " • T-Shirts" : ""}`;
-        } else if(key === "bape"){
-          count = (bapeTShirts?.length||0);
-          metaExtra = `T-Shirts CHF ${prices.bape_tshirt}`;
-        } else if(key === "casablanca"){
-          count = (casablancaTShirts?.length||0) + (casablancaHoodies?.length||0);
-          metaExtra = `T-Shirts CHF ${prices.casablanca_tshirt} • Hoodies CHF ${prices.casablanca_hoodie}`;
-        } else if(key === "stussy"){
-          count = (stussyTShirts?.length||0) + (stussyHoodies?.length||0);
-          metaExtra = `T-Shirts CHF ${prices.stussy_tshirt} • Hoodies CHF ${prices.stussy_hoodie}`;
-        } else {
-          count = (cfg.images?.length || 0);
-          const brandPrice = (
-            key==="lv" ? prices.lv :
-            key==="moncler" ? prices.moncler :
-            key==="gucci" ? prices.gucci :
-            key==="palm" ? prices.palm_tshirt :
-            key==="dior" ? prices.dior : null
-          );
-          metaExtra = brandPrice !== null ? `ab CHF ${brandPrice}` : "";
-        }
+      
+      // Nur Marken anzeigen, die die aktuelle Kategorie haben
+      const availableBrands = Object.entries(categories).filter(([key, cfg]) => 
+        currentCategory && cfg[currentCategory] && cfg[currentCategory].images && cfg[currentCategory].images.length > 0
+      );
+      
+      if (availableBrands.length === 0) {
+        wrap.innerHTML = `<div style="text-align:center;padding:20px;color:#666">Keine Marken für ${currentCategory === 'tshirts' ? 'T-Shirts' : 'Hoodies'} verfügbar.</div>`;
+        return;
+      }
+      
+      availableBrands.forEach(([key,cfg])=>{
+        const categoryData = cfg[currentCategory];
+        const count = categoryData.images.length;
+        const price = categoryData.price;
 
         const card=document.createElement("div");
         card.className="brand-card";
@@ -865,7 +533,7 @@
         card.innerHTML=`
           <div class="brand-left">
             <div class="brand-title">${cfg.label}</div>
-            <div class="brand-meta">${count ? `${count} Bilder` : `Keine Bilder`}${metaExtra ? ` • ${metaExtra}` : ""}</div>
+            <div class="brand-meta">${count} Bilder • CHF ${price}</div>
           </div>
           <div class="brand-right">›</div>`;
         wrap.appendChild(card);
@@ -873,12 +541,16 @@
     }
 
     document.addEventListener("DOMContentLoaded",()=>{
-      buildBrandList();
-      // Standard-Galerien initial rendern
-      Object.entries(categories).forEach(([k,cfg])=>{
-        if(k === "amiri" || k === "offwhite" || k === "balenciaga" || 
-           k === "bape" || k === "casablanca" || k === "stussy") return; // per Dropdown
-        renderGrid(k,cfg.images,k);
+      // Standardmäßig T-Shirts auswählen
+      selectCategory('tshirts');
+      
+      // Galerie-Container für jede Marke erstellen
+      const galleryContainer = document.querySelector('.grid-container') || document.body;
+      Object.keys(categories).forEach(key => {
+        const grid = document.createElement('div');
+        grid.id = key;
+        grid.className = 'grid';
+        galleryContainer.appendChild(grid);
       });
     });
   </script>
@@ -886,26 +558,30 @@
 
 <body>
   <div class="hero">
-    <h1>Wähle ein Brand aus</h1>
-    <p>Wähle eine Marke und stöbere durch die Galerie.</p>
+    <h1>Wähle eine Kategorie</h1>
+    <p>Wähle zwischen T-Shirts und Hoodies, um verfügbare Marken anzuzeigen.</p>
+  </div>
+
+  <div class="category-selector">
+    <div class="category-btns">
+      <div class="category-btn active" data-category="tshirts" onclick="selectCategory('tshirts')">
+        <div class="icon">👕</div>
+        <div class="label">T-Shirts</div>
+        <div class="desc">Alle verfügbaren T-Shirt Marken</div>
+      </div>
+      <div class="category-btn" data-category="hoodies" onclick="selectCategory('hoodies')">
+        <div class="icon">🧥</div>
+        <div class="label">Hoodies</div>
+        <div class="desc">Nur Marken mit Hoodies</div>
+      </div>
+    </div>
   </div>
 
   <div class="brand-list-wrap">
     <div id="brandList" class="brand-list"></div>
   </div>
 
-  <!-- Galerien -->
-  <div id="amiri" class="grid"></div>
-  <div id="lv" class="grid"></div>
-  <div id="moncler" class="grid"></div>
-  <div id="gucci" class="grid"></div>
-  <div id="offwhite" class="grid"></div>
-  <div id="balenciaga" class="grid"></div>
-  <div id="palm" class="grid"></div>
-  <div id="dior" class="grid"></div>
-  <div id="bape" class="grid"></div>
-  <div id="casablanca" class="grid"></div>
-  <div id="stussy" class="grid"></div>
+  <!-- Galerien werden dynamisch erstellt -->
 
   <!-- Lightbox -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
