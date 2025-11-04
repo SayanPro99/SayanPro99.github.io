@@ -68,6 +68,7 @@
        Bape T-Shirts → ./ordner11/ | Amiri Hoodies → ./ordner12/ 
        Casablanca T-Shirts → ./ordner13/ | Casablanca Hoodies → ./ordner14/
        Stussy Hoodies → ./ordner15/ | Stussy T-Shirts → ./ordner16/
+       Jacken → ./ordner18/
        ====================================================================== */
 
     const AMIRI_BASE        = "./ordner3/";
@@ -85,6 +86,7 @@
     const CASABLANCA_H_BASE = "./ordner14/";
     const STUSSY_H_BASE     = "./ordner15/";
     const STUSSY_T_BASE     = "./ordner16/";
+    const JACKEN_BASE       = "./ordner18/";
 
     /* ===== Preise (CHF) ===== */
     const prices = {
@@ -102,7 +104,8 @@
       casablanca_tshirt: 55,
       casablanca_hoodie: 90,
       stussy_tshirt: 55,
-      stussy_hoodie: 90
+      stussy_hoodie: 90,
+      jacken: 110
     };
 
     const srcPath = (folder, file) => `${folder}${file}`;
@@ -390,6 +393,22 @@
       "f1dc776f.jpg","f6c27c80.jpg","fc67338c.jpg","fdaf7474.jpg","fe49cc35.jpg"
     ];
 
+    // Jacken (Ordner18)
+    const jackenImages = [
+      "d56e1eb1.jpg","d63a69b3.jpg","d04291a9.jpg","de5d97e9.jpg","deb3b2f6.jpg",
+      "e5dfdbdb.jpg","e58e82a0.jpg","e77a788c.jpg","f66a7e3b.jpg","f971d1b8.jpg",
+      "fbfc14f3.jpg","fc9c175f.png","fd90aa01.png","fde096b5.png","ff5a6b04.jpg",
+      "1d4c1a70.jpg","2d3cb652.jpg","2ff258b5.jpg","4d8ce72c.jpg","5b440ce8.jpg",
+      "5e106a59.jpg","5fd5bdfe.jpg","6f2ef3fe.jpg","8a641714.jpg","8ca16e1b.png",
+      "9b5642ac.jpg","14e8bdad.jpg","052abe5c.jpg","77d4bedd.png","98e799c0.png",
+      "103d7959.png","330eb372.jpg","674d4c24.jpg","1384c56a.jpg","6386b83d.png",
+      "9659d9ea.jpg","29032bc1.jpg","044354b5.jpg","74519e59.jpg","151979d1.jpg",
+      "56702020.jpg","61856570.jpg","82295342.jpg","90675194.jpg","a01c34f0.jpg",
+      "a4fdbedf.jpg","a6e7a031.jpg","a031dcaf.jpg","a72f9004.jpg","a78f36a9.png",
+      "ab8454d8.jpg","acbdf312.jpg","ae307842.jpg","b467b307.jpg","bfad33d1.jpg",
+      "c3c25480.png","c61829a4.png","cb3814dc.jpg","cbe221e3.jpg","cebe2103.jpg"
+    ];
+
     /* -------- Kategorien-Konfiguration -------- */
     const categories = {
       amiri:      { label:"Amiri",         tshirts: {base: AMIRI_BASE, images: amiriImages, price: prices.amiri_tshirt}, hoodies: {base: AMIRI_H_BASE, images: amiriHoodies, price: prices.amiri_hoodie} },
@@ -402,12 +421,13 @@
       dior:       { label:"Dior",          tshirts: {base: DIOR_BASE, images: diorImages, price: prices.dior} },
       bape:       { label:"Bape",          tshirts: {base: BAPE_T_BASE, images: bapeTShirts, price: prices.bape_tshirt} },
       casablanca: { label:"Casablanca",    tshirts: {base: CASABLANCA_T_BASE, images: casablancaTShirts, price: prices.casablanca_tshirt}, hoodies: {base: CASABLANCA_H_BASE, images: casablancaHoodies, price: prices.casablanca_hoodie} },
-      stussy:     { label:"Stussy",        tshirts: {base: STUSSY_T_BASE, images: stussyTShirts, price: prices.stussy_tshirt}, hoodies: {base: STUSSY_H_BASE, images: stussyHoodies, price: prices.stussy_hoodie} }
+      stussy:     { label:"Stussy",        tshirts: {base: STUSSY_T_BASE, images: stussyTShirts, price: prices.stussy_tshirt}, hoodies: {base: STUSSY_H_BASE, images: stussyHoodies, price: prices.stussy_hoodie} },
+      jacken:     { label:"Jacken",        jacken: {base: JACKEN_BASE, images: jackenImages, price: prices.jacken} }
     };
 
     /* --- Anzeige / Lightbox --- */
     let currentGallery = null, currentIndex = 0;
-    let currentCategory = null; // 'tshirts' oder 'hoodies'
+    let currentCategory = null; // 'tshirts', 'hoodies' oder 'jacken'
 
     /* ===== Kategorie-Auswahl ===== */
     function selectCategory(category) {
@@ -423,8 +443,14 @@
       buildBrandList();
       
       // Hero-Text anpassen
-      document.querySelector('.hero h1').textContent = `Wähle ein Brand aus - ${category === 'tshirts' ? 'T-Shirts' : 'Hoodies'}`;
-      document.querySelector('.hero p').textContent = `Verfügbare Marken für ${category === 'tshirts' ? 'T-Shirts' : 'Hoodies'}`;
+      const categoryLabels = {
+        'tshirts': 'T-Shirts',
+        'hoodies': 'Hoodies',
+        'jacken': 'Jacken'
+      };
+      
+      document.querySelector('.hero h1').textContent = `Wähle ein Brand aus - ${categoryLabels[category]}`;
+      document.querySelector('.hero p').textContent = `Verfügbare Marken für ${categoryLabels[category]}`;
     }
 
     /* ===== Marken anzeigen ===== */
@@ -433,7 +459,12 @@
       
       // Prüfen, ob die Marke die ausgewählte Kategorie hat
       if (!categories[key][currentCategory]) {
-        alert(`Keine ${currentCategory === 'tshirts' ? 'T-Shirts' : 'Hoodies'} für ${categories[key].label} verfügbar.`);
+        const categoryLabels = {
+          'tshirts': 'T-Shirts',
+          'hoodies': 'Hoodies',
+          'jacken': 'Jacken'
+        };
+        alert(`Keine ${categoryLabels[currentCategory]} für ${categories[key].label} verfügbar.`);
         return;
       }
       
@@ -515,7 +546,12 @@
       );
       
       if (availableBrands.length === 0) {
-        wrap.innerHTML = `<div style="text-align:center;padding:20px;color:#666">Keine Marken für ${currentCategory === 'tshirts' ? 'T-Shirts' : 'Hoodies'} verfügbar.</div>`;
+        const categoryLabels = {
+          'tshirts': 'T-Shirts',
+          'hoodies': 'Hoodies',
+          'jacken': 'Jacken'
+        };
+        wrap.innerHTML = `<div style="text-align:center;padding:20px;color:#666">Keine Marken für ${categoryLabels[currentCategory]} verfügbar.</div>`;
         return;
       }
       
@@ -559,7 +595,7 @@
 <body>
   <div class="hero">
     <h1>Wähle eine Kategorie</h1>
-    <p>Wähle zwischen T-Shirts und Hoodies, um verfügbare Marken anzuzeigen.</p>
+    <p>Wähle zwischen T-Shirts, Hoodies und Jacken, um verfügbare Marken anzuzeigen.</p>
   </div>
 
   <div class="category-selector">
@@ -573,6 +609,11 @@
         <div class="icon">🧥</div>
         <div class="label">Hoodies</div>
         <div class="desc">Nur Marken mit Hoodies</div>
+      </div>
+      <div class="category-btn" data-category="jacken" onclick="selectCategory('jacken')">
+        <div class="icon">🧥</div>
+        <div class="label">Jacken</div>
+        <div class="desc">Alle verfügbaren Jacken</div>
       </div>
     </div>
   </div>
